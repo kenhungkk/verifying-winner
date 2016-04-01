@@ -1,0 +1,13 @@
+ignore/*
+*.pdf
+*.aux
+*.log
+*.bbl
+*.blg
+*.nav
+*.out
+*.snm
+*.toc
+*~
+.DS_Store
+.Rhistory
