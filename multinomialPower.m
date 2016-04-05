@@ -10,7 +10,7 @@ function [] = multinomialPower (m, n, alpha, numSample)
     sel = arrayfun(@(x) selectivePower(m, n, x, alpha, numSample), delta);
     gn = gnPower(m, n, delta, alpha, numSample);
     plot(delta, sel, delta, gn, '--');
-    legend('Selective', 'Gupta and Nagel', 'Location', 'southeast');
+    % legend('Selective', 'Gupta and Nagel', 'Location', 'southeast');
     xlabel('\delta');
     ylabel('Power');
 end

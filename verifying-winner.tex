@@ -5,6 +5,7 @@
 \usepackage{caption}
 \usepackage{cleveref}
 \usepackage{enumitem}
+\usepackage{graphicx}
 \usepackage[totalwidth=480pt, totalheight=680pt]{geometry}
 \usepackage{mathrsfs}
 \usepackage{tikz}
@@ -114,9 +115,9 @@ Without loss of generality, we will assume $X_1$ is considered largest with the 
 $$\exp\left(\frac{X_1 - X_j}{2} \left(\log \pi_1 - \log \pi_j\right) + \cdots + \frac{X_1 + X_j}{2} \left(\log \pi_1 + \log \pi_j\right) + \cdots + X_n\right) \frac{1_{X_1 + \cdots + X_n \log \pi_n = N}}{X_1! \cdots X_n!}.$$
 
 Next we condition on the sufficient statistics that are multiplied to the the nuisance parameter, in other words, we consider the conditional law
-$$\mathcal{L}_{\theta_1 = \theta_j}\left(\frac{X_1 - X_j}{2} \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
+$$\mathcal{L}_{\pi_1 = \pi_j}\left(\frac{X_1 - X_j}{2} \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
 or equivalently, the conditional law
-$$\mathcal{L}_{\theta_1 = \theta_j}\left(X_1 \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
+$$\mathcal{L}_{\pi_1 = \pi_j}\left(X_1 \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
 which is the distribution $\text{Binomial}\left(X_1 + X_j, \frac{1}{2}\right)$ truncated by the event $A_1$. The one-sided $p$-value $p_{1j}$ is thus given as
 $$\frac{\sum_{t = X_1}^{X_1 + X_j} \binom{X_1 + X_j}{t} \left(\frac{1}{2}\right)^{X_1 + X_j}}{\sum_{t = \left(X_1 + X_j\right)/2}^{X_1 + X_j} \binom{X_1 + X_j}{t} \left(\frac{1}{2}\right)^{X_1 + X_j}} = \frac{\sum_{t = X_1}^{X_1 + X_j} \binom{X_1 + X_j}{t}}{\sum_{t = \left(X_1 + X_j\right)/2}^{X_1 + X_j} \binom{X_1 + X_j}{t}},$$
 and to account for the tie-breaking we adopted earlier, we
@@ -131,15 +132,28 @@ It is possible to check that $p_{12} \ge p_{1j}$ for any $j > 2$. Since the null
 $$\PP_{H_{01}}\left(p_{12} < \alpha \middle| A_1\right) \le \max_{j>1} \PP_{H_{01j}}\left(p_{12} < \alpha \middle| A_1\right) \le \max_{j>1} \PP_{H_{01j}}\left(p_{1j} < \alpha \middle| A_1\right) \le \alpha,$$
 meaning that it is sufficient to construct a one-sided test between $X_1$ and $X_2$ and consider only $p_{12}$.
 
+It may appear quite surprising that ``verifying a winner'' as we propose in this section requires no adjustment for multiplicity, in the sense that we only need to compare the winner to the runner- up, just as we would have done if $n = 2$. After all, we know that the winner suffer’s from a winner's curse: given $X_5$ is the winner, $X_5 / N$ would overestimate $\pi_5$, and the larger $n$ is, the more severe this bias is likely to be. However, if $X_9$ is the runner-up, then $X_9 / N$ is likely biased upward nearly as much as $X_5$. Informally, we might say that $X_9$ suffer’s from a “runner-up’s curse” that is nearly as bad as the winner's curse; as a result, $X_5 - X_9$ is actually not all that biased upward. By multiplying the $p$-value by $2$, or equivalently performing a two-tailed test, takes care of what little bias there is. Indeed, performing a two-tailed test can be viewed as a sort of ``correction for multiplicity'', albeit one that we would have to make even if $n = 2$.
+
 \subsection{Connection with the subset selection problem}
 \label{sec:compare_subset}
 
+Gupta and Nagel \cite{Gupta:1967wg} devised a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, they guaranteed
+$$\PP\left(\argmax_j \pi_j \in J\left(X\right)\right) \ge 1 - \alpha.$$
+This was achieved by finding an integer $D$, as a function on $N$ and $n$, and select by
+$$J\left(X\right) = \left\{j: X_j \ge \max_k X_k - D\right\}.$$
+Gupta and Nagel also provided the method to choose $D$, which we implemented. 
 
+\Cref{fig:power} gives the power curves for $\text{Multinomial}\left(N, \pi\right)$ and
+$$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
+for various combinations of $N$ and $n$. The two procedure coincide if $n = 2$ as there are is actual selection.
 
-
-
-
-
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width = \textwidth]{plotMultinomialPower}
+\end{center}
+\caption{Power curves as a function of $\delta$. The plots in the first row all have $N = 50$ and the second row $N = 250$.}
+\label{fig:power}
+\end{figure}
 
 \section{Exponential families}
 \label{sec:exponential_families}
