@@ -145,13 +145,13 @@ Gupta and Nagel also provided the method to choose $D$, which we implemented.
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(N, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $N$ and $n$. The two procedure coincide if $n = 2$ as there are is actual selection.
+for various combinations of $N$ and $n$. The two procedure coincide if $n = 2$ as there are is actual selection. However as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width = \textwidth]{plotMultinomialPower}
+\includegraphics[width = \textwidth, trim = {1.3in 0.7in 1.6in 0.6in}, clip]{plotMultinomialPower}
 \end{center}
-\caption{Power curves as a function of $\delta$. The plots in the first row all have $N = 50$ and the second row $N = 250$.}
+\caption{Power curves as a function of $\delta$. The plots in the first row all have $N = 50$ and the second row $N = 250$. The solid line is the power for the selective test and the dashed line Gupta and Nagel's test.}
 \label{fig:power}
 \end{figure}
 
