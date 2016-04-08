@@ -30,8 +30,8 @@ function [power] = selectivePower(m, n, delta, alpha, numSample)
     secX = max(X(:, 2:end), [], 2);
     % nX is X1 + X2
     nX = secX + X(:, 1);
-    accepted = nnz(cdf('Binomial', secX, nX, 0.5) * 2 < alpha);
-    power = accepted / numSample;
+    rejected = nnz(cdf('Binomial', secX, nX, 1/2) * 2 <= alpha);
+    power = rejected / numSample;
 end
 
 % Find the test power of Gutpa and Nagel for multinomial distribution
@@ -49,13 +49,9 @@ function [power] = gnPower(m, n, delta, alpha, numSample)
         % Generates the sample
         X = mnrnd(m, pi, numSample);
         % Takes the maximum of each row
-        [maxX, I] = max(X, [], 2);
-        % Sets the maximum of each row to -Inf
-        X(sub2ind(size(X), 1:numSample, transpose(I))) = -Inf;
-        % Takes the maximum of each row again, yielding second largest
-        secX = max(X, [], 2);
+        maxX = max(X, [], 2);
         % d for a given r is the upper alpha quantile, rounded up
-        d = ceil(quantile(maxX - secX, 1 - alpha));
+        d = ceil(quantile(maxX - X(:, 1), 1 - alpha));
         % Taking maximum over all r
         if dStar < d
             dStar = d;
@@ -71,8 +67,8 @@ function [power] = gnPower(m, n, delta, alpha, numSample)
         X = mnrnd(m, pi, numSample);
         % secX is max(Xj; j>1), i.e. X2
         secX = max(X(:, 2:end), [], 2);
-        accepted = nnz(X(:, 1) - dStar > secX);
-        power(i) = accepted / numSample;
+        rejected = nnz(X(:, 1) - secX > dStar);
+        power(i) = rejected / numSample;
     end
 end
 
