@@ -7,7 +7,7 @@
 function [] = multinomialPower (m, n, alpha, numSample)
     % delta ranges from 0 to 2
     delta = 0:0.01:2;
-    sel = arrayfun(@(x) selectivePower(m, n, x, alpha, numSample), delta);
+    sel = arrayfun(@(x) selectivePower(m, n, x, alpha / (n-1) * n, numSample), delta);
     gn = gnPower(m, n, delta, alpha, numSample);
     plot(delta, sel, delta, gn, '--');
     % legend('Selective', 'Gupta and Nagel', 'Location', 'southeast');
