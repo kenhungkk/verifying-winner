@@ -24,6 +24,10 @@
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\RR}{\mathbb{R}}
 
+%Commands for inline commenting that shows up on pdf
+\newcommand{\WFcomment}[1]{{\color{red}{(WF: \bf \sc #1) }}}
+
+
 \begin{document}
 
 \title{Rank verification for exponential families}
@@ -215,22 +219,22 @@ $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n ~~~~ \text{ and } ~~~~ \sum_{j=1}^n \left(
 A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\left(y\right)$.
 \end{definition}
 
-A Schur-concave function is symmetric by default. Conversely a symmetric and log-concave function is Schur-concave, thus many common exponential family distributions lie in this class. Schur-concave function indeed appears a lot, \Cref{sec:applications} includes both continuous and discrete examples.
+A Schur-concave function is symmetric by default \WFcomment{``since $a \succeq b$ and $b \succeq a$ if $b$ is a permutation of the coordinates of $a$''}. Conversely a symmetric and log-concave function is Schur-concave \WFcomment{Is this obvious?}, thus many common exponential family distributions lie in this class. Schur-concave function indeed appears a lot, \Cref{sec:applications} includes both continuous and discrete examples.
 
-Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of distribution satisfying this {\em Schur-concave exponential family}. Without loss of generality, we can assume $X_1 \ge X_2 \ge \max_{k > 2} X_k$. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{0j}: \theta_1 \le \theta_j$ for $j > 1$.
+Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of distribution satisfying this {\em Schur-concave exponential family}. Without loss of generality, we can assume $X_1 \ge X_2 \ge \max_{k > 2} X_k$ \WFcomment{Careful here: I know what you mean but some people will find it confusing to ``assume'' that an event occurs. Maybe say ``without loss of generality, we consider the case where...; other cases follow by relabeling.}. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{0j}: \theta_1 \le \theta_j$ for $j > 1$ \WFcomment{Notation could be confusing: $H_{01}$ is not a special case of $H_{0j}$}.
 
 Rejecting this hypothesis corresponds to inferring that $\theta_1 > \max_{j>1} \theta_j$. This is equivalent to $X_1$ being stochastically larger than $X_j$ for any $j > 1$.
 
 \begin{theorem}
 \label{thm:stoch}
-$X_1$ is greater than $X_2$ is stochastic order if and only if $\theta_1 > \theta_2$.
+$X_1$ is greater than $X_2$ in stochastic order if and only if $\theta_1 > \theta_2$.
 \end{theorem}
 
 \begin{proof}
 
 We prove the ``if'' part first. For any fixed $a$, and $X_1 \ge a$ and $X_2 < a$, we have $X_1 > X_2$ and
 $$\exp\left(\theta_1 X_1 + \theta_2 X_2 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right) \ge \exp\left(\theta_1 X_2 + \theta_2 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right).$$
-Integrating both sides over the region $\left\{X: X_1 \ge a, X_2 < a\right\}$, summing instead if $X$ is a discrete vector, gives
+Integrating both sides over the region $\left\{X: X_1 \ge a, X_2 < a\right\}$, summing instead if $X$ is a discrete vector \WFcomment{it's not necessary to distinguish summing from integrating since summing is ``integrating wrt counting measure.'' Anyway the carrier measure could be neither discrete nor absolutely continuous}, gives
 $$\PP\left(X_1 \ge a, X_2 < a\right) \ge \PP\left(X_1 < a, X_2 \ge a\right).$$
 Now adding $\PP\left(X_1 \ge a, X_2 \ge a\right)$ to both probabilities gives
 $$\PP\left(X_1 \ge a\right) \ge \PP\left(X_2 \ge a\right),$$
@@ -243,9 +247,13 @@ We are now ready to state and prove our main result.
 \begin{theorem}
 Suppose we observe $X = \left(X_1, \ldots, X_n\right)$ from an exponential family with natural parameter $\theta = \left(\theta_1, \ldots, \theta_n\right)$, i.e.
 $$X \sim \left(\theta_1 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right),$$
-with a Schur-concave carrier measure $g$. Then there is a selective level-$\alpha$ test that verifies $\theta_{\left(1\right)} > \theta_{\left(2\right)}$ by comparing only $X_{\left(1\right)}$ and $X_{\left(2\right)}$. The test also verifies that $X_{\left(1\right)} \ge X_{\left(j\right)}$ stochastically for all $j > 1$. Here $X_{\left(j\right)}$ is the order statistic where $X_{\left(1\right)} \ge \cdots \ge X_{\left(n\right)}$.
+with a Schur-concave carrier measure $g$. Then there is a selective level-$\alpha$ test that verifies $\theta_{\left(1\right)} > \theta_{\left(2\right)}$ \WFcomment{I know what you mean here but notation could be confusing} by comparing only $X_{\left(1\right)}$ and $X_{\left(2\right)}$. The test also verifies that $X_{\left(1\right)} \ge X_{\left(j\right)}$ stochastically for all $j > 1$. Here $X_{\left(j\right)}$ is the order statistic where $X_{\left(1\right)} \ge \cdots \ge X_{\left(n\right)}$.
 \label{thm:main_result}
 \end{theorem}
+
+\WFcomment{This result could be stated a bit more strongly, though I'm not certain exactly how to phrase it. In fact the test we perform is whatever is the ``usual'' two-sided level-$\alpha$ test for comparing $\theta_1$ vs. $\theta_2$.
+
+The proof and figures look great!}
 
 \begin{proof}
 
