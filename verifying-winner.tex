@@ -27,7 +27,6 @@
 %Commands for inline commenting that shows up on pdf
 \newcommand{\WFcomment}[1]{{\color{red}{(WF: \bf \sc #1) }}}
 
-
 \begin{document}
 
 \title{Rank verification for exponential families}
@@ -219,9 +218,9 @@ $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n ~~~~ \text{ and } ~~~~ \sum_{j=1}^n \left(
 A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\left(y\right)$.
 \end{definition}
 
-A Schur-concave function is symmetric by default \WFcomment{``since $a \succeq b$ and $b \succeq a$ if $b$ is a permutation of the coordinates of $a$''}. Conversely a symmetric and log-concave function is Schur-concave \WFcomment{Is this obvious?}, thus many common exponential family distributions lie in this class. Schur-concave function indeed appears a lot, \Cref{sec:applications} includes both continuous and discrete examples.
+A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \cite{Marshall:2010hb}, thus many common exponential family distributions lie in this class. Schur-concave function indeed appears a lot, \Cref{sec:applications} includes both continuous and discrete examples.
 
-Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of distribution satisfying this {\em Schur-concave exponential family}. Without loss of generality, we can assume $X_1 \ge X_2 \ge \max_{k > 2} X_k$ \WFcomment{Careful here: I know what you mean but some people will find it confusing to ``assume'' that an event occurs. Maybe say ``without loss of generality, we consider the case where...; other cases follow by relabeling.}. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{0j}: \theta_1 \le \theta_j$ for $j > 1$ \WFcomment{Notation could be confusing: $H_{01}$ is not a special case of $H_{0j}$}.
+Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of distribution satisfying this {\em Schur-concave exponential family}. Without loss of generality, otherwise by relabeling, we consider only the event $X_1 \ge X_2 \ge \max_{k > 2} X_k$. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$.
 
 Rejecting this hypothesis corresponds to inferring that $\theta_1 > \max_{j>1} \theta_j$. This is equivalent to $X_1$ being stochastically larger than $X_j$ for any $j > 1$.
 
@@ -234,7 +233,7 @@ $X_1$ is greater than $X_2$ in stochastic order if and only if $\theta_1 > \thet
 
 We prove the ``if'' part first. For any fixed $a$, and $X_1 \ge a$ and $X_2 < a$, we have $X_1 > X_2$ and
 $$\exp\left(\theta_1 X_1 + \theta_2 X_2 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right) \ge \exp\left(\theta_1 X_2 + \theta_2 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right).$$
-Integrating both sides over the region $\left\{X: X_1 \ge a, X_2 < a\right\}$, summing instead if $X$ is a discrete vector \WFcomment{it's not necessary to distinguish summing from integrating since summing is ``integrating wrt counting measure.'' Anyway the carrier measure could be neither discrete nor absolutely continuous}, gives
+Integrating both sides over the region $\left\{X: X_1 \ge a, X_2 < a\right\}$ gives
 $$\PP\left(X_1 \ge a, X_2 < a\right) \ge \PP\left(X_1 < a, X_2 \ge a\right).$$
 Now adding $\PP\left(X_1 \ge a, X_2 \ge a\right)$ to both probabilities gives
 $$\PP\left(X_1 \ge a\right) \ge \PP\left(X_2 \ge a\right),$$
@@ -247,13 +246,9 @@ We are now ready to state and prove our main result.
 \begin{theorem}
 Suppose we observe $X = \left(X_1, \ldots, X_n\right)$ from an exponential family with natural parameter $\theta = \left(\theta_1, \ldots, \theta_n\right)$, i.e.
 $$X \sim \left(\theta_1 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right),$$
-with a Schur-concave carrier measure $g$. Then there is a selective level-$\alpha$ test that verifies $\theta_{\left(1\right)} > \theta_{\left(2\right)}$ \WFcomment{I know what you mean here but notation could be confusing} by comparing only $X_{\left(1\right)}$ and $X_{\left(2\right)}$. The test also verifies that $X_{\left(1\right)} \ge X_{\left(j\right)}$ stochastically for all $j > 1$. Here $X_{\left(j\right)}$ is the order statistic where $X_{\left(1\right)} \ge \cdots \ge X_{\left(n\right)}$.
+with a Schur-concave carrier measure $g$. Then a naive two-sided test comparing only $X_{j^*}$ and $\max_{j \ne j^*} X_j$, where $j^* = \argmax_{j} X_j$, can verify $\theta_{j^*} \ge \max_{j \ne j^*} \theta_{j}$ with selective level $\alpha$. The test also verifies that $X_{j^*} \ge X_j$ stochastically for all $j \ne j^*$.
 \label{thm:main_result}
 \end{theorem}
-
-\WFcomment{This result could be stated a bit more strongly, though I'm not certain exactly how to phrase it. In fact the test we perform is whatever is the ``usual'' two-sided level-$\alpha$ test for comparing $\theta_1$ vs. $\theta_2$.
-
-The proof and figures look great!}
 
 \begin{proof}
 
@@ -272,7 +267,7 @@ D_{1j} & \sim \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 +
 & \sim g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1}.
 \end{align*}
 
-The $p$-value for $H_{0j}$ is thus
+The $p$-value for $H_{01j}$ is thus
 \begin{equation}
 p_{1j} = \frac{\int_{D_{1j}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_2 - M_{1j}, 0\right\}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}.
 \label{eqn:p1j}
@@ -365,7 +360,7 @@ for $z \le 0$ and the majorization reversed for $z \ge 0$. This majorization rel
 $$g\left(X_1 + z, X_2 - z, X_3\right) \le g\left(X_1 + z, X_2, X_3 - z\right)$$
 for $z \le 0$, and the inequality reversed for $z \ge 0$. Taking integrals on both sides yields the desired inequality.
 
-For the alternative case where $X_2 \ge M_{13}$, it follows from a similar proof. In either cases, $p_{12} \ge p_{13}$, or in generality, $p_{12} \ge p_{1j}$ for $j \ge 1$. A test based on only $X_1$ and $X_2$ is sufficient for the null hypothesis $H_{0j}$, if the carrying measure $g$ is Schur-concave. By \Cref{thm:stoch}, rejecting this null hypothesis is equivalent to inferring that $X_1 \ge X_j$ for all $j>1$ stochastically.
+For the alternative case where $X_2 \ge M_{13}$, it follows from a similar proof. In either cases, $p_{12} \ge p_{13}$, or in generality, $p_{12} \ge p_{1j}$ for $j > 1$. A test based on only $X_1$ and $X_2$ is sufficient for the null hypothesis $H_{01}$, if the carrying measure $g$ is Schur-concave. Indeed, since the denominator of $p_{12}$ under the null hypothesis, this one-sided test comparing $X_1$ and $X_2$ is identical to a naive two-sided test comparing $X_1$ and $X_2$. By \Cref{thm:stoch}, rejecting this null hypothesis is equivalent to inferring that $X_1 \ge X_j$ for all $j>1$ stochastically.
 
 \end{proof}
 
@@ -379,12 +374,12 @@ If the distribution is discrete, the proof above holds true. Instead of performi
 We can take the idea above further and construct confidence bound for $\theta_1 - \max_{j>1} \theta_j$. This can be achieved by considering a statistical test, to see if $\theta_1 - \max_{j>1} \theta_j \le \delta$, followed by the duality of confidence interval and statistical test.
 
 \begin{theorem}
-In the same setup as \Cref{thm:main_result}, there is a selective level-$\alpha$ lower confidence bound for $\theta_{\left(1\right)} - \max_{j>1} \theta_{\left(j\right)}$.
+In the same setup as \Cref{thm:main_result}, there is a selective level-$\alpha$ lower confidence bound for $\theta_{j^*} - \max_{j \ne j^*} \theta_j$.
 \end{theorem}
 
 \begin{proof}
 
-Again we start with assuming $X_1 \ge \cdots \ge X_n$. The null hypothesis $H_{01}^\delta$ can be thought of as $\bigcup_{j > 1} H_{0j}^\delta$, where $H_{0j}^\delta$ is $\theta_1 - \theta_j \le \delta$. In other words, we focus on the conditional law
+Again we start with assuming $X_1 \ge \cdots \ge X_n$. The null hypothesis $H_{01}^\delta$ can be thought of as $\bigcup_{j > 1} H_{01j}^\delta$, where $H_{01j}^\delta$ is $\theta_1 - \theta_j \le \delta$. In other words, we focus on the conditional law
 $$\mathcal{L}_{\theta_1 - \theta_j = \delta} \left(D_{1j} \middle| D_{1j}, X_2, \ldots, X_n, A\right),$$
 which is the truncated distribution
 \begin{align*}
