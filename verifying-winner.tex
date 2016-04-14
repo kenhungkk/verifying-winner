@@ -69,14 +69,14 @@ A classic question is on how to statistically verify empirical rankings based on
 
 \begin{enumerate}
 
-\item This has a hidden upward selection bias, or ``winner's curse'', as we are only testing this hypothesis as Trump is leading in the polls. In other words, the hypothesis itself is random. Alternatively, we can note that the marginal type I error rate is indeed not so straightforward. If the null hypothesis is ``$H_0: \text{Leader in polls has most support}$'', then for any distribution $F$ the marginal type I error rate is
+\item This has a hidden upward selection bias, or ``winner's curse'', as we are only testing this hypothesis as Trump is leading in the polls. In other words, the hypothesis itself is random. Alternatively, we can note that the marginal type I error rate is indeed not so straightforward. If the null hypothesis is ``$H_0: \text{Leader in polls has most support}$'' \WFcomment{Careful, this is an event}, then for any distribution $F$ the marginal type I error rate is
 
 \begin{equation}
 \PP_F\left(\text{reject } H_0\right) = \sum_{\substack{j \text{ is a candidate} \\ j \text{ does not have most support}}} \PP_F\left(\text{reject } H_0 \middle| j \text{ leads in polls}\right) \PP_F \left(j \text{ leads in polls}\right).
 \label{eqn:marginal_error}
 \end{equation}
 
-\item Comparing Trump to all other candidates involves multiple comparisons. Without considering the structure of this problem, common methods like Tukey's correction \cite{Tukey:1951} may largely decrease the test power.
+\item Comparing Trump to all other candidates involves multiple comparisons. Without considering the structure of this problem, common methods like Tukey's correction \cite{Tukey:1951} may largely decrease the test power \WFcomment{Tukey's correction doesn't directly cover this case unless we modify it somehow. But without discussing how we might carry out this modification, bringing up Tukey might confuse people.}
 
 \end{enumerate}
 
@@ -104,7 +104,7 @@ The subset selection problem solved in \cite{Gupta:1967wg} by Gupta and Nagel ca
 
 \subsection{Main result}
 
-In this paper, we focus on Schur-concave exponential family, a broad class of distribution that is defined in \Cref{sec:exponential_families} and includes various examples listed in \Cref{sec:applications}. We constructed a selective level-$\alpha$ test for verifying that the largest observation is stochastically largest as well. The test provides selective type I error control, as well as enables us to construct confidence bound on the differences between the natural parameters and verify the order of the rest of natural parameters.
+In this paper, we focus on Schur-concave exponential family, a broad class of distribution that is defined in \Cref{sec:exponential_families} and includes various examples listed in \Cref{sec:applications}. We constructed a selective level-$\alpha$ test for verifying that the largest observation is stochastically largest as well. The test provides selective type I error control, as well as enables us to construct confidence bound on the differences between the natural parameters and verify the order of the rest of natural parameters. \WFcomment{Still feels a bit abstract when you discuss these goals here.}
 
 \subsection{Outline}
 
@@ -117,12 +117,12 @@ Suppose we observe
 $$\left(X_1, \ldots, X_n\right) \sim \text{Multinomial}\left(m, \pi\right)$$
 and we want to test
 $$H_{0j}: \pi_j \le \max_{k \ne j} \pi_k = \bigcup_{k \ne j} H_{0jk}: \pi_j \le \pi_k$$
-when $X_j$ is larger than all other $X_k$. To break ties, we introduce independent auxiliary random variable $U_j \sim U\left[0,1\right]$, and opt to test $H_{0j}$ in the event of
+when $X_j$ is larger than all other $X_k$. \WFcomment{This a long and overly-abstract way of saying ``we break ties randomly''} To break ties, we introduce independent auxiliary random variable $U_j \sim U\left[0,1\right]$, and opt to test $H_{0j}$ in the event of
 $$A_j = \left\{X_j + U_j > \max_{k \ne j} X_k + U_k\right\}.$$
 The distribution, written in an exponential family format, is
 $$\exp\left(X_1 \log \pi_1 + \cdots + X_n \log \pi_n\right) \frac{1_{X_1 + \cdots + X_n = m}}{X_1! \cdots X_n!}.$$
 
-Without loss of generality, we will assume $X_1$ is considered largest with the tie-breaking method above in mind. Following the construction in \cite{Fithian:2014ws}, if we want to construct $p$-values $p_{1j}$ for $H_{01j}$, we need to first re-parametrize such that the selection event $A_1$ can be expressed as the sufficient statistic. The distribution is now
+Without loss of generality, we will assume $X_1$ is considered largest with the tie-breaking method above in mind. Following the construction in \cite{Fithian:2014ws}, if we want to construct $p$-values $p_{1j}$ for $H_{01j}$, we need to first re-parametrize such that the selection event $A_1$ can be expressed as the sufficient statistic \WFcomment{What does it mean that the selection event is expressed as a sufficient statistic?}. The distribution is now
 $$\exp\left(\frac{X_1 - X_j}{2} \left(\log \pi_1 - \log \pi_j\right) + \cdots + \frac{X_1 + X_j}{2} \left(\log \pi_1 + \log \pi_j\right) + \cdots + X_n \log \pi_n\right) \frac{1_{X_1 + \cdots + X_n = m}}{X_1! \cdots X_n!}.$$
 
 Next we condition on the sufficient statistics that are multiplied to the the nuisance parameter, in other words, we consider the conditional law
@@ -138,16 +138,17 @@ p_{ij}\left(x_1, \ldots, x_n\right) & = \PP\left(X_1 \ge x_1 \middle| X_2 = x_2,
 and to account for the tie-breaking we adopted earlier, we
 \begin{itemize}
 \item multiply the first term in the numerator and the denominator by $1/k$ where $k$ is the number of observations tied for largest; otherwise,
-\item multiply the first term in the denominator by $1/2$ if $X_1$ and $X_2$ has the same parity.
+\item multiply the first term in the denominator by $1/2$ if $X_1$ and $X_2$ has the same parity \WFcomment{could be a bit clearer about why you do this}.
 \end{itemize}
-Noticing that if there are ties for the largest the $p$-value is $1$ and the denominator is really $1/2$ otherwise, we can write
+Noticing that if there are ties for the largest the $p$-value is $1$ and the denominator is really $1/2$ otherwise \WFcomment{I don't think that's true for $j \neq 2$, is it?}, we can write
 $$p_{1j} = 1 \wedge 2 \sum_{t=X_1}^{X_1 + X_j} \binom{X_i + X_j}{t}.$$
+
 
 It is possible to check that $p_{12} \ge p_{1j}$ for any $j > 2$. Since the null hypothesis we are testing is a union of these smaller null hypothesis, the type I error rate is
 $$\PP_{H_{01}}\left(p_{12} < \alpha \middle| A_1\right) \le \max_{j>1} \PP_{H_{01j}}\left(p_{12} < \alpha \middle| A_1\right) \le \max_{j>1} \PP_{H_{01j}}\left(p_{1j} < \alpha \middle| A_1\right) \le \alpha,$$
-meaning that it is sufficient to construct a one-sided test between $X_1$ and $X_2$ and consider only $p_{12}$.
+meaning that it is sufficient to construct a one-sided test between $X_1$ and $X_2$ and consider only $p_{12}$. \WFcomment{This derivation is a little unclear. Is the middle probability a well-defined probability?}
 
-It may appear quite surprising that ``verifying a winner'' as we propose in this section requires no adjustment for multiplicity, in the sense that we only need to compare the winner to the runner- up, just as we would have done if $n = 2$. After all, we know that the winner suffer’s from a winner's curse: given $X_5$ is the winner, $X_5 / m$ would overestimate $\pi_5$, and the larger $n$ is, the more severe this bias is likely to be. However, if $X_9$ is the runner-up, then $X_9 / m$ is likely biased upward nearly as much as $X_5$. Informally, we might say that $X_9$ suffer’s from a “runner-up’s curse” that is nearly as bad as the winner's curse; as a result, $X_5 - X_9$ is actually not all that biased upward. By multiplying the $p$-value by $2$, or equivalently performing a two-tailed test, we take care of what little bias there is. Indeed, performing a two-tailed test can be viewed as a sort of ``correction for multiplicity'', albeit one that we would have to make even if $n = 2$.
+It may appear quite surprising that ``verifying a winner'' as we propose in this section requires no adjustment for multiplicity, in the sense that we only need to compare the winner to the runner- up, just as we would have done if $n = 2$ \WFcomment{I don't think it's clear enough to readers why the test is ``just as we would have done if $n=2$''}. After all, we know that the winner suffer’s from a winner's curse: given $X_5$ is the winner, $X_5 / m$ would overestimate $\pi_5$, and the larger $n$ is, the more severe this bias is likely to be. However, if $X_9$ is the runner-up, then $X_9 / m$ is likely biased upward nearly as much as $X_5$. Informally, we might say that $X_9$ suffer’s from a “runner-up’s curse” that is nearly as bad as the winner's curse; as a result, $X_5 - X_9$ is actually not all that biased upward. By multiplying the $p$-value by $2$, or equivalently performing a two-tailed test, we take care of what little bias there is. Indeed, performing a two-tailed test can be viewed as a sort of ``correction for multiplicity'', albeit one that we would have to make even if $n = 2$.
 
 \subsection{Connection with the subset selection problem}
 \label{sec:compare_subset}
@@ -160,7 +161,7 @@ Gupta and Nagel also provided the method to choose $D$. The subset selection can
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $m$ and $n$. For Gupta and Nagel, we use $\alpha = 0.05$; but to account for the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:selective_vs_marginal}, we will apply the selective procedure for with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate such that both procedures are controlled at $\alpha$. Gupta and Nagel coincides with our test at $n = 2$; however as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
+for various combinations of $m$ and $n$. For Gupta and Nagel, we use $\alpha = 0.05$; but to account for the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:selective_vs_marginal}, we will apply the selective procedure for with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate such that both procedures are controlled at $\alpha$. \WFcomment{Can we justify this? Our procedure has error $\alpha$ in the case where all $\pi_j$ are equal.} Gupta and Nagel coincides with our test at $n = 2$; however as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -178,7 +179,7 @@ We would like to extend the result from multinomials to exponential families. We
 X \sim \exp\left(\theta_1 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right).
 \label{eqn:exp_family}
 \end{equation}
-It is reasonable to assume that the family is ``symmetric'', i.e.\ if $\theta_j = \theta_k$, then the probability distribution remains the same when $X_j$ and $X_k$ are swapped. This corresponds to requiring $g\left(X\right)$ to be symmetric. We would also like to introduce a fairly mild additional condition that $g$ is {\em Schur-concave}. But first we recall the notion of {\em majorization}.
+It is reasonable to assume that the family is ``symmetric'', i.e.\ if $\theta_j = \theta_k$, then the probability distribution remains the same when $X_j$ and $X_k$ are swapped. This corresponds to requiring $g\left(X\right)$ to be symmetric. We would also like to introduce a fairly mild additional condition that $g$ is {\em Schur-concave}. But first we recall the notion of {\em majorization}. \WFcomment{I think we're implicitly assuming here  that $g$ is a density wrt one of (a) Lebesgue or (b) counting measure. Is that right? And if so, do we need a couple sentences to explain why it works in the counting measure case? That is, we need the atoms of non-zero measure to match up with each other along the rays of interest, right?}
 
 \begin{definition}
 For two vectors $a$ and $b$ in $\RR^n$, suppose permuting the two vectors in descending order gives
@@ -298,7 +299,7 @@ $$p_{12} = \frac{B}{A + B}$$
 	\coordinate (B) at ($(A) + (330:3)$);
 	\draw[dashed] (0, 0) -- (C1);
 	\draw[dashed] (0, 0) -- (C2);
-	\fill[yellow!50] (0, 0) -- (C1) -- ($(C1) + (7, 0)$) -- ($(C2) + (8, 0)$) -- (C2) -- cycle;
+	\fill[yellow!90!gray] (0, 0) -- (C1) -- ($(C1) + (7, 0)$) -- ($(C2) + (8, 0)$) -- (C2) -- cycle;
 	\node[above left] at ($(C2) + (8, 0)$) {$A_1$};
 	\draw[thick] (A) -- (B) node[midway, above right] {$A$};
 	\draw[thick, ->] (B) -- ++(330:5) node[midway, above right] {$B$};
@@ -333,7 +334,7 @@ It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 	\coordinate (D) at ($(A) + (150:1)$);
 	\draw[dashed] (0, 0) -- (C1);
 	\draw[dashed] (0, 0) -- (C2);
-	\fill[yellow!50] (0, 0) -- (C1) -- ($(C1) + (7, 0)$) -- ($(C2) + (8, 0)$) -- (C2) -- cycle;
+	\fill[yellow!90!gray] (0, 0) -- (C1) -- ($(C1) + (7, 0)$) -- ($(C2) + (8, 0)$) -- (C2) -- cycle;
 	\node[above left] at ($(C2) + (8, 0)$) {$A_1$};
 	\draw[thick] (A) -- (B) node[midway, above right] {$A$};
 	\draw[thick, ->] (B) -- ++(330:5) node[midway, below left] {$B$};
@@ -449,7 +450,7 @@ We can construct selective $p$-values by conditioning on $M_j\left(X\right)$, as
 	\draw[dashed] (0, 0) -- (C1);
 	\draw[dashed] (0, 0) -- (C2);
 	\draw[dashed] (C5) -- (C6) node[midway, above, rotate = -90] {Truncation for $X_j < X_{j-1}$};
-	\fill[yellow!50] (0, 0) -- (C1) -- (C5) -- (C6) -- (C2) -- cycle;
+	\fill[yellow!90!gray] (0, 0) -- (C1) -- (C5) -- (C6) -- (C2) -- cycle;
 	\node[above] at ($(C2)!0.7!(C6)$) {$A_1$};
 	\draw[thick] (A) -- (B) node[midway, above right] {$A$};
 	\draw[thick] (B) -- (C3) node[midway, below left] {$B$};
