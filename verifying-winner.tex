@@ -67,11 +67,11 @@ A classic question is on how to statistically verify empirical rankings based on
 \caption{Results from a February 1, 2016 Quinnipiac University poll of $890$ Iowa Republicans. To compute the last column (Votes), we make the simplifying assumption that the reported percentages in the third column (Result) correspond to raw vote shares among survey respondents. The asterisks indicate that the rank is verified through a step-down procedure.}
 \label{tbl:poll}
 \end{table}
-Having observed that Trump received the most votes in this poll, we want to ask whether he is actually in the lead in the population of all Iowa Republicans. Intuitively, we would compare Trump to Cruz, as well as the other candidate. This intuitive method however has a couple of issues.
+Having observed that Trump received the most votes in this poll, we want to ask whether he indeed enjoys the most support among all Iowa Republicans. Intuitively, we would compare Trump to Cruz, as well as the other candidate. This intuitive method however has a couple of issues.
 
 \begin{enumerate}
 
-\item This has a hidden upward selection bias, or ``winner's curse'', as we are only testing this hypothesis as Trump is leading in the polls. In other words, the hypothesis itself is random. Alternatively, we can note that the marginal type I error rate is indeed not so straightforward. Specifically, the null hypothesis is ``$H_0 \left(X\right): \text{Leader in polls has most support}$'', which is random and dependent on poll data $X$. Then for any distribution $F$ the marginal type I error rate is
+\item This has a hidden upward selection bias, or ``winner's curse'', as we are only testing this hypothesis as Trump is leading in the polls. In other words, the hypothesis itself is random. Alternatively, we can note that the marginal type I error rate is not quite straightforward. Specifically, the null hypothesis is ``$H_0 \left(X\right): \text{Leader in polls has most support}$'', which is dependent on random poll data $X$ through $j^*\left(X\right)$, the leader in polls. Then for any distribution $F$ the marginal type I error rate is
 
 \begin{equation}
 \PP_F\left(\text{reject } H_0\right) = \sum_{\substack{j \text{ is a candidate} \\ j \text{ does not have most support}}} \PP_F\left(\text{reject } H_0 \middle| j \text{ leads in polls}\right) \PP_F \left(j \text{ leads in polls}\right).
@@ -119,13 +119,13 @@ Suppose we observe
 $$\left(X_1, \ldots, X_n\right) \sim \text{Multinomial}\left(m, \pi\right)$$
 and we want to test
 $$H_{0j}: \pi_j \le \max_{k \ne j} \pi_k = \bigcup_{k \ne j} H_{0jk}: \pi_j \le \pi_k$$
-when $X_j$ is larger than all other $X_k$. In case of ties, we break them independently and randomly. The distribution, written in an exponential family format, is
+when $X_j$ is larger than all other $X_k$. In case of ties, we break them independently and randomly. The distribution, written in an exponential family format, and up to constant factors, is
 $$\exp\left(X_1 \log \pi_1 + \cdots + X_n \log \pi_n\right) \frac{1_{X_1 + \cdots + X_n = m}}{X_1! \cdots X_n!}.$$
 
-Without loss of generality, we will assume $X_1$ is considered largest with the tie-breaking method above in mind. Following the construction in \cite{Fithian:2014ws}, if we want to construct $p$-values $p_{1j}$ for $H_{01j}$, we need to first re-parametrize such that the selection event $A_1$ can be expressed in terms of the sufficient statistic. The distribution is now
+Without loss of generality, we will assume $X_1$ is considered largest. Following the construction in \cite{Fithian:2014ws}, if we want to construct $p$-values $p_{1j}$ for $H_{01j}$, we need to first re-parametrize such that the selection event $A_1$ can be expressed in terms of the sufficient statistic. The distribution is now
 $$\exp\left(\frac{X_1 - X_j}{2} \left(\log \pi_1 - \log \pi_j\right) + \cdots + \frac{X_1 + X_j}{2} \left(\log \pi_1 + \log \pi_j\right) + \cdots + X_n \log \pi_n\right) \frac{1_{X_1 + \cdots + X_n = m}}{X_1! \cdots X_n!}.$$
 
-Next we condition on the sufficient statistics that are multiplied to the the nuisance parameter, in other words, we consider the conditional law
+Next we condition on the sufficient statistics for the nuisance parameter, in other words, we consider the conditional law
 $$\mathcal{L}_{\pi_1 = \pi_j}\left(\frac{X_1 - X_j}{2} \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
 or equivalently, the conditional law
 $$\mathcal{L}_{\pi_1 = \pi_j}\left(X_1 \middle| X_2, \ldots, \frac{X_1 + X_j}{2}, \ldots, X_n, A_1\right),$$
@@ -145,9 +145,9 @@ $$p_{1j} = 1 \wedge 2 \sum_{t=X_1}^{X_1 + X_j} \binom{X_i + X_j}{t}.$$
 
 It is possible to check that $p_{12} \ge p_{1j}$ for any $j > 2$. The type I error rate is
 $$\PP_{H_{01}}\left(p_{12} < \alpha \middle| A_1\right) \stackrel{\text{(i)}}{=} \max_{j>1} \PP_{H_{01j}}\left(p_{12} < \alpha \middle| A_1\right) \stackrel{\text{(ii)}}{\le} \max_{j>1} \PP_{H_{01j}}\left(p_{1j} < \alpha \middle| A_1\right) \stackrel{\text{(iii)}}{\le} \alpha,$$
-where (i) follows from $H_{01} = \bigcup_{j>1} H_{01j}$; (ii) is true as $p_{12} \ge p_{1j}$ as long as $X_1 \ge X_2 \ge \max_{j>2} X_j$, which is guaranteed here as we conditioned on $A_1$; (iii) follows from the construction of $p_{1j}$. \KHcomment{I think the probability in the middle (between (i) and (ii)) is well-defined, as $p_{12}$ is just a random variable dependent on $X$.} Thus it is sufficient to construct a one-sided test between $X_1$ and $X_2$ and consider only $p_{12}$.
+where (i) follows from $H_{01} = \bigcup_{j>1} H_{01j}$; (ii) is true as $p_{12} \ge p_{1j}$ as long as $X_1 \ge X_2 \ge X_j$; (iii) follows from the construction of $p_{1j}$. \KHcomment{I think the probability in the middle (between (i) and (ii)) is well-defined, as $p_{12}$ is just a random variable dependent on $X$.} Thus it is sufficient to construct a one-sided test between $X_1$ and $X_2$ and consider only $p_{12}$.
 
-It may appear quite surprising that ``verifying a winner'' as we propose in this section requires no adjustment for multiplicity, in the sense that we only need to compare the winner to the runner-up, just as we would have done if $n = 2$. When $n=2$, the observation $X_1$ follows Binomial$\left(X_1 + X_2, \frac{1}{2}\right)$, coinciding with the test we proposed. After all, we know that the winner suffer’s from a winner's curse: given $X_5$ is the winner, $X_5 / m$ would overestimate $\pi_5$, and the larger $n$ is, the more severe this bias is likely to be. However, if $X_9$ is the runner-up, then $X_9 / m$ is likely biased upward nearly as much as $X_5$. Informally, we might say that $X_9$ suffer’s from a “runner-up’s curse” that is nearly as bad as the winner's curse; as a result, $X_5 - X_9$ is actually not all that biased upward. By multiplying the $p$-value by $2$, or equivalently performing a two-tailed test, we take care of what little bias there is. Indeed, performing a two-tailed test can be viewed as a sort of ``correction for multiplicity'', albeit one that we would have to make even if $n = 2$.
+It may appear quite surprising that ``verifying a winner'' as we propose in this section requires no adjustment for multiplicity, in the sense that we only need to compare the winner to the runner-up, just as we would have done if $n = 2$. When $n=2$, the observation $X_1$ follows Binomial$\left(X_1 + X_2, \frac{1}{2}\right)$, coinciding with the test we proposed. After all, we know that the winner suffer’s from a winner's curse: given $X_5$ is the winner, $X_5 / m$ would overestimate $\pi_5$, and the larger $n$ is, the more severe this bias is likely to be. However, if $X_9$ is the runner-up, then $X_9 / m$ is likely biased upward nearly as much as $X_5$. Informally, we might say that $X_9$ suffer’s from a ``runner-up's curse'' that is nearly as bad as the winner's curse; as a result, $X_5 - X_9$ is actually not all that biased upward. By multiplying the $p$-value by $2$, or equivalently performing a two-tailed test, we take care of what little bias there is. Indeed, performing a two-tailed test can be viewed as a sort of ``correction for multiplicity'', albeit one that we would have to make even if $n = 2$.
 
 \subsection{Connection with the subset selection problem}
 \label{sec:compare_subset}
@@ -160,7 +160,7 @@ Gupta and Nagel also provided the method to choose $D$. The subset selection can
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $m$ and $n$. For Gupta and Nagel, we use $\alpha = 0.05$; but to account for the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:selective_vs_marginal}, we will apply the selective procedure for with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. \WFcomment{Can we justify this? Our procedure has error $\alpha$ in the case where all $\pi_j$ are equal.} \KHcomment{The selective error rate is $\alpha$, but Gupta and Nagel really only had marginal error rate. If all $\pi_j$ are equal, the marginal error rate is $\frac{n-1}{n} \alpha$.} Gupta and Nagel coincides with our test at $n = 2$; however as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
+for various combinations of $m$ and $n$. For Gupta and Nagel, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:selective_vs_marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. \WFcomment{Can we justify this? Our procedure has error $\alpha$ in the case where all $\pi_j$ are equal.} \KHcomment{The selective error rate is $\alpha$, but Gupta and Nagel really only had marginal error rate. If all $\pi_j$ are equal, the marginal error rate is $\frac{n-1}{n} \alpha$.} Gupta and Nagel coincides with our test at $n = 2$; however as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -178,7 +178,7 @@ We would like to extend the result from multinomials to exponential families. We
 X \sim \exp\left(\theta_1 X_1 + \cdots + \theta_n X_n\right) g\left(X\right) h\left(\theta\right),
 \label{eqn:exp_family}
 \end{equation}
-defined on the Lebesgue or counting measure. It is reasonable to assume that the family is ``symmetric'', i.e.\ if $\theta_j = \theta_k$, then the probability distribution remains the same when $X_j$ and $X_k$ are swapped. This corresponds to requiring $g\left(X\right)$ to be symmetric. We would also like to introduce a fairly mild additional condition that $g$ is {\em Schur-concave}. But first we recall the notion of {\em majorization}, defined on both $\mathbb{R}^n$ and $\mathbb{Z}^n$. \WFcomment{I think we're implicitly assuming here  that $g$ is a density wrt one of (a) Lebesgue or (b) counting measure. Is that right? And if so, do we need a couple sentences to explain why it works in the counting measure case? That is, we need the atoms of non-zero measure to match up with each other along the rays of interest, right?} \KHcomment{I think we are making that assumption. Added a few more words there but not sure if it is explicit enough.}
+defined on the Lebesgue or counting measure. It is reasonable to assume that the family is ``symmetric'', i.e.\ if $\theta_j = \theta_k$, then the probability distribution remains the same when $X_j$ and $X_k$ are swapped. This corresponds to requiring $g\left(X\right)$ to be symmetric. We would also like to introduce a fairly mild additional condition that $g$ is {\em Schur-concave}. But first we recall the notion of {\em majorization}, defined on both $\mathbb{R}^n$ and $\mathbb{Z}^n$. \WFcomment{I think we're implicitly assuming here  that $g$ is a density wrt one of (a) Lebesgue or (b) counting measure. Is that right? And if so, do we need a couple sentences to explain why it works in the counting measure case? That is, we need the atoms of non-zero measure to match up with each other along the rays of interest, right?} \KHcomment{We are making those assumptions. For Lebesgue, there should be no atoms. For counting measure, they should all line up perfectly. I don't think this result generalizes very well for other measures.}
 
 \begin{definition}
 For two vectors $a$ and $b$ in $\RR^n$, suppose permuting the two vectors in descending order gives
@@ -220,13 +220,13 @@ A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\
 
 A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \cite{Marshall:2010hb}, thus many common exponential family distributions lie in this class. Schur-concave function indeed appears a lot, \Cref{sec:applications} includes both continuous and discrete examples.
 
-Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of distribution satisfying this {\em Schur-concave exponential family}. Without loss of generality, otherwise by relabeling, we consider only the event $X_1 \ge X_2 \ge \max_{k > 2} X_k$. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$.
+Now suppose the carrier distribution $g$ in \Cref{eqn:exp_family} is indeed Schur-concave. We hereon call the class of such distribution satisfying this {\em Schur-concave exponential family}.
 
-Rejecting this hypothesis corresponds to inferring that $\theta_1 > \max_{j>1} \theta_j$. This is equivalent to $X_1$ being stochastically larger than $X_j$ for any $j > 1$.
+Without loss of generality, otherwise by relabeling, we consider only the event $X_1 \ge X_2 \ge \max_{k > 2} X_k$. We will be testing the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$. Rejecting this hypothesis corresponds to inferring that $\theta_1 > \max_{j>1} \theta_j$. This is equivalent to $X_1$ being stochastically larger than $X_j$ for any $j > 1$.
 
 \begin{theorem}
 \label{thm:stoch}
-$X_1$ is greater than $X_2$ in stochastic order if and only if $\theta_1 > \theta_2$.
+$X_1 \ge X_2$ in stochastic order if and only if $\theta_1 > \theta_2$.
 \end{theorem}
 
 \begin{proof}
@@ -315,7 +315,7 @@ $$p_{12} = \frac{B}{A + B}$$
 
 \Cref{fig:compare_rays} has both the $p$-values shown on the same diagram. Proving $p_{12} \ge p_{13}$ is the same as proving
 $$\frac{B}{A+B} \ge \frac{D}{C+D} ~~~~ \Longleftrightarrow ~~~~ \frac{B}{A} \ge \frac{D}{C}.$$
-We will prove so by extending $A$ to include $\hat{A}$ on the diagram. We denote the sum $A + \hat{A}$ as $A'$. Formally,
+We will prove so by extending $A$ to include $\tilde{A}$ on the diagram. We denote the sum $A + \tilde{A}$ as $A'$. Formally,
 \begin{equation}
 A' = \int_{-D_{13}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz \ge \int_{-D_{12}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz = A.
 \label{eqn:int_extension}
@@ -343,14 +343,14 @@ It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 	\node[below] at (C) {$\left(M_{13}, X_2, M_{13}\right)$};
 	\draw[thick, ->] (B) -- ++(30:5) node[midway, above left] {$D$};
 	\fill ($(0, 0)!(B)!(C2)$) circle(2pt);
-	\draw[thick, dashed] (A) -- (D) node[midway, below left] {$\hat{A}$};
+	\draw[thick, dashed] (A) -- (D) node[midway, below left] {$\tilde{A}$};
 	\fill (D) circle(2pt) node[above] {$\left(M_{13}, X_2 + D_{13}, X_3\right)$};
 	\draw[thick, dotted] (C) -- (D) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] (A) -- ++(0, -3) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] ($(B) + (30:4)$) -- ($(B) + (330:4)$) node[midway, below, rotate=-90] {$\succeq$};
 \end{tikzpicture}
 \end{center}
-\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray; and $p_{13}$ in terms of $C$ and $D$. $A'$ would refer to the sum of $A$ with the dashed line portion labeled as $\hat{A}$, formally explained in \Cref{eqn:int_extension}. The majorization relation is indicated by the dotted line.}
+\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray; and $p_{13}$ in terms of $C$ and $D$. $A'$ would refer to the sum of $A$ with the dashed line portion labeled as $\tilde{A}$, formally explained in \Cref{eqn:int_extension}. The majorization relation is indicated by the dotted line.}
 \label{fig:compare_rays}
 \end{figure}
 
@@ -366,7 +366,7 @@ For the alternative case where $X_2 \ge M_{13}$, it follows from a similar proof
 
 As the construction of this test follows \cite{Fithian:2014ws}, it is also a uniformly most powerful unbiased selective level-$\alpha$ test.
 
-If the distribution is discrete, the proof above holds true. Instead of performing integrals, the lattice points on the rays will be summed. If ties are broken independently and randomly, as in \Cref{sec:multinomial_example}, the end points on the rays can be considered as half a point.
+If the distribution is discrete, the proof above holds true. Instead of performing integrals, the atoms on the rays will be summed. If ties are broken independently and randomly, as in \Cref{sec:multinomial_example}, the end points on the rays can be considered as ``half an atom''.
 
 \section{Selective confidence bound}
 \label{sec:selective_confidence_bound}
@@ -406,7 +406,7 @@ The same argument in \Cref{fig:compare_rays} shows that $p_{12} \ge p_{13}$. Thi
 \section{Step down procedure}
 \label{sec:step_down_procedure}
 
-If one is interested in verifying more than just the ``winner'', this selective test can also be extended as a step-down procedure to verify the ``first runner-up'' and ``second runner-up'' etc., while controlling the FWER and the FDR.
+If one is interested in verifying more than just the ``winner'', this selective test can also be extended to a step-down procedure that verifies the ``first runner-up'' and ``second runner-up'' etc., while controlling the FWER and the FDR.
 
 Formally, we wish to find the biggest $j$ such that we can infer
 $$\theta_1 > \ldots > \theta_j > \max_{k>j} \theta_k.$$
@@ -461,7 +461,7 @@ We can construct selective $p$-values by conditioning on $M_j\left(X\right)$, as
 	\draw[thick] (B) -- (C4) node[midway, above left] {$D$};
 	\fill (C4) circle(2pt);
 	\fill ($(0, 0)!(B)!(C2)$) circle(2pt);
-	\draw[thick, dashed] (A) -- (D) node[midway, below left] {$\hat{A}$};
+	\draw[thick, dashed] (A) -- (D) node[midway, below left] {$\tilde{A}$};
 	\fill (D) circle(2pt) node[above] {$\left(M_{13}, X_2 + D_{13}, X_3\right)$};
 	\draw[thick, dotted] (C) -- (D) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] (A) -- ++(0, -3) node[midway, below, rotate=-90] {$\succeq$};
