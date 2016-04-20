@@ -38,7 +38,7 @@
 \maketitle
 
 \begin{abstract}
-Many statistical experiments involve comparing of multiple population groups. For example, a public opinion poll may ask which of several political candidates commands the most support in a given population, or a clinical trial may compare patient outcomes under several treatment conditions. This article concerns the problem of {\em rank verification} --- post hoc tests of whether the ordering discovered in the data is in fact statistically significant. For exponential family models, we show under mild conditions that an unadjusted two-tailed pairwise $p$-value comparing the ``winning'' population to the ``runner-up'' is a valid $p$-value for checking whether the winner is truly the best. We extend this result to provide lower confidence bounds on the gap between the ``winning'' population and the others, and propose a simple step-down algorithm for verifying ranks beyond the first.
+Many statistical experiments involve comparing multiple population groups. For example, a public opinion poll may ask which of several political candidates commands the most support, or a clinical trial may compare patient outcomes to determine the best of several treatment conditions. This article concerns the problem of {\em rank verification} --- post hoc tests of whether the ordering discovered in the data is in fact statistically significant. For exponential family models, we show under mild conditions that an unadjusted two-tailed pairwise test comparing the ``winning'' population to the ``runner-up'' is a valid test of whether the winner is truly the best. We also propose comparably simple procedures to give lower confidence bounds on the gap between the winning population and the others, and to verify ranks beyond the first.
 \end{abstract}
 
 \section{Introduction}
@@ -46,7 +46,7 @@ Many statistical experiments involve comparing of multiple population groups. Fo
 
 \subsection{Motivating Example: Iowa Republican Caucus Poll}\label{sec:iowa}
 
-On February 1, 2016, Quinnipiac University released a poll of 890 Iowa Republicans regarding their preferred candidate for the Republican presidential nomination \citep{quinnipiac}. The results, shown in Table~\ref{tbl:poll}, placed Donald Trump in the lead with $31\%$ of the vote, with Ted Cruz in second with $24\%$, Marco Rubio in third with $17\%$, and ten other candidates including ``Don't know'' trailing behind. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans, i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \pi_{\text{Rubio}}, \ldots)$.\footnote{The reality is a bit more complicated: before releasing the data, Quinnipiac has processed it to make the reported result more representative of likely caucus-goers.}
+Table~\ref{tbl:poll} shows the result of a Quinnipiac University poll asking 890 Iowa Republicans their preferred candidate for the Republican presidential nomination \citep{quinnipiac}. Donald Trump led with $31\%$ of the vote, Ted Cruz came second with $24\%$, Marco Rubio third with $17\%$, and ten other candidates including ``Don't know'' trailed behind. 
 
 \begin{table}[htbp]
 \begin{center}
@@ -69,18 +69,16 @@ On February 1, 2016, Quinnipiac University released a poll of 890 Iowa Republica
 \label{tbl:poll}
 \end{table}
 
-Seeing that Trump leads this poll, several salient questions may occur to us: Is Trump really winning, and if so by how much? And analogously, is Cruz really in second, is Rubio really in third, and so on?
+Seeing that Trump leads this poll, several salient questions may occur to us: Is Trump really winning, and if so by how much? And analogously, is Cruz really in second, is Rubio really in third, and so on? Note that there is implicitly a problem of multiple comparisons here, because if Cruz had led the poll instead, we would be asking a different set of questions. Indeed, the selection issue appears especially pernicious due to the so-called ``winner's curse:'' given that Trump leads the poll, it more likely than not overestimates his support.
 
-Note that there is implicitly a problem of multiple comparisons here, because if Cruz had led the poll instead, we would be asking a different set of questions. Indeed, the selection issue appears especially pernicious due to the so-called ``winner's curse:'' given that Trump leads the poll, it more likely than not overestimates his support.
-
-Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha=0.05$:
+Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha=0.05$. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans, i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \ldots)$.\footnote{The reality is a bit more complicated: before releasing the data, Quinnipiac has processed it to make the reported result more representative of likely caucus-goers.}
 \begin{enumerate}
 \item {\em Is Trump really winning?} If Trump and Cruz were in fact tied, then Trump's share of their combined 490 votes would be distributed as $\text{Binom}(490, 0.5)$. Because the (two-tailed) $p$-value for this pairwise test is $p=0.006$, we reject the null and conclude that Trump is really winning.
 \item {\em By how much?} Using an exact $95\%$ interval for the same binomial model, we conclude Trump has at least $7.5\%$ more support than Cruz (i.e., $\pi_{\text{Trump}} \geq 1.075 \,\pi_{\text{Cruz}}$) and also leads the other candidates by at least as much.
-\item {\em Is Cruz in second, Rubio in third, etc.?} We can next compare Cruz to Rubio just as we compared Trump to Cruz (again rejecting because 214 is significantly more than half of 365), then Rubio to Carson, and so on, as a stepdown procedure. The first four comparisons are all significant at level $0.05$, but Paul and Bush are tied so we stop.
+\item {\em Is Cruz in second, Rubio in third, etc.?} We can next compare Cruz to Rubio just as we compared Trump to Cruz (again rejecting because 214 is significantly more than half of 365), then Rubio to Carson, and so on, continuing until we fail to reject. The first four comparisons are all significant at level $0.05$, but Paul and Bush are tied so we stop.
 \end{enumerate}
 
-Surprisingly, the three procedures described above are all entirely valid despite the implicit multiple-comparisons issue. The remainder of this article is dedicated to justifying them for the multinomial family and many other settings.
+Surprisingly, all of the three procedures described above are statistically valid despite ignoring the implicit multiple-comparisons issue. The remainder of this article is dedicated to justifying these procedures for the multinomial family and analogous procedures in other settings.
 
 \subsection{Generic Problem Setting and Main Result}
 
@@ -88,17 +86,17 @@ Generically, we will consider data drawn from an exponential family model with d
 \begin{equation}\label{eq:expfam}
 X \sim e^{\theta'x - \psi(\theta)}g(x),
 \end{equation}
-with respect to either the Lebesgue or counting measure on $\RR^n$. We assume further that $g(x)$ is symmetric. In addition to the multinomial family, \eqref{eq:expfam} also encompasses settings such as comparing independent binomial treatment outcomes in a clinical trial, competing sports teams under a Bradley-Terry model, entries of a Dirichlet distribution, and many more. \WFcomment{Also students taking a test in a Rasch model, after conditioning on how many get each question right. Or comparing the variances of different normal populations.} We will generically use the term {\em population} to refer to the treatment group, sports team, political candidate, etc. represented by a given random variable $X_j$. 
+with respect to either the Lebesgue or counting measure on $\RR^n$. We assume further that $g(x)$ is symmetric. In addition to the multinomial family, \eqref{eq:expfam} also encompasses settings such as comparing independent binomial treatment outcomes in a clinical trial, competing sports teams under a Bradley-Terry model, entries of a Dirichlet distribution, and many more; see Section~\ref{sec:examples} for these and other examples. \WFcomment{Also students taking a test in a Rasch model, after conditioning on how many get each question right. Or comparing the variances of different normal populations.}
 
-As we will see, $\theta_j > \theta_k$ if and only if $X_j$ is stochastically larger than $X_k$, so there is a well-defined stochastic ordering of the populations. We will refer to the population with maximal $\theta_j$ as the {\em best}, and the one with maximal $X_j$ as the {\em winner}. Following the convention in the ranking and selection literature, we assume that if there are multiple largest $\theta_j$, then one is arbitrarily marked as the best. Note that in cases where it is more interesting to ask which is the smallest population --- for example, if $X_j$ is the number of patients on treatment $j$ who suffer a heart attack during a trial --- we can change variables to $-X_j$. 
+We will generically use the term {\em population} to refer to the treatment group, sports team, political candidate, etc. represented by a given random variable $X_j$. As we will see, $\theta_j \geq \theta_k$ if and only if $X_j$ is stochastically larger than $X_k$; thus, there is a well-defined stochastic ordering of the populations that matches the ordering of the entries of $\theta$. We will refer to the population with maximal $\theta_j$ as the {\em best}, and the one with maximal $X_j$ as the {\em winner}. Following the convention in the ranking and selection literature, we assume that if there are multiple largest $\theta_j$, then one is arbitrarily marked as the best. Note that in cases where it is more interesting to ask which is the smallest population --- for example, if $X_j$ is the number of patients on treatment $j$ who suffer a heart attack during a trial --- we can change variables to $-X$. 
 
 Write the order statistics of $X$ as
 \[
 X_{[1]} \geq X_{[2]} \geq \cdots \geq X_{[n]},
 \]
-and define $\theta_{[j]}$ as the entry of $\theta$ corresponding to the $j$th order statistic of $X$ (note $\theta_{[1]}$ might {\em not} equal $\max_j \theta_j$, for example). We assume any ties between entries of $X$ are broken randomly. 
+and define $\theta_{[j]}$ as the entry of $\theta$ corresponding to the $j$th order statistic of $X$ (so $\theta_{[1]}$ might {\em not} equal $\max_j \theta_j$, for example). We assume any ties between entries of $X$ are broken randomly.
 
-In each of the above examples, there is an exact two-tailed pairwise test we would typically apply if testing $\theta_j=\theta_k$ for any two fixed indices. For example, for the multinomial, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section, and for independent binomials we would apply Fisher's exact test. More generally, we can condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the known conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it implicitly assumes the two indices $j,k$ are fixed and is therefore not adjusted for selection. Similarly, inverting this test for all values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}.\footnote{To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.}
+In each of the above examples, there is a natural exact test we could apply to test $\theta_j=\theta_k$ for any two {\em fixed} populations $j$ and $k$. In the multinomial case, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section. For the case of independent binomials we would apply Fisher's exact test, again conditioning on $X_j+X_k$. These are both examples of a generic UMPU pairwise test in which we condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the known conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it makes no explicit adjustment for selection. Similarly, inverting this test for all values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}.\footnote{To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.}
 
 Generalizing the procedures described in Section~\ref{sec:iowa} we obtain the following:
 \begin{enumerate}
@@ -107,16 +105,24 @@ Generalizing the procedures described in Section~\ref{sec:iowa} we obtain the fo
 \item {\em Is the runner-up really the second best, etc.?} Continue by comparing the runner-up to the second-runner-up, again using the unadjusted pairwise test, and so on down the list comparing adjacent values. Stop the first time the test accepts.
 \end{enumerate}
 
-We now state our main theorem: under a mild technical assumption, the three procedures described above are statistically valid, even accounting for the selection.
+We now state our main theorem: under a mild technical assumption, Procedures 1--3 described above are statistically valid, even accounting for the selection.
 \begin{theorem}\label{thm:main}
-Assume the model~\eqref{eq:expfam} holds and $g(x)$ is a Schur-concave function. The first procedure has level $\alpha$ conditional on the best population not winning (otherwise an error is impossible). The second procedure gives an exact $1-\alpha$ lower confidence bound for $\theta_{[1]} - \max_{j \neq [1]} \theta_{j}$. The third procedure is a conservative stepdown procedure with familywise error rate (FWER) no larger than $\alpha$.
+Assume the model~\eqref{eq:expfam} holds and $g(x)$ is a Schur-concave function. Then:
+\begin{enumerate}
+\item Procedure 1 has level $\alpha$ conditional on the best population not winning (otherwise an error is impossible).
+\item Procedure 2 gives an exact $1-\alpha$ lower confidence bound for $\theta_{[1]} - \max_{j \neq [1]} \theta_{j}$.
+\item Procedure 3 is a conservative stepdown procedure with familywise error rate (FWER) no larger than $\alpha$.
+\end{enumerate}
 \end{theorem}
 
-We define Schur-concave functions and discuss their properties in Section~\ref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, Theorem~\ref{thm:main} applies to all of the cases discussed above.
+We define Schur-concave functions and discuss their properties in Section~\ref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, Theorem~\ref{thm:main} applies to all of the cases discussed above. The proof relies on the conditional selective-inference framework of~\citet{Fithian:2014ws} combined with classical multiple-testing methods, as well as ideas involving majorization and Schur-concavity.
 
-Note that there is an implicit adjustment for selection here, since we are using two-tailed unadjusted tests. If we instead based our tests on an independent realization $X^*$, then we could (for example) use the right-tailed version of the unadjusted pairwise test for the first procedure. Having to use a two-tailed procedure is in some sense unsurprising: Even for $n=2$, it is intuitive that we should have to use the two-tailed test instead of the one-tailed. Indeed, the first procedure is exactly equivalent to the two-tailed test of the fixed hypothesis $\theta_1=\theta_2$. 
+Note that these procedures make an implicit adjustment for selection because they use two-tailed unadjusted tests. If we instead based our tests on an independent realization $X^*$, then (for example) Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n=2$ Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1=\theta_2$, and it is intuitively clear that a one-tailed test would be anti-conservative. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n=2$. 
 
-What may be more surprising is that, no matter how large $n$ is, we do not require any additional adjustment beyond what we already require for $n=2$. Informally, this can possibly be explained by noting that for large $n$, $X_{[2]}$ suffers from a positive selection bias --- a ``runner-up's curse,'' so to speak --- which is nearly as severe as the bias of $X_{[1]}$.
+
+
+
+% Informally, this can possibly be explained by noting that for large $n$, $X_{[2]}$ suffers from a positive selection bias --- a ``runner-up's curse,'' so to speak --- which is nearly as severe as the bias of $X_{[1]}$.
 
 
 
