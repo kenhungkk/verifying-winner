@@ -180,7 +180,7 @@ $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n ~~~~ \text{ and } ~~~~ \sum_{j=1}^n \left(
 A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\left(y\right)$.
 \end{definition}
 
-A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \cite{Marshall:2010hb}, thus many common exponential family distributions lie in this class. Schur-concave functions indeed appear a lot, \Cref{sec:examples} includes both continuous and discrete examples.
+A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \citep{Marshall:2010hb}, thus many common exponential family distributions lie in this class. Schur-concave functions indeed appear a lot, \Cref{sec:examples} includes both continuous and discrete examples.
 
 \Cref{thm:main} requires that $g\left(x\right)$ in model~\eqref{eqn:expfam} to be Schur-concave. It was stated in the ensuing discussion that this condition is mild, and that the examples are abundant. To name a few:
 
@@ -236,7 +236,7 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \label{thm:seltest}
 \end{theorem}
 
-\begin{proof}[Proof of \Cref{thm:seltest}]
+\begin{proof}
 Without loss of generality, otherwise by relabeling, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$. For each of these we can construct an exact $p$-value $p_{1j}$. Hence by \Cref{lma:union}, a test based on $p_{1*} = \max_j p_{1j}$ would be exact for $H_{01}$. Procedure 1 will perform an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that the test based on $p_{12}$ coincides with the unadjusted pairwise test.
 
 Following the framework in \citet{Fithian:2014ws}, we consider the selection event where the winner is $1$: $$A_1 = \left\{X_1 \ge \max_{j > 1} X_j\right\}.$$
@@ -359,7 +359,7 @@ For the alternative case where $X_2 \ge M_{13}$, the segment $C$ will reach the 
 Since the denominator of $p_{12}$ is half of the symmetric distribution before truncation, a one-sided test that rejects based on $p_{12}$ is identical to the naive unadjusted pairwise test comparing $X_1$ and $X_2$. The naive unadjusted pairwise test is indeed valid.
 \end{proof}
 
-The proof above holds true if the exponential family is defined on the counting measure. If ties are broken independently and randomly, as in \Cref{sec:multinomial_example}, the end points on the rays can be considered as ``half an atom''.
+The proof above holds true if the exponential family is defined on the counting measure. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom''.
 
 As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test.
 
@@ -390,15 +390,15 @@ meaning that $X_1$ is greater than $X_2$ in stochastic order.
 \subsection{Multinomial Case: Connection with the Subset Selection}
 \label{sec:subsetsel}
 
-Gupta and Nagel \cite{Gupta:1967wg} devised a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, they guaranteed
+\citet{Gupta:1967wg} devised a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, they guaranteed
 $$\PP\left(\argmax_j \pi_j \in J\left(X\right)\right) \ge 1 - \alpha.$$
 This was achieved by finding an integer $D$, as a function on $m$, $n$ and $\alpha$, and select by
 $$J\left(X\right) = \left\{j: X_j \ge \max_k X_k - D\right\}.$$
-Gupta and Nagel also provided the method to choose $D$. The subset selection can be modified. Inherently, the event $\left\{J\left(X\right) = \left\{1\right\}\right\}$ is the same as inferring $\pi_1$ is the largest. We thus implemented their test for this purpose.
+They also provided the method to choose $D$. The subset selection can be modified. Inherently, the event $\left\{J\left(X\right) = \left\{1\right\}\right\}$ is the same as inferring $\pi_1$ is the largest. We thus implemented their test for this purpose.
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $m$ and $n$. For Gupta and Nagel, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Gupta and Nagel coincides with our test at $n = 2$; however as $n$ grows, the selective test shoes significantly more power than Gupta and Nagel's test.
+for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than Gupta and Nagel's test.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -427,8 +427,8 @@ $$\mathcal{L}_{\theta_1 - \theta_j = \delta} \left(D_{1j} \middle| D_{1j}, X_2, 
 which is the truncated distribution
 \begin{align*}
 D_{1j} & \sim \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
-& ~~~~~~~~ g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1} \\
-& \sim \exp\left(\delta D_{ij}\right) g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1}.
+& ~~~~~~~~ g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1} \\
+& \sim \exp\left(\delta D_{1j}\right) g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1}.
 \end{align*}
 
 The $p$-values thus are
@@ -452,7 +452,7 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \end{corollary}
 
 \begin{proof}
-If the confidence bound $\delta^*$ is negative, we report $-\infty$ so it definitely is valid and conservative. On the other hand, if $\delta^* \ne 0$, then at $\delta^*$ the $p$-value $p_{12} = \alpha$. The denominator is the positive part of a positively skewed distribution, and thus bigger than half of the distribution. So the unadjusted pairwise test $p$-value from Procedure 2 comparing $X_{[1]}$ and $X_{[2]}$ is larger than $p_{12}$ from Procedure 2', rendering Procedure 2 conservative.
+If the confidence bound $\delta^*$ is negative, we report $-\infty$ so it definitely is valid and conservative. On the other hand, if $\delta^* \ne 0$, then at $\delta^*$ the $p$-value $p_{12} = \alpha$. The denominator is the positive part of a positively skewed distribution, and thus bigger than half of the distribution. So the unadjusted pairwise test $p$-value from Procedure 2 comparing $X_1$ and $X_2$ is larger than $p_{12}$ from Procedure 2', rendering Procedure 2 conservative.
 \end{proof}
 
 Note that Procedure 2 reporting $-\infty$ in case of $\delta^*$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\log \pi_{\text{Trump}} - \max_{j \ne \text{Trump}} \log \pi_{j} \ge 0.103142$.
@@ -472,7 +472,7 @@ There is a step-down procedure, which we will denote as Procedure 3', that infer
 
 \begin{proof}
 
-This can be fitted into the selective sequential model selection framework proposed by Fithian, Taylor and Tibshirani \cite{Fithian:2015uj}. Given the observations $X_1 \ge \cdots \ge X_n$, drawn from an unknown distribution $F$, we consider the sequence of null hypothesis of
+This can be fitted into the selective sequential model selection framework proposed by \citet{Fithian:2015uj}. Given the observations $X_1 \ge \cdots \ge X_n$, drawn from an unknown distribution $F$, we consider the sequence of null hypothesis of
 $$H_{0j}: \theta_j \le \max_{k > j} \theta_k.$$
 Alternatively, we can think of them as a sequence of nested model
 $$M_0\left(X\right) \subseteq M_1\left(X\right) \subseteq \cdots \subseteq M_n\left(X\right), ~~~~~~~~ M_j\left(X\right)^c = \left\{\theta_1 > \cdots > \theta_j > \max_{k > j} \theta_k\right\},$$
@@ -528,17 +528,17 @@ Here we are only comparing $X_j$ to $X_{j+1}$ by \Cref{sec:winnerbest}. The uppe
 
 $$p_{jk} = \frac{\int_{D_{jk}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_{j+1} - M_{jk}, 0\right\}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}.$$
 
-Hence similar to the proof of \Cref{thm:seltest}, Schur-concavity ensures $p_{j\left(j+1\right)} \ge p_{jk}$ for all $k>j$, meaning that it is sufficient to compare $X_j$ and $X_{j+1}$. In fact, we can take $p_j = p_{j\left(j+1\right)}$. These are valid selective $p$-value as required in Fithian, Taylor and Tibshirani, as
+Hence similar to the proof of \Cref{thm:seltest}, Schur-concavity ensures $p_{j\left(j+1\right)} \ge p_{jk}$ for all $k>j$, meaning that it is sufficient to compare $X_j$ and $X_{j+1}$. In fact, we can take $p_j = p_{j\left(j+1\right)}$. These are valid selective $p$-value as required in \citet{Fithian:2015uj}, as
 $$\PP_F \left(p_j \le \alpha \middle| M_{j-1}\left(X\right)\right) \le \alpha \text{ a.s.}, ~~~~~~~~ F \in M_{j-1}\left(X\right)$$
 by tower property.
 
-The conditioning above indeed holds some significance. The sufficient filtration \cite{Fithian:2015uj} $\mathscr{F}_k$ is given as the $\sigma$-field
+The conditioning above indeed holds some significance. The sufficient filtration \citep{Fithian:2015uj} $\mathscr{F}_k$ is given as the $\sigma$-field
 \begin{align*}
 \mathscr{F}_k & = \sigma\left(M_0\left(X\right), \ldots, M_j\left(X\right), X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right) \\
 & = \sigma\left(\left\{X_1 > \ldots > X_j > \max_{k>j} X_k\right\}, X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right) \\
 & = \sigma\left(M_j\left(X\right), X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right),
 \end{align*}
-which is the conditioning we used just now. Hence the nested sequence of model satisfies the subpath sufficiency principle, and the $p$-values sequence $p_j$ is independent on nulls, as defined in and shown in Theorem 4 of \cite{Fithian:2015uj}. Thus the step-down procedure where we keep rejecting $H_{0j}$ until the first time that $p_j > \alpha$ controls FWER.
+which is the conditioning we used just now. Hence the nested sequence of model satisfies the subpath sufficiency principle, and the $p$-values sequence $p_j$ is independent on nulls, as defined in and shown in Theorem 4 of \citet{Fithian:2015uj}. Thus the step-down procedure where we keep rejecting $H_{0j}$ until the first time that $p_j > \alpha$ controls FWER.
 \end{proof}
 
 \begin{corollary}
@@ -546,7 +546,7 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \end{corollary}
 
 \begin{proof}
-The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always smaller than their counterpart in Procedure 3, as the upper truncation at $X_{j-1}$ is on the upper tail. Therefore Procedure 3 is more conservative and definitely valid.
+The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always smaller than their counterpart in Procedure 3, as the upper truncation at $X_{j-1}$ is on the upper tail. Therefore Procedure 3 is conservative and definitely valid.
 \end{proof}
 
 \section{Discussion}
