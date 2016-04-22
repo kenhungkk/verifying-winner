@@ -137,7 +137,7 @@ In the vicinity of the polling problem above, \citet{Nettleton:2009ht} provided 
 The subset selection problem solved in \citet{Gupta:1967wg} can indeed be used to solve the multinomial case. They selected a subset that contains the largest, or ``tagged'', parameter with probability $1-\alpha$. Confirming the largest parameter is thus equivalent to asserting the selected subset has size $1$. \Cref{sec:subsetsel} includes a comparison of our proposed test and their test.
 
 \subsection{Outline}
-\Cref{sec:maj} gives a formal definition of the condition we are imposing, as well as common examples satisfying the condition. \Cref{sec:winnerbest} proves that an unadjusted pairwise test comparing the winner to the runner-up is valid, as well as a demonstration of the power of this test. This section also explains the validity of level $\alpha$ conditional on the best population not winning. \Cref{sec:confbound,sec:stepdown} prove Procedure 2 and 3 are valid. We will finally examine a published study with our methods in \Cref{sec:conclusion}.
+\Cref{sec:maj} gives a formal definition of the condition we are imposing, as well as common examples satisfying the condition. \Cref{sec:winnerbest} proves that an unadjusted pairwise test comparing the winner to the runner-up is valid, as well as a demonstration of the power of this test. This section also explains the validity of level $\alpha$ conditional on the best population not winning. \Cref{sec:confbound,sec:stepdown} prove Procedure 2 and 3 are valid. We will finally examine a published study with our methods in \Cref{sec:disc}.
 
 \section{Majorization and Schur-concavity}
 \label{sec:maj}
@@ -549,26 +549,33 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always smaller than their counterpart in Procedure 3, as the upper truncation at $X_{j-1}$ is on the upper tail. Therefore Procedure 3 is more conservative and definitely valid.
 \end{proof}
 
-\section{Conclusion}
-\label{sec:conclusion}
+\section{Discussion}
+\label{sec:disc}
 
+Our selective test procedure allows us to untangle multiple comparisons based on correlated observations easily, while avoiding the pitfalls of selective inference. To illustrate, we look at a past psychology study done by \citet{Uhls:2012gf}.
 
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{c c}
+	\hline
+	Value & Count \\
+	\hline
+	Achievement & $3$ \\
+	Benevolence & $5$ \\
+	Fame & $8$ \\
+	Community feeling & $2$ \\
+	Financial success & $1$ \\
+	Self-acceptance & $0$ \\
+	Image & $0$ \\
+	Other & $1$ \\
+	\hline
+\end{tabular}
+\end{center}
+\caption{The number of study participants who chose each value as their top desired one. Since only one options can be chosen, these observations are inherently multinomial.}
+\label{tbl:fame}
+\end{table}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+A sample of $20$ students from elementary and middle schools were asked to choose a top ``value'' from 7 different options: achievement, benevolence, fame, community feeling, financial success, self-acceptance, image and other. The results are tabulated in \Cref{tbl:fame}. The study postulates that fame is significantly the top value of choice. It proceeds to perform a binomial test for the null hypothesis that the participants chose among the $7$ options uniformly and concluded with a $p$-value of $0.006$ that fame is indeed the top desired value. The analysis failed to address the ``winner's curse'', as well as the intricate dependence among the observations. Our paper addressed these two issues and provided a simple test --- perform a unadjusted (two-tailed) binomial test of the winner and the runner-up. In this case, we test if $8$ is a significant observation in $\text{Binomial}\left(8 + 5, 0.5\right)$. The two-tailed $p$-value is $0.580811$, suggesting that the study was inconclusive.
 
 \bibliographystyle{plainnat}
 \bibliography{papers,additional}
