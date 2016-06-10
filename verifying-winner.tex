@@ -68,13 +68,13 @@ Many statistical experiments involve comparing multiple population groups. For e
 	\hline
 \end{tabular}
 \end{center}
-\caption{Results from a February 1, 2016 Quinnipiac University poll of $890$ Iowa Republicans. To compute the last column (Votes), we make the simplifying assumption that the reported percentages in the third column (Result) correspond to raw vote shares among survey respondents. The asterisks indicate that the rank is verified through a step-down procedure.}
+\caption{Results from a February 1, 2016 Quinnipiac University poll of $890$ Iowa Republicans. To compute the last column (Votes), we make the simplifying assumption that the reported percentages in the third column (Result) correspond to raw vote shares among survey respondents. The asterisks indicate that the rank is verified at $0.05$-level through a step-down procedure.}
 \label{tbl:poll}
 \end{table}
 
 Seeing that Trump leads this poll, several salient questions may occur to us: Is Trump really winning, and if so by how much? And analogously, is Cruz really in second, is Rubio really in third, and so on? Note that there is implicitly a problem of multiple comparisons here, because if Cruz had led the poll instead, we would be asking a different set of questions. Indeed, the selection issue appears especially pernicious due to the so-called ``winner's curse'': given that Trump leads the poll, it more likely than not overestimates his support.
 
-Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha = 0.05$. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans, i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $\left(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \ldots\right)$.\footnote{The reality is a bit more complicated: before releasing the data, Quinnipiac has processed it to make the reported result more representative of likely caucus-goers.}
+Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha = 0.05$. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans; i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $\left(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \ldots\right)$.\footnote{The reality is a bit more complicated: before releasing the data, Quinnipiac has processed it to make the reported result more representative of likely caucus-goers.}
 
 \begin{enumerate}
 \item {\em Is Trump really winning?} If Trump and Cruz were in fact tied, then Trump's share of their combined 490 votes would be distributed as $\text{Binom}\left(490, 0.5\right)$. Because the (two-tailed) $p$-value for this pairwise test is $p = 0.006$, we reject the null and conclude that Trump is really winning.
@@ -92,26 +92,25 @@ Surprisingly, all of the three procedures described above are statistically vali
 Generically, we will consider data drawn from an exponential family model with density
 \begin{equation}
 X \sim \exp\left(\theta'x - \psi\left(\theta\right)\right) g\left(x\right),
-\tag{*}
 \label{eqn:expfam}
 \end{equation}
-with respect to either the Lebesgue on $\RR^n$ or counting measure on $\ZZ^n$. We assume further that $g\left(x\right)$ is symmetric. In addition to the multinomial family, model~\eqref{eqn:expfam} also encompasses settings such as comparing independent binomial treatment outcomes in a clinical trial, competing sports teams under a Bradley--Terry model, entries of a Dirichlet distribution, and many more; see \Cref{sec:examples} for these and other examples.
+with respect to either the Lebesgue measure on $\RR^n$ or counting measure on $\ZZ^n$. We assume further that $g\left(x\right)$ is symmetric with respect to permutation, and Schur concave, a mild technical condition defined in \Cref{sec:maj}. In addition to the multinomial family, model~\eqref{eqn:expfam} also encompasses settings such as comparing independent binomial treatment outcomes in a clinical trial, competing sports teams under a Bradley--Terry model, entries of a Dirichlet distribution, and many more; see \Cref{sec:examples} for these and other examples.
 
-We will generically use the term {\em population} to refer to the treatment group, sports team, political candidate, etc. represented by a given random variable $X_j$. As we will see, $\theta_j \ge \theta_k$ if and only if $X_j$ is stochastically larger than $X_k$; thus, there is a well-defined stochastic ordering of the populations that matches the ordering of the entries of $\theta$. We will refer to the population with maximal $\theta_j$ as the {\em best}, the one with maximal $X_j$ as the {\em winner}, and the one with maximal $X_j$ other than the winner as the {\em runner-up}. Following the convention in the ranking and selection literature, we assume that if there are multiple largest $\theta_j$, then one is arbitrarily marked as the best. Note that in cases where it is more interesting to ask which is the smallest population --- for example, if $X_j$ is the number of patients on treatment $j$ who suffer a heart attack during a trial --- we can change variables to $-X$. 
+We will generically use the term {\em population} to refer to the treatment group, sports team, political candidate, etc. represented by a given random variable $X_j$. As we will see, $\theta_j \ge \theta_k$ if and only if $X_j$ is stochastically larger than $X_k$; thus, there is a well-defined stochastic ordering of the populations that matches the ordering of the entries of $\theta$. We will refer to the population with maximal $\theta_j$ as the {\em best}, the one with maximal $X_j$ as the {\em winner}, and the one with maximal $X_j$ other than the winner as the {\em runner-up}. Following the convention in the ranking and selection literature, we assume that if there are multiple largest $\theta_j$, then one is arbitrarily marked as the best. Note that in cases where it is more interesting to ask which is the smallest population (for example, if $X_j$ is the number of patients on treatment $j$ who suffer a heart attack during a trial) we can change the variables to $-X$ and the parameters to $\theta$. 
 
 Write the order statistics of $X$ as
 $$X_{[1]} \ge X_{[2]} \ge \cdots \ge X_{[n]},$$
 where $[j]$ will denote the random index for the $j$-th order statistic. Define $\theta_{[j]}$ as the entry of $\theta$ corresponding to the $j$-th order statistic of $X$ (so $\theta_{[1]}$ might {\em not} equal $\max_j \theta_j$, for example). We assume any ties between entries of $X$ are broken randomly.
 
-In each of the above examples, there is a natural exact test we could apply to test $\theta_j=\theta_k$ for any two {\em fixed} populations $j$ and $k$. In the multinomial case, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section. For the case of independent binomials we would apply Fisher's exact test, again conditioning on $X_j+X_k$. These are both examples of a generic UMPU pairwise test in which we condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the known conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it makes no explicit adjustment for selection. Similarly, inverting this test for all values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}.\footnote{To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.}
+In each of the above examples, there is a natural exact test we could apply to test $\theta_j=\theta_k$ for any two {\em fixed} populations $j$ and $k$. In the multinomial case, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section. For the case of independent binomials we would apply Fisher's exact test, again conditioning on $X_j+X_k$. These are both examples of a generic UMPU pairwise test in which we condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$, which crucially does not depend on the value of $\theta_j$ or $\theta_k$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it makes no explicit adjustment for selection. Similarly, inverting this test for all values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}.\footnote{To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.}
 
 Generalizing the procedures described in \Cref{sec:iowa} we obtain the following:
 \begin{enumerate}
 \item {\em Is the winner really the best?} Carry out the unadjusted pairwise test comparing the winner to the runner-up. If the test rejects at level $\alpha$, conclude that the winner is really the best.
-\item {\em By how much?} Construct the unadjusted pairwise confidence interval comparing the winner to the runner-up, and report the lower confidence bound obtained for $\theta_{[1]}-\theta_{[2]}$ if it were nonnegative, report $-\infty$ otherwise.
+\item {\em By how much?} Construct the unadjusted pairwise confidence interval comparing the winner to the runner-up, and report the lower confidence bound obtained for $\theta_{[1]}-\theta_{[2]}$ if it is nonnegative, report $-\infty$ otherwise.
 \item {\em Is the runner-up really the second best, etc.?} Continue by comparing the runner-up to the second-runner-up, again using the unadjusted pairwise test, and so on down the list comparing adjacent values. Stop the first time the test accepts.
 \end{enumerate}
-Here Procedure $2$ is modified due to technicalities. A less extreme modification is provided in this paper later.
+Procedure $2$ is modified above due to some technicalities. If reporting $-\infty$ seems extreme, we included a gentler modification in this paper as well.
 
 We now state our main theorem: under a mild technical assumption, Procedures 1--3 described above are statistically valid, even accounting for the selection.
 \begin{theorem}
@@ -124,20 +123,20 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \label{thm:main}
 \end{theorem}
 
-We define Schur-concave functions and discuss their properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof relies on the conditional selective-inference framework of \citet{Fithian:2014ws} combined with classical multiple-testing methods, as well as ideas involving majorization and Schur-concavity.
+We define Schur-concavity and discuss its properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof relies on the conditional selective-inference framework of \citet{Fithian:2014ws} combined with classical multiple-testing methods, as well as some properties of majorization and Schur-concavity.
 
-Note that these procedures make an implicit adjustment for selection because they use two-tailed unadjusted tests. If we instead based our tests on an independent realization $X^*$, then, for example, Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n = 2$ Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1 = \theta_2$, and it is intuitively clear that a one-tailed test would be anti-conservative. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n = 2$. 
+Note that these procedures make an implicit adjustment for selection because they use two-tailed unadjusted tests. If we instead based our tests on an independent realization $X^*$, then, for example, Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n = 2$, Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1 = \theta_2$, and it is intuitively clear that a one-tailed test would be anti-conservative. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n = 2$. 
 
 \subsection{Related work}
 
-\citet{Gutmann:1987fk} have worked on a similar question where the observations are from a location family, and the location parameters are compared. In contrast, a related paper by \citet{Karnnan:2009iv} discussed a scale family instead, comparing the scale parameters. \citet{Bofinger:1991hv} gave a location-scale family generated by the exponential distribution as well. However, as location-scale families have limited overlap with exponential families, the counterpart question for exponential families have remained unaddressed. Location-scale families assumed independence between observations, while this is not required in exponential families. A follow-up paper by \citet{Maymin:1992fz} gave a slightly more general result, applicable to more than location-scale families, yet still under the constraints of independence.
+Previous works construct tests comparing parameters in various families of distributions, by comparing just the winner and the runner-up. \citet{Gutmann:1987fk} tackles the question where the observations are from a location family, and the location parameters are compared. In which case, the difference of the winner and the runner-up has to pass a predetermined threshold. In contrast, a related paper by \citet{Karnnan:2009iv} discusses a scale family, comparing the scale parameters instead. Specifically, to test for the smallest variance across multiple populations, it is sufficient to test the ratio of the smallest to the second-smallest variances. \citet{Bofinger:1991hv} gives a location-scale family generated by translating an exponential distribution as well. Similarly, test the difference between the winner and the runner-up is enough. A follow-up paper by \citet{Maymin:1992fz} gave an analogous result for location-scale families, yet still under the constraints of independence as well.
 
-In the vicinity of the polling problem above, \citet{Nettleton:2009ht} provided an asymptotic test for multinomial distribution, imposing the selection by considering intersection-union tests. \citet{Ng:2007cn} also analyzed the multinomial case for an exact test, but with an additional restriction that maximum observation is a known constant.
+However, as location-scale families have limited overlap with exponential families, the counterpart question for exponential families remains unaddressed. Location-scale families assumes independence between observations, while this is not required in exponential families. For instance, in the vicinity of the polling problem above, \citet{Nettleton:2009ht} provides an asymptotic test for multinomial distribution, imposing the selection by considering intersection-union tests. \citet{Ng:2007cn} also analyzes the multinomial case for an exact test, but with an additional restriction that maximum observation is a known constant $M$. In terms of the polling problem above, we poll until one candidate hits a goal $M$. While in either papers the observations $X$ are not independent, it still suffices to test the difference between the winner and the runner-up.
 
-The subset selection problem solved in \citet{Gupta:1967wg} can indeed be used to solve the multinomial case. They selected a subset that contains the largest, or ``tagged'', parameter with probability $1-\alpha$. Confirming the largest parameter is thus equivalent to asserting the selected subset has size $1$. \Cref{sec:subsetsel} includes a comparison of our proposed test and their test.
+One final result that our particular interest in the subset selection problem \citep{Gupta:1967wg}. It can indeed be used to solve the multinomial case. They select a subset that contains the largest, or ``tagged'', parameter with probability $1-\alpha$. Confirming the largest parameter is thus equivalent to asserting the selected subset has size $1$. \Cref{sec:subsetsel} includes a comparison of our proposed test and their test.
 
 \subsection{Outline}
-\Cref{sec:maj} gives a formal definition of the condition we are imposing, as well as common examples satisfying the condition. \Cref{sec:winnerbest} proves that an unadjusted pairwise test comparing the winner to the runner-up is valid, as well as a demonstration of the power of this test. This section also explains the validity of level $\alpha$ conditional on the best population not winning. \Cref{sec:confbound,sec:stepdown} prove Procedure 2 and 3 are valid. We will finally examine a published study with our methods in \Cref{sec:disc}.
+\Cref{sec:maj} gives a formal definition of Schur-concavity, as well as common examples satisfying this condition. \Cref{sec:winnerbest} proves that an unadjusted pairwise test comparing the winner to the runner-up is valid, and demonstrates the power of this test. \Cref{sec:confbound,sec:stepdown} justify Procedures 2 and 3. We conclude by examining a published study with our methods in \Cref{sec:disc}.
 
 \section{Majorization and Schur-concavity}
 \label{sec:maj}
@@ -145,7 +144,7 @@ The subset selection problem solved in \citet{Gupta:1967wg} can indeed be used t
 We start by reviewing the notion of {\em majorization}, defined on both $\RR^n$ and $\ZZ^n$.
 
 \begin{definition}
-For two vectors $a$ and $b$ in $\RR^n$ (or $\ZZ^n$), suppose permuting the two vectors in descending order gives
+For two vectors $a$ and $b$ in $\RR^n$ (or $\ZZ^n$), suppose sorting the two vectors in descending order gives
 $a_{\left(1\right)} \ge \cdots \ge a_{\left(n\right)}$ and $b_{\left(1\right)} \ge \cdots \ge b_{\left(n\right)}$. We say that $a \succeq b$ ($a$ majorizes $b$) if for $1 \le i < n$,
 \begin{align*}
 a_{\left(1\right)} + \cdots + a_{\left(i\right)} & \ge b_{\left(1\right)} + \cdots + b_{\left(i\right)} \\
@@ -203,7 +202,7 @@ If the individual results are masked and we only know about the net wins, then
 $$p\left(x\right) \propto \exp\left(2\theta' x\right) g\left(x\right),$$
 where $g\left(x\right)$ is a function that count number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave.
 
-\item Comparing the variances of different normal populations. Suppose there are $n$ normal population with laws $N\left(\mu_j, \sigma_j^2\right)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $r_j$. By Cochran's theorem, $\left(m-1\right) r_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $r$ is
+\item Comparing the variances of different normal populations. Suppose there are $n$ normal populations with laws $N\left(\mu_j, \sigma_j^2\right)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $r_j$. By Cochran's theorem, $\left(m-1\right) r_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $r$ is
 \begin{align*}
 r & \sim \prod_{j=1}^n \left(\frac{\left(m-1\right) r_j}{\sigma_j^2}\right)^{\left(m-3\right) / 2} e^{-\left(m-1\right) r_j / 2 \sigma_j^2} 1_{\left\{r_j > 0 \right\}} \\
 & \propto \exp\left(-\frac{m-1}{2 \sigma_1^2} r_1 - \cdots - \frac{m-1}{2 \sigma_n^2} r_n\right) \prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}.
@@ -359,11 +358,11 @@ For the alternative case where $X_2 \ge M_{13}$, the segment $C$ will reach the 
 Since the denominator of $p_{12}$ is half of the symmetric distribution before truncation, a one-sided test that rejects based on $p_{12}$ is identical to the naive unadjusted pairwise test comparing $X_1$ and $X_2$. The naive unadjusted pairwise test is indeed valid.
 \end{proof}
 
-The proof above holds true if the exponential family is defined on the counting measure. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom''.
+The proof above holds true if the exponential family is defined on the counting measure. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers, and a ``full atom'' otherwise.
 
 As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test.
 
-The selective type I error we opted to control for Procedure 1 offers the more conventional, marginal type I error rate.
+The selective type I error we opted to control for Procedure 1 offers the conventional, marginal type I error rate.
 \begin{equation}
 \PP_{H_{01}}\left(\text{reject } H_{01}\right) = \PP_{H_{01}}\left(\text{Winner is } 1\right) \PP_{H_{01}}\left(\text{reject } H_{01} \middle| \text{Winner is } 1\right) \le \frac{n-1}{n} \alpha,
 \label{eqn:marginal}
@@ -390,11 +389,11 @@ meaning that $X_1$ is greater than $X_2$ in stochastic order.
 \subsection{Multinomial Case: Connection with the Subset Selection}
 \label{sec:subsetsel}
 
-\citet{Gupta:1967wg} devised a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, they guaranteed
+\citet{Gupta:1967wg} devises a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, it guarantees
 $$\PP\left(\argmax_j \pi_j \in J\left(X\right)\right) \ge 1 - \alpha.$$
-This was achieved by finding an integer $D$, as a function on $m$, $n$ and $\alpha$, and select by
+This is achieved by finding an integer $D$, as a function on $m$, $n$ and $\alpha$, and selecting by
 $$J\left(X\right) = \left\{j: X_j \ge \max_k X_k - D\right\}.$$
-They also provided the method to choose $D$. The subset selection can be modified. Inherently, the event $\left\{J\left(X\right) = \left\{1\right\}\right\}$ is the same as inferring $\pi_1$ is the largest. We thus implemented their test for this purpose.
+It also provides the method to choose $D$. The subset selection can be modified. Inherently, the event $\left\{J\left(X\right) = \left\{1\right\}\right\}$ is the same as inferring $\pi_1$ is the largest. We thus implemented their test for this purpose.
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
