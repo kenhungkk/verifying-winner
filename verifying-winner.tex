@@ -16,13 +16,16 @@
 
 \captionsetup{width=0.8\textwidth}
 \DeclareMathOperator*{\argmax}{arg\,max}
+
 \newtheorem{corollary}{Corollary}
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}[corollary]{Lemma}
 \newtheorem{theorem}[corollary]{Theorem}
 \setlength{\tabcolsep}{1em}
 \setlist{listparindent=\parindent, parsep=0pt}
-
+\newtheoremstyle{custom}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}}
+\theoremstyle{custom}
+\newtheorem*{customthm}{Theorem}
 \newcommand{\EE}{\mathbb{E}}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\RR}{\mathbb{R}}
@@ -122,7 +125,6 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \end{enumerate}
 \label{thm:main}
 \end{theorem}
-\WFcomment{You seem to restate each part of this theorem later in the paper, so that e.g. Theorem 4 is the same as part 1 of Theorem 1.}
 
 We define Schur-concavity and discuss its properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof relies on the conditional selective-inference framework of \citet{Fithian:2014ws} combined with classical multiple-testing methods, as well as some properties of majorization and Schur-concavity.
 
@@ -199,7 +201,7 @@ Let $Y_{jk}$ be an indicator for the match between player $j$ and $k$, where we 
 $$p\left(y\right) \propto \exp\left(\sum_j 2\theta_j \sum_{k \ne j} y_{jk}\right)  = \exp\left(2\theta' x\right),$$
 where $x_j = \sum_{k \ne j} y_{jk}$. In other words, if $X_j$ is the number of wins by player $j$, then $X=(X_1,\ldots,X_n)$ is a sufficient statistic with distribution
 $$p\left(x\right) = \exp\left(2\theta' x\right) g\left(x\right),$$
-where $g\left(x\right)$ is a function that counts the number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave. \WFcomment{What is a bijection proof?} Therefore, we can use Procedures 1--3 to compare player qualities.
+where $g\left(x\right)$ is a function that counts the number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave. Therefore, we can use Procedures 1--3 to compare player qualities.
 
 \item Comparing the variances of different normal populations. Suppose there are $n$ normal populations with laws $N\left(\mu_j, \sigma_j^2\right)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $R_j$. By Cochran's theorem, $\left(m-1\right) R_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $R$ is
 \begin{align*}
@@ -209,61 +211,53 @@ r & \sim \prod_{j=1}^n \left(\frac{\left(m-1\right) r_j}{\sigma_j^2}\right)^{\le
 The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}$, which is Schur-concave. Thus, we can use Procedures 1--3 to find populations with the smallest or largest variances.
 \end{enumerate}
 
-\section{Is the Winner Really the Best?}
+\section{Verifying the Winner: Is the Winner Really the Best?}
 \label{sec:winnerbest}
 
 The following lemma should clarify the key idea in the proof of the theorem.
 
-\begin{lemma}
-If $p_j$ are valid $p$-values for testing null hypothesis $H_{0j}$, then $p_* = \max_j p_j$ is a valid $p$-value for the union null hypothesis $H_0 = \bigcup_j H_{0j}$. If all the $p$-values are exact, then $p_*$ is also an exact $p$-value.
+\begin{lemma}[\citealp{Berger:1982hy}]
+If $p_j$ are valid $p$-values for testing null hypothesis $H_{0j}$, then $p_* = \max_j p_j$ is a valid $p$-value for the union null (i.e.\ disjunction null) hypothesis $H_0 = \bigcup_j H_{0j}$. If all the $p$-values are uniform, then $p_*$ is also a valid $p$-value.
 \label{lma:union}
 \end{lemma}
 
 \begin{proof}
-\WFcomment{I don't think this is a new result. In particular, it's a special case of the partial conjunction null test, but it should also predate that paper.\\
 
-Careful on terminology: the term ``exact'' usually means ``non-asymptotic'' as opposed to ``exactly uniform.'' Also, I was thrown at first when you said ``since $p_j$ are all valid $p$-values.'' I know what you mean now but at first I thought you were saying all the null hypotheses were true.}
+Under $H_0$, one of the $H_{0j}$ is true. Suppose this is $H_{01}$. In this case,
+$$\PP\left(p_* \le \alpha\right) \le \PP\left(p_1 \le \alpha\right) \le \alpha.$$
+And thus $p_*$ is a valid $p$-value for the union null hypothesis.
 
-Since $p_j$ are all valid $p$-values,
-$$\PP_{H_{0j}}\left(p_j < \alpha\right) \le \alpha.$$
-So for the union null hypothesis
-$$\PP_{H_0}\left(p_* < \alpha\right) = \max_j \PP_{H_{0j}}\left(p_* < \alpha\right) \le \max_j \PP_{H_{0j}}\left(p_j < \alpha\right) \le \alpha.$$
-And thus $p_*$ is a valid $p$-value for the union null hypothesis. Now if $p_j$ are all exact, then equality holds above and $p_*$ is exact as well.
-
-\WFcomment{What is $\PP_{H_{0j}}\left(p_* < \alpha\right)$? That is not a well-defined probability because it depends on the distribution of the other p-values (I suppose the same could be said for $\PP_{H_{0j}}(p_j < \alpha)$, but at least that won't confuse anyone). Anyway, the second claim in this Lemma isn't true: if all the p-values are uniform, then the max p-value is not uniform.}
 \end{proof}
-
 
 We are now ready to prove our result for Procedure 1.
 
-\begin{theorem}
+\begin{customthm}[Part 1 of \Cref{thm:main}]
 Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Procedure 1 (the unadjusted pairwise test) has level $\alpha$ conditional on the best population not winning.
-\label{thm:seltest}
-\end{theorem}
-\WFcomment{This is just a restatement of conclusion 1 of Theorem 1, right?}
+\end{customthm}
 
 \begin{proof}
-\WFcomment{I've now read this proof carefully and it looks generally correct, but I wonder if we could organize it a little more clearly?}
 
-Without loss of generality, otherwise by relabeling, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$\WFcomment{and that ties are broken such that... need to figure out how to say this right. Also, we should be a little more careful how we say ``without loss of generality'' --- sounds like you're saying we can relabel indices after observing the data?}. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$. For each of these we can construct an exact $p$-value $p_{1j}$. Hence by \Cref{lma:union}, a test based on $p_{1*} = \max_j p_{1j}$ would be exact for $H_{01}$\WFcomment{No; see note. However, because $p_{1*}=p_{12}$ almost surely given $X_1>X_2>\cdots$, $p_{1*}$ actually is conditionally uniform.}. \WFcomment{As we will see, } Procedure 1 will perform an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that the test based on $p_{12}$ coincides with the unadjusted pairwise test.
+We start by assuming that we are working with the Lebesgue measure rather than the counting measure. The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
-Following the framework in \citet{Fithian:2014ws}, we consider the selection event where the winner is $1$: \WFcomment{Did we already condition on $X_1\ge X_2\ge\cdots\ge X_n$? See prev. comment.}
+Here, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$ and that ties are broken uniformly. For other cases, the following proof remains valid under relabeling. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$. For each of these we can construct an exact $p$-value $p_{1j}$. Hence by \Cref{lma:union}, a test based on $p_{1*} = \max_j p_{1j}$ would be valid for $H_{01}$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that the test based on $p_{12}$ coincides with the unadjusted pairwise test.
+
+Following the framework in \citet{Fithian:2014ws}, we consider the selection event where the winner is $1$: 
 $$A_1 = \left\{X_1 \ge \max_{j > 1} X_j\right\}.$$
 For convenience, we let
 $$D_{jk} = \frac{X_j - X_k}{2} ~~~~ \text{ and } ~~~~ M_{jk} = \frac{X_j + X_k}{2}.$$
 
-We start by re-parametrizing to replace $X_1$ and $X_j$ with $D_{1j}$ and $M_{1j}$ \WFcomment{Worth pointing out we now have an exponential family in $D_{1j},M_{1j},\cdots$ with nat. param.s ...?} and consider
+We start by re-parametrizing to replace $X_1$ and $X_j$ with $D_{1j}$ and $M_{1j}$. The distribution is now an exponential family with sufficient statistics $D_{1j}, M_{1j}, X_{\setminus\left\{1, j\right\}}$ and corresponding natural parameters $\theta_1 - \theta_j, \theta_1 + \theta_j, \theta_{\setminus\left\{1, j\right\}}$. We now consider
 \begin{equation}
 \mathcal{L}_{\theta_1 - \theta_j = 0} \left(D_{1j} \middle| M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right), \text{ where } A_1 = \left\{D_{1j} \ge \max_{k \ne 1, j} X_k - M_{1j}\right\} \cap \left\{D_{1j} \ge 0\right\}.
 \label{eqn:condlaw}
 \end{equation}
 The conditional law in \Cref{eqn:condlaw}, in particular, is a truncated distribution
 \begin{align*}
-D_{1j} & \sim \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
+p\left(D_{1j}\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
 & ~~~~~~~~ g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1} \\
-& \sim g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1}.
+& \stackrel{\text{(a)}}{\propto} g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1},
 \end{align*}
-\WFcomment{What happened to the other $\theta_j$ values? I think the first ``$\sim$'' above should be a ``$\propto$'' and you need to say where all the $\theta$'s went.} 
+where at step (a), conditioning on $X_{\setminus\left\{1, j\right\}}$ and $M_{1j}$ removes dependence on $\theta_{\setminus\left\{1, j\right\}}$ and $\theta_1 + \theta_j$ respectively, while $\theta_1 - \theta_j$ is taken to be $0$ under our null hypothesis.
 
 The $p$-value for $H_{01j}$ is thus
 \begin{equation}
@@ -273,17 +267,17 @@ p_{1j} = \frac{\int_{D_{1j}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, 
 
 By construction, $p_{1j}$ satisfies
 $$\PP_{H_{01j}}\left(p_{1j} < \alpha \middle| M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right) = \alpha.$$
-Taking expectation on both sides gives \WFcomment{``Marginalizing over $M_{1j},X_{\setminus{1,j}}$,'' maybe?}
+Marginalizing over $M_{1j}, X_{\setminus\left\{1, j\right\}}$,
 $$\PP_{H_{01j}}\left(p_{1j} < \alpha \middle| A_1\right) = \alpha.$$
 Therefore these $p_{1j}$ are indeed valid exact $p$-values.
 
-Without loss of generality, it is sufficient to show that $p_{12} \ge p_{13}$. In the computation of either $p$-value, $X_4, \ldots, X_n$ are all conditioned on. The first point in \Cref{lma:twoprop} says that we may assume $n = 3$ without affecting the Schur-concavity of $g$. \WFcomment{Again, exactly what are we doing here? I think we're not really assuming $n=3$; more like conditioning on the other variables to reduce to a case where $n=3$, but we need to be explicit about how this reduction works.} This allows us to clean up our notation and
+Without loss of generality, it is sufficient to show that $p_{12} \ge p_{13}$. In the computation of either $p$-value, $X_4, \ldots, X_n$ are all conditioned on. Fixing these variables that are conditioned on, $g$ has only thee variables: $X_1$, $X_2$ and $X_3$. We can write this as $g_{X_4, \ldots, X_n}\left(X_1, X_2, X_3\right)$. The first point in \Cref{lma:twoprop} says that the function $g_{X_4, \ldots, X_n}$ is Schur-concave as well. This allows us to clean up our notation and just rename $g_{X_4, \ldots, X_n}$ as $g$. The p-values thus are
 \begin{align*}
 p_{12} & = \frac{\int_{D_{12}}^\infty g\left(M_{12} + z, M_{12} - z, X_3\right) \,dz}{\int_0^\infty g\left(M_{12} + z, M_{12} - z, X_3\right) \,dz} \\
 p_{13} & = \frac{\int_{D_{13}}^\infty g\left(M_{13} + z, X_2, M_{13} - z\right) \,dz}{\int_{\max\left\{X_2 - M_{13}, 0\right\}}^\infty g\left(M_{13} + z, X_2, M_{13} - z\right) \,dz}
 \end{align*}
 
-Suppose $X_2 < M_{13}$. \WFcomment{Changing variables to $z + D_{12}$ and $z + D_{13}$ respectively}, we can re-parametrize the integrals above to give
+The maximum in the denominator of $p_{13}$ prompts us to consider two separate cases. First, we suppose $X_2 < M_{13}$. Changing variables such that the lower limits of both integrals in the numerator is $0$, we can re-parametrize the integrals above to give
 \begin{align*}
 p_{12} & = \frac{\int_0^\infty g\left(X_1 + z, X_2 - z, X_3\right) \,dz}{\int_0^\infty g\left(M_{12} + z, M_{12} - z, X_3\right) \,dz} \\
 & = \frac{\int_0^\infty g\left(X_1 + z, X_2 - z, X_3\right) \,dz}{\int_{-D_{12}}^\infty g\left(X_1 + z, X_2 - z, X_3\right) \,dz} \\
@@ -308,12 +302,13 @@ $$p_{12} = \frac{B}{A + B}$$
 	\draw[thick, ->] (B) -- ++(330:5) node[midway, above right] {$B$};
 	\fill (A) circle(2pt) node[above left] {$\left(M_{12}, M_{12}, X_3\right)$};
 	\fill (B) circle(2pt) node[above right] {$\left(X_1, X_2, X_3\right)$};
-	\draw[thick, ->] (0, 0) -- (1, 0) node[right] {\tiny $\left(1, 0, 0\right)$};
-	\draw[thick, ->] (0, 0) -- (120:1) node[above] {\tiny $\left(0, 1, 0\right)$};
-	\draw[thick, ->] (0, 0) -- (240:1) node[below] {\tiny $\left(0, 0, 1\right)$};
+	\fill (0, 0) circle(2pt) node[left] {$\left(\overline{X} = \frac{X_1 + X_2 + X_3}{3}, \overline{X}, \overline{X}\right)$};
+	\draw[thick, ->] (0, 0) -- (1, 0) node[right] {\tiny $+ \left(1, 0, 0\right)$};
+	\draw[thick, ->] (0, 0) -- (120:1) node[above] {\tiny $+ \left(0, 1, 0\right)$};
+	\draw[thick, ->] (0, 0) -- (240:1) node[below] {\tiny $+ \left(0, 0, 1\right)$};
 \end{tikzpicture}
 \end{center}
-\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray. The diagram is drawn a level set of $x_1 + x_2 + x_3$ \WFcomment{Problem: the point $(1,0,0)$ is not actually in that level set.}. The green region represents the selection event $A_1$.}
+\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray. The diagram is drawn a level set of $x_1 + x_2 + x_3$. The green region represents the selection event $A_1$.}
 \label{fig:p-value}
 \end{figure}
 
@@ -354,7 +349,7 @@ It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 	\draw[thick, dotted] ($(B) + (30:4)$) -- ($(B) + (330:4)$) node[midway, below, rotate=-90] {$\succeq$};
 \end{tikzpicture}
 \end{center}
-\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray; and $p_{13}$ in terms of $C$ and $D$. $A'$ would refer to the sum of $A$ with the dashed line portion labeled as $\tilde{A}$, formally explained in \Cref{eqn:int_extension}. The majorization relation is indicated by the dotted line. \WFcomment{The point $(X_1,X_2,X_3)$ is cut off a bit in the picture.}}
+\caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray; and $p_{13}$ in terms of $C$ and $D$. $A'$ would refer to the sum of $A$ with the dashed line portion labeled as $\tilde{A}$, formally explained in \Cref{eqn:int_extension}. The majorization relation is indicated by the dotted line.}
 \label{fig:compare_rays}
 \end{figure}
 
@@ -364,12 +359,13 @@ for $z \le 0$ and the majorization reversed for $z \ge 0$. This majorization rel
 $$g\left(X_1 + z, X_2 - z, X_3\right) \le g\left(X_1 + z, X_2, X_3 - z\right)$$
 for $z \le 0$, and the inequality reversed for $z \ge 0$. Taking integrals on both sides yields the desired inequality.
 
-For the alternative case where $X_2 \ge M_{13}$, the segment $C$ will reach the line $x_1 = x_2$ first before it reaches $x_1 = x_3$, ending at $\left(X_2, X_2, X_1 - X_2 + X_3\right)$ instead. But we can still extend $A$ by $\tilde{A}$ to $\left(X_2, X_1, X_3\right)$. The rest of the proof follows. In either cases, $p_{12} \ge p_{13}$, or in generality, $p_{12} \ge p_{1j}$ for $j > 1$. In other words, $p_{12} = p_{1*}$.
+For the second case where $X_2 \ge M_{13}$, the segment $C$ will reach the line $x_1 = x_2$ first before it reaches $x_1 = x_3$, ending at $\left(X_2, X_2, X_1 - X_2 + X_3\right)$ instead. But we can still extend $A$ by $\tilde{A}$ to $\left(X_2, X_1, X_3\right)$. The rest of the proof follows. In either cases, $p_{12} \ge p_{13}$, or in generality, $p_{12} \ge p_{1j}$ for $j > 1$. In other words, $p_{12} = p_{1*}$.
 
 Since the denominator of $p_{12}$ is half of the symmetric distribution before truncation, a one-sided test that rejects based on $p_{12}$ is identical to the naive unadjusted pairwise test comparing $X_1$ and $X_2$. The naive unadjusted pairwise test is indeed valid.
-\end{proof}
 
-The proof above holds true if the exponential family is defined on the counting measure. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers, and a ``full atom'' otherwise. \WFcomment{Should be part of the proof.}
+Now suppose the exponential family is defined on the counting measure instead. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers, and a ``full atom'' otherwise.
+
+\end{proof}
 
 As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test.
 
@@ -384,9 +380,9 @@ Finally, comparing the parameters $\theta_j$ has an even more appealing interpre
 
 \begin{theorem}
 \label{thm:stoch}
-$X_1 \ge X_2$ in stochastic order if and only if $\theta_1 > \theta_2$.
+For a multivariate exponential family with a symmetric carrier distribution, $X_1 \ge X_2$ in stochastic order if and only if $\theta_1 > \theta_2$.
 \end{theorem}
-\WFcomment{Under what conditions? For a multivariate exponential family with a symmetric carrier distribution, right? Also, are we sure this is a new result?}
+\WFcomment{Are we sure this is a new result?} \KHcomment{Nothing found when I looked up a text for stochastic order, and on Google with ``stochastic order exponential family''}
 
 \begin{proof}
 It suffices to prove the ``if'' part, as the ``only if'' part can be follows from swapping the role of $\theta_1$ and $\theta_2$. For any fixed $a$, and $X_1 \ge a$ and $X_2 < a$, we have $X_1 > X_2$ and
@@ -398,25 +394,22 @@ $$\PP\left(X_1 \ge a\right) \ge \PP\left(X_2 \ge a\right),$$
 meaning that $X_1$ is greater than $X_2$ in stochastic order.
 \end{proof}
 
-
-
-\subsection{Multinomial Case: Connection with the Subset Selection}
+\subsection{Power Comparison in the Multinomial Case}
 \label{sec:subsetsel}
-\WFcomment{Section title can be improved: this section is primarily about a power comparison with the most natural competing procedure.}
 
 \citet{Gupta:1967wg} devises a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, it guarantees
 \begin{equation}\label{eq:subsetsel}
 \PP\left(\argmax_j \pi_j \in J\left(X\right)\right) \ge 1 - \alpha.
 \end{equation}
-This is achieved by finding an integer $D$, as a function on $m$, $n$ and $\alpha$, and selecting by
-$$J\left(X\right) = \left\{j: X_j \ge \max_k X_k - D\right\}.$$
+This is achieved by finding an integer $d$, as a function on $m$, $n$ and $\alpha$, and selecting the subset
+$$J\left(X\right) = \left\{j: X_j \ge \max_k X_k - d\right\}.$$
+Here, we take $d(m, n, \alpha)$ to be the smallest integer such that \eqref{eq:subsetsel} holds for any $\pi$.
 
-\WFcomment{Why is $D$ capitalized? It's not a random variable, is it? Also, can you explain how $D$ is selected? e.g., ``Here, we take $d(m,n,\alpha)$ to be the smallest integer such that \eqref{eq:subsetsel} holds for any $\pi$.''}
-It also provides the method to choose $D$. The subset selection can be modified. Inherently, the event $\left\{J\left(X\right) = \left\{1\right\}\right\}$ is the same as inferring $\pi_1$ is the largest. We thus implemented their test for this purpose. \WFcomment{The phrasing here is awkward because the relationship between successive sentences is not clear. Instead try something like: ``Subset selection is closely related to testing whether the winner is the best. In particular, we can define a test that declares $j$ the best whenever $\{J(X)=\{j\}\}$. If $J(X)$ satisfies \eqref{eq:subsetsel}, this test is valid at level $\alpha$. We next compare the power of the resulting test against the power of our Procedure 1 in a multinomial example with $pi \propto \left(e^\delta, 1, \ldots, 1\right)$, for several combinations of $m$ and $n$.''}
+It also provides the algorithm computing $d$. Subset selection is closely related to testing whether the winner is the best. In particular, we can define a test that declares $j$ the best whenever $J\left(X\right) = \left\{j\right\}$. If $J\left(X\right)$ satisfies \eqref{eq:subsetsel}, this test is valid at level $\alpha$. We next compare the power of the resulting test against the power of our Procedure 1 in a multinomial example with $\pi \propto \left(e^\delta, 1, \ldots, 1\right)$, for several combinations of $m$ and $n$.
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than Gupta and Nagel's test.
+for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than \citeauthor{Gupta:1967wg}'s test.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -426,13 +419,14 @@ for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05
 \label{fig:power}
 \end{figure}
 
-\WFcomment{Is there any way we can get an asymptotic expression for $d$ in terms of $n$, as $m\to\infty$, and compare it to our procedure's ``effective $d$''? I suspect there is a $\log n$ factor in there that we don't have.}
+To interpret, e.g., the lower left plot, suppose that in a poll of $m = 50$ respondents, one candidate enjoys $30\%$ support and the other $n - 1 = 9$ split the remainder ($\delta = \log\frac{0.3}{0.7 / 9} \approx 1.35$). Then our procedure has power approximately $0.3$ to detect the best candidate, while \citeauthor{Gupta:1967wg}'s procedure has power around $0.1$.
 
-\WFcomment{``To interpret, e.g., the lower left plot, suppose that in a poll of $m=250$ respondents, one candidate enjoys $20\%$ support and the other $n-1=9$ split the remainder ($\smash{\delta = \log\frac{0.2}{0.8 / 9} \approx 0.69}$). Then our procedure has power XXXX to detect the best candidate, while Gupta \& Nagel's procedure has power YYYY.''}
+A fundamental difference between the two methods is the definition of the threshold. The threshold from \citet{Gupta:1967wg} depends solely on the setup of the model: $m$ and $n$. Our threshold, however, depends on the data itself. Such difference is amplified when $n$ is large. The threshold from \citeauthor{Gupta:1967wg} increases with $n$ even if the added observations are all $0$. In such case, our threshold does not change at all, suggesting more potential test power.
 
-\section{By How Much?}
+\WFcomment{Is there any way we can get an asymptotic expression for $d$ in terms of $n$, as $m\to\infty$, and compare it to our procedure's ``effective $d$''? I suspect there is a $\log n$ factor in there that we don't have.} \KHcomment{We will need to get into details about $r^*$ to explain so, which seems like excessive details. I added some intuition on why our test it better. Not sure if it suffices.}
+
+\section{Confidence Bounds on Differences: By How Much?}
 \label{sec:confbound}
-\WFcomment{I like that your section heading recalls the earlier discussion, but this feels a little informal for a section heading.}
 
 We can take the idea above further and construct confidence bound for $\theta_{[1]} - \max_{j \ne [1]} \theta_{j}$. This can be achieved by considering a statistical test, to see if $\theta_{[1]} - \max_{j \ne [1]} \theta_{j} \le \delta$, followed by the duality of confidence interval and statistical test.
 
@@ -449,15 +443,15 @@ Again we start with assuming $X_1 \ge \cdots \ge X_n$. The $p$-values in questio
 $$\mathcal{L}_{\theta_1 - \theta_j = \delta} \left(D_{1j} \middle| D_{1j}, X_2, \ldots, X_n, A\right),$$
 which is the truncated distribution
 \begin{align*}
-D_{1j} & \sim \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
+p\left(D_{1j}\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
 & ~~~~~~~~ g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1} \\
-& \sim \exp\left(\delta D_{1j}\right) g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1}.
+& \propto \exp\left(\delta D_{1j}\right) g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1}.
 \end{align*}
 
 The $p$-values thus are
 $$p_{1j} = \frac{\int_{D_{1j}}^\infty \exp\left(\delta z\right) g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_2 - M_{1j}, 0\right\}}^\infty \exp\left(\delta z\right) g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}.$$
 
-As before in \Cref{thm:seltest}, without loss of generality we assume $n = 3$. Once again it is sufficient to show that $p_{12} \ge p_{13}$. We have the same two cases. If $X_2 < M_{13}$, then
+As before in Part 1 of \Cref{thm:main}, the conditioning reduces to the case where $n = 3$. Once again it is sufficient to show that $p_{12} \ge p_{13}$. We have the same two cases. If $X_2 < M_{13}$, then
 \begin{align*}
 p_{12} & = \frac{\int_0^\infty \exp\left(\delta \left(z + D_{12}\right)\right) g\left(X_1 + z, X_2 - z, X_3\right) \,dz}{\int_{-D_{12}}^\infty \exp\left(\delta \left(z + D_{12}\right)\right) g\left(X_1 + z, X_2 - z, X_3\right) \,dz} \\
 & = \frac{\int_0^\infty \exp\left(\delta z\right) g\left(X_1 + z, X_2 - z, X_3\right) \,dz}{\int_{-D_{12}}^\infty \exp\left(\delta z\right) g\left(X_1 + z, X_2 - z, X_3\right) \,dz} \\
@@ -470,9 +464,9 @@ The same argument in \Cref{fig:compare_rays} shows that $p_{12} \ge p_{13}$. Thi
 
 In other words, Procedure 2' can be summarized as: Find the minimum $\delta$ such that $p_{12} \le \alpha$. And by construction, Procedure 2' gives exact $1-\alpha$ confidence bound for $\theta_{[1]} - \max_{j \ne [1]} \theta_j$.
 
-\begin{corollary}
+\begin{customthm}[Part 2 of \Cref{thm:main}]
 Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Procedure 2 (the lower bound of unadjusted pairwise confidence interval) gives a conservative $1-\alpha$ lower confidence bound for $\theta_{[1]} - \max_{j \ne [1]} \theta_j$.
-\end{corollary}
+\end{customthm}
 
 \begin{proof}
 If the confidence bound $\delta^*$ is negative, we report $-\infty$ so it definitely is valid and conservative. On the other hand, if $\delta^* \ne 0$, then at $\delta^*$ the $p$-value $p_{12} = \alpha$. The denominator is the positive part of a positively skewed distribution, and thus bigger than half of the distribution. So the unadjusted pairwise test $p$-value from Procedure 2 comparing $X_1$ and $X_2$ is larger than $p_{12}$ from Procedure 2', rendering Procedure 2 conservative.
@@ -480,7 +474,7 @@ If the confidence bound $\delta^*$ is negative, we report $-\infty$ so it defini
 
 Note that Procedure 2 reporting $-\infty$ in case of $\delta^*$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\log \pi_{\text{Trump}} - \max_{j \ne \text{Trump}} \log \pi_{j} \ge 0.103142$.
 
-\section{Is the Runner-Up Really the Second Best, etc.?}
+\section{Verifying Other Ranks: Is the Runner-Up Really the Second Best, etc.?}
 \label{sec:stepdown}
 
 If one is interested in verifying more than just the ``winner'', this selective test can also be extended to a step-down procedure that verifies the ``first runner-up'' and ``second runner-up'' etc., while controlling the FWER.
@@ -547,11 +541,11 @@ We can construct selective $p$-values by conditioning on $M_j\left(X\right)$, as
 \label{fig:crop_rays}
 \end{figure}
 
-Here we are only comparing $X_j$ to $X_{j+1}$ by \Cref{sec:winnerbest}. The upper truncation for $X_j$ can be represented by cropping \Cref{fig:compare_rays} along a vertical line, shown in \Cref{fig:crop_rays}, thus the proof of \Cref{thm:seltest} on sufficiency to compare $X_1$ and $X_2$ remains valid with appropriate conditioning. Again we can construct the $p$-values as in \Cref{eqn:p1j} for $k>j$.
+Here we are only comparing $X_j$ to $X_{j+1}$ by \Cref{sec:winnerbest}. The upper truncation for $X_j$ can be represented by cropping \Cref{fig:compare_rays} along a vertical line, shown in \Cref{fig:crop_rays}, thus the proof of Part 1 of \Cref{thm:main} on sufficiency to compare $X_1$ and $X_2$ remains valid with appropriate conditioning. Again we can construct the $p$-values as in \Cref{eqn:p1j} for $k>j$.
 
 $$p_{jk} = \frac{\int_{D_{jk}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_{j+1} - M_{jk}, 0\right\}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}.$$
 
-Hence similar to the proof of \Cref{thm:seltest}, Schur-concavity ensures $p_{j\left(j+1\right)} \ge p_{jk}$ for all $k>j$, meaning that it is sufficient to compare $X_j$ and $X_{j+1}$. In fact, we can take $p_j = p_{j\left(j+1\right)}$. These are valid selective $p$-value as required in \citet{Fithian:2015uj}, as
+Hence similar to the proof of Part 1 of \Cref{thm:main}, Schur-concavity ensures $p_{j\left(j+1\right)} \ge p_{jk}$ for all $k>j$, meaning that it is sufficient to compare $X_j$ and $X_{j+1}$. In fact, we can take $p_j = p_{j\left(j+1\right)}$. These are valid selective $p$-value as required in \citet{Fithian:2015uj}, as
 $$\PP_F \left(p_j \le \alpha \middle| M_{j-1}\left(X\right)\right) \le \alpha \text{ a.s.}, ~~~~~~~~ F \in M_{j-1}\left(X\right)$$
 by tower property.
 
@@ -564,9 +558,9 @@ The conditioning above indeed holds some significance. The sufficient filtration
 which is the conditioning we used just now. Hence the nested sequence of model satisfies the subpath sufficiency principle, and the $p$-values sequence $p_j$ is independent on nulls, as defined in and shown in Theorem 4 of \citet{Fithian:2015uj}. Thus the step-down procedure where we keep rejecting $H_{0j}$ until the first time that $p_j > \alpha$ controls FWER.
 \end{proof}
 
-\begin{corollary}
+\begin{customthm}[Part 3 of \Cref{thm:main}]
 Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Procedure 3 is a conservative step-down procedure with FWER no larger than $\alpha$.
-\end{corollary}
+\end{customthm}
 
 \begin{proof}
 The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always smaller than their counterpart in Procedure 3, as the upper truncation at $X_{j-1}$ is on the upper tail. Therefore Procedure 3 is conservative and definitely valid.
@@ -575,7 +569,7 @@ The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always small
 \section{Discussion}
 \label{sec:disc}
 
-Our selective test procedure allows us to untangle multiple comparisons based on correlated observations easily, while avoiding the pitfalls of selective inference \WFcomment{This sentence is confusing}. To illustrate, we look at a past psychology study done by \citet{Uhls:2012gf}.
+Our selective test procedure allows us to untangle multiple comparisons based on correlated observations easily, while avoiding the pitfalls of selection. To illustrate, we look at a past psychology study done by \citet{Uhls:2012gf}.
 
 \begin{table}[htbp]
 \begin{center}
@@ -594,13 +588,13 @@ Our selective test procedure allows us to untangle multiple comparisons based on
 	\hline
 \end{tabular}
 \end{center}
-\caption{The number of study participants who chose each value as their top desired one. Since only one option can be chosen, these observations are inherently multinomial \WFcomment{I think it goes without saying this is multinomial}.}
+\caption{The number of study participants who chose each value as their top desired one. Since only one option can be chosen, these observations are inherently multinomial.}
 \label{tbl:fame}
 \end{table}
 
-A sample of $20$ students from elementary and middle schools were asked to choose a top ``value'' from 7 different options: achievement, benevolence, fame, community feeling, financial success, self-acceptance, image and other. The results are tabulated in \Cref{tbl:fame}. The study postulates that fame is significantly the top value of choice. It proceeds to perform a binomial test for the null hypothesis that the participants chose among the $7$ options uniformly and concluded with a $p$-value of $0.006$ that fame is indeed the top desired value. The analysis failed to address the ``winner's curse'', as well as the intricate dependence among the observations \WFcomment{Intricate dependence?}. Our paper addressed these two issues and provided a simple test --- perform a unadjusted (two-tailed) binomial test of the winner and the runner-up. In this case, we test if $8$ is a significant observation in $\text{Binomial}\left(8 + 5, 0.5\right)$. The two-tailed $p$-value is $0.580811$, suggesting that the study was inconclusive.
+A sample of $20$ students from elementary and middle schools were asked to choose a top ``value'' from 7 different options: achievement, benevolence, fame, community feeling, financial success, self-acceptance, image and other. The results are tabulated in \Cref{tbl:fame}. The study postulates that fame is significantly the top value of choice. It proceeds to perform a binomial test for the null hypothesis that the participants chose among the $7$ options uniformly and concluded with a $p$-value of $0.006$ that fame is indeed the top desired value. The analysis failed to address the ``winner's curse'', as well as the dependence among the observations. Our paper addressed these two issues and provided a simple test --- perform a unadjusted (two-tailed) binomial test of the winner and the runner-up. In this case, we test if $8$ is a significant observation in $\text{Binomial}\left(8 + 5, 0.5\right)$. The two-tailed $p$-value is $0.580811$, suggesting that the study was inconclusive.
 
-\WFcomment{Ending is a bit abrupt.}
+This paper has provided a straightforward yet powerful method for verifying that the winner is the best, for joint distributions in the exponential family with mild condition. Such a test allows us to ``ignore'' the issues of selection and multiple-testing, which are often overlooked or mishandled.
 
 \bibliographystyle{plainnat}
 \bibliography{papers,additional}
