@@ -238,9 +238,17 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \end{customthm}
 
 \begin{proof}
+The type I error --- the probability of incorrectly declaring anyone other than the best to be the best --- is
+\[
+\PP\left[\bigcup_{j \text{ not best}} \text{declare } j \text{ best}\right] \leq \sum_j \PP\left[ \text{declare } j \text{ best} \mid j \text{ wins}\right] \PP[j \text{ wins}].
+\]
+Because only one candidate can win (recall that ties are broken randomly), it is sufficient to show for each $j$ that 
+$\PP_{H_{0j}}\left[ \text{reject } H_{0j} \mid j \text{ wins}\right] \leq \alpha$. 
+
+
 We start by assuming that we are working with the Lebesgue measure rather than the counting measure. The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
-Here, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$ and that ties are broken uniformly. For other cases, the following proof remains valid under relabeling. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j > 1$. For each of these we can construct an exact $p$-value $p_{1j}$. Hence by \Cref{lma:union}, a test based on $p_{1*} = \max_j p_{1j}$ would be valid for $H_{01}$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that the test based on $p_{12}$ coincides with the unadjusted pairwise test.
+To avoid notational clutter, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$. For other cases, the following proof remains valid under relabeling. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test based on $p_{1*} = \max_j p_{1j}$ would be valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that the test based on $p_{12}$ coincides with the unadjusted pairwise test.
 
 Our proof has three main parts:
 \begin{inlinelist}
@@ -258,12 +266,17 @@ $$D_{jk} = \frac{X_j - X_k}{2} ~~~~ \text{ and } ~~~~ M_{jk} = \frac{X_j + X_k}{
 
 We then re-parametrize to replace $X_1$ and $X_j$ with $D_{1j}$ and $M_{1j}$. The distribution is now an exponential family with sufficient statistics $D_{1j}, M_{1j}, X_{\setminus\left\{1, j\right\}}$ and corresponding natural parameters $\theta_1 - \theta_j, \theta_1 + \theta_j, \theta_{\setminus\left\{1, j\right\}}$. We now consider
 \begin{equation}
-\mathcal{L}_{\theta_1 - \theta_j = 0} \left(D_{1j} \;\middle|\; M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right), \text{ where } A_1 = \left\{D_{1j} \ge \max_{k \ne 1, j} X_k - M_{1j}\right\} \cap \left\{D_{1j} \ge 0\right\}.
+\mathcal{L}_{\theta_1 - \theta_j = 0} \left(D_{1j} \;\middle|\; M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right).
 \label{eqn:condlaw}
 \end{equation}
+We can rewrite the selection event in terms of our new parameterization as
+\begin{align*}
+A_1 &= \left\{X_1 \ge X_j\right\} \cap \left\{X_1 \ge \max_{k \neq 1,j} X_k\right\}\\
+&= \left\{D_{1j} \ge 0\right\} \cap \left\{D_{1j} \ge \max_{k \ne 1, j} X_k - M_{1j}\right\}.
+\end{align*}
 The conditional law in \Cref{eqn:condlaw}, in particular, is a truncated distribution
 \begin{align*}
-p\left(D_{1j}\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
+p\left(D_{1j} \mid \cdots\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
 & ~~~~~~~~ g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1} \\
 & \stackrel{\text{(a)}}{\propto} g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1},
 \end{align*}
@@ -386,6 +399,7 @@ Since the denominator of $p_{12}$ is half of the symmetric distribution before t
 \paragraph{Modification for counting measure}
 
 Now suppose the exponential family is defined on the counting measure instead. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers, and a ``full atom'' otherwise.
+\WFcomment{It also relies on the atoms on the two rays ``matching up,'' right?}
 \end{proof}
 
 As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test.
@@ -441,9 +455,9 @@ for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05
 
 To interpret, e.g., the lower left plot, suppose that in a poll of $m = 50$ respondents, one candidate enjoys $30\%$ support and the other $n - 1 = 9$ split the remainder ($\delta = \log\frac{0.3}{0.7 / 9} \approx 1.35$). Then our procedure has power approximately $0.3$ to detect the best candidate, while \citeauthor{Gupta:1967wg}'s procedure has power around $0.1$.
 
-A fundamental difference between the two methods is the definition of the threshold. The threshold from \citet{Gupta:1967wg} depends solely on the setup of the model: $m$ and $n$. Our threshold, however, depends on the data itself. Such difference is amplified when $n$ is large. When $n$ is large, $d$ from \citeauthor{Gupta:1967wg} is computed by considering the often-worst case scenario where $\pi = \left(\frac{1}{2}, \frac{1}{2}, 0, \ldots, 0\right)$. Hence $d$ is the $1-\alpha$ quantile of
+A fundamental difference between the two methods is the definition of the threshold. The threshold from \citet{Gupta:1967wg} depends solely on the setup of the model: $m$ and $n$. Our threshold, however, depends on the data itself. Such difference is amplified when $n$ is large. When $n$ is large, $d$ from \citeauthor{Gupta:1967wg} is computed by considering the often-worst case scenario where $\pi = \left(\frac{1}{2}, \frac{1}{2}, 0, \ldots, 0\right)$. Hence $d$ is the $1-\alpha$ \WFcomment{$1-\alpha/2$?} quantile of
 $$X_1 - X_2 \sim m - 2 \cdot \text{Binomial}\left(m, \frac{1}{2}\right) \approx \text{Normal}\left(0, m\right)$$
-and $d \approx \sqrt{m} z_\alpha$. On the other hand, our method defines a threshold based on the $1 - \frac{n}{n-1} \cdot \frac{\alpha}{2}$ quantile of
+and $d \approx \sqrt{m} z_\alpha$ \WFcomment{where $z_\alpha$ is BLAH}. On the other hand, our method defines a threshold based on the $1 - \frac{n}{n-1} \cdot \frac{\alpha}{2}$ quantile of
 $$X_1 - X_2 \mid X_1 + X_2 \sim X_1 + X_2 - 2 \cdot \text{Binomial}\left(X_1 + X_2, \frac{1}{2}\right),$$
 which is approximately $\sqrt{X_1 + X_2} z_{\alpha / 2}$. The smaller $\left(X_1 + X_2\right) / m$ is (e.g.\ if $\pi_1 + \pi_2$ is smaller), the more different the two thresholds are, suggesting that our test is more powerful.
 
