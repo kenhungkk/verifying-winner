@@ -238,12 +238,14 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 
 \begin{proof}
 The type I error --- the probability of incorrectly declaring any non-best to be the best --- is
+$$\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \PP\left[\text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \PP\left[j \text{ wins}\right],$$
+where $j^*$ is the best (fixed when the distribution is determined). The probability above is taken over all distributions where $j^*$ is the best. However, since there is exactly one winner at all times (recall that ties are broken at all times), it is sufficient to bound $\PP_{j^* \text{ is the best}}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right]$, for each $j \ne j^*$. Since $j^*$ being the best implies that $j$ is not the best, it is, in turn, sufficient to show that
+$$\PP_{j \text{ is not the best}}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \le \alpha,$$
+giving us
 \begin{equation}
-\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \PP\left[\text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \PP\left[j \text{ wins}\right],
+\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \alpha \cdot \PP\left[j \text{ wins}\right] \le \frac{n-1}{n} \alpha.
 \label{eq:marginal}
 \end{equation}
-where $j^*$ is the best (fixed when the distribution is determined). The probability above is taken over all distributions where $j^*$ is the best. However, since there is exactly one winner at all times (recall that ties are broken at all times), it is sufficient to bound $\PP_{j^* \text{ is the best}}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right]$, for each $j \ne j^*$. Since $j^*$ being the best implies that $j$ is not the best, it is, in turn, sufficient to show that
-$$\PP_{j \text{ is not the best}}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right].$$
 
 We start by assuming that we are working with the Lebesgue measure rather than the counting measure. The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
@@ -400,14 +402,7 @@ Since the denominator of $p_{12}$ is half of the symmetric distribution before t
 Now suppose the exponential family is defined on the counting measure instead. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers, and a ``full atom'' otherwise. The number of atoms on each ray is the same (after the extension $\tilde{A}$) and thus the atoms on each ray can be paired up. The inequalities above still hold for each pair of the atoms.
 \end{proof}
 
-As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test.
-
-The selective type I error we opted to control for Procedure 1 offers the conventional, marginal type I error rate, as shown in \eqref{eq:marginal}. More precisely with our notation in the proof,
-\begin{equation}
-\PP_{H_{01}}\left[\text{reject } H_{01}\right] = \PP_{H_{01}}\left[\text{Winner is } 1\right] \PP_{H_{01}}\left[\text{reject } H_{01} \;\middle|\; \text{Winner is } 1\right] \le \frac{n-1}{n} \alpha,
-\label{eqn:marginal}
-\end{equation}
-because, under the hypothesis $H_{01}$, the probability of $1$, which is not the best population, winning is at most $\frac{n-1}{n}$. Selective type I error rate control provides more than just marginal type I error rate control. \citet{Fithian:2015uj} has shown that it helps controlling familywise error rate, which we will utilize in \Cref{sec:stepdown}.
+As the construction of this test follows \citet{Fithian:2014ws}, it is also a UMPU selective level-$\alpha$ test. The selective type I error we opted to control for Procedure 1 offers more than just marginal type I error rate control. \citet{Fithian:2015uj} has shown that it helps controlling familywise error rate, which we will utilize in \Cref{sec:stepdown}.
 
 Finally, comparing the parameters $\theta_j$ has an even more appealing interpretation:
 
@@ -441,7 +436,7 @@ It also provides the algorithm computing $d$. Subset selection is closely relate
 
 \Cref{fig:power} gives the power curves for $\text{Multinomial}\left(m, \pi\right)$ and
 $$\pi \propto \left(e^\delta, 1, \ldots, 1\right),$$
-for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \Cref{eqn:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than \citeauthor{Gupta:1967wg}'s test.
+for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \eqref{eq:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than \citeauthor{Gupta:1967wg}'s test.
 
 \begin{figure}[htbp]
 \begin{center}
