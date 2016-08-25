@@ -274,9 +274,9 @@ Assume the model~\eqref{eqn:expfam} holds and $g\left(x\right)$ is a Schur-conca
 \end{customthm}
 
 \begin{proof}
-Let $j^*$ denote the (fixed) index of the best population, so $\theta_{j^*} \geq \max_{j\neq j^*} \theta_j$. The type I error --- the probability of incorrectly declaring any other $j$ to be the best --- is
+Let $j^*$ denote the (fixed) index of the best population, so $\theta_{j^*} \ge \max_{j\neq j^*} \theta_j$. The type I error --- the probability of incorrectly declaring any other $j$ to be the best --- is
 $$\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \PP\left[\text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \PP\left[j \text{ wins}\right],$$
-recalling that ties are broken randomly, so there is only one winner in any realization. Thus, it is enough to bound $\PP_{\theta}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \leq \alpha$, for each $j \ne j^*$, and for all $\theta$ with $j^* \in \argmax_j \theta_j$. Then we will have
+recalling that ties are broken randomly, so there is only one winner in any realization. Thus, it is enough to bound $\PP_{\theta}\left[ \text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \le \alpha$, for each $j \ne j^*$, and for all $\theta$ with $j^* \in \argmax_j \theta_j$. Then we will have
 \begin{equation}
 \PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \alpha \cdot \PP\left[j \text{ wins}\right] = \alpha \PP\left[j^* \text{ does not win}\right] \le \frac{n-1}{n} \alpha,
 \label{eq:marginal}
@@ -285,7 +285,7 @@ where the last inequality follows from \Cref{lma:margsharp}.
 
 We start by assuming that we are working with the Lebesgue measure rather than the counting measure (eliminating the possibility of ties). The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
-To minimize notational clutter, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \leq \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\leq \alpha$ coincides with the unadjusted pairwise test.
+To minimize notational clutter, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \le \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\le \alpha$ coincides with the unadjusted pairwise test.
 
 Our proof has three main parts:
 \begin{inlinelist}
@@ -535,19 +535,25 @@ $$\alpha \ge \frac{\int_{D_{12}}^\infty \exp\left(\delta^* z\right) g\left(M_{12
 indicating that $\delta^*$ is smaller than the confidence bound that Procedure 2' would report. Hence $\delta^*$ is a valid and conservative.
 \end{proof}
 
-Note that Procedure 2 reporting $-\infty$ in case of $\delta^*\leq 0$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\pi_{\text{Trump}} \geq \max_{j \ne \text{Trump}} \pi_{j} \geq 1.108$ (Trump leads the field by at least $10.8\%$).
+Note that Procedure 2 reporting $-\infty$ in case of $\delta^* \le 0$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\pi_{\text{Trump}} \ge \max_{j \ne \text{Trump}} \pi_{j} \ge 1.108$ (Trump leads the field by at least $10.8\%$).
 
 \section{Verifying Other Ranks: Is the Runner-Up Really the Second Best, etc.?}
 \label{sec:stepdown}
 \WFcomment{This whole section is too vague. The procedure, and even the decision problem, are not that familiar to most readers so they need to be set out very explicitly. I tried to improve this a bit but parts still need more work.}
 
 Often we will be interested in verifying ranks beyond the winner. More generally, we could imagine declaring that the first $j$ candidates are all in the correct order, that is
-\begin{equation}\label{eq:jrankscorrect}
-\theta_{[1]} > \ldots > \theta_{[j]} > \max_{k>j} \theta_{[k]}.
+\begin{equation}
+\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}.
+\label{eq:jrankscorrect}
 \end{equation}
-Let $j_0$ denote the largest $j$ for which~\eqref{eq:jrankscorrect} is true. Note that $j_0$ is both random and unknown, because it depends on both the data and population ranks. Procedure 3 declares that $j_0 \geq j$ if the unadjusted pairwise tests between $X_{[k]}$ and $X_{[k+1]}$, reject at level $\alpha$ for {\em all} of $k=1,\ldots,j$.
 
-Let $\hat{j}_0$ denote the number of ranks validated by a procedure (the number of rejections). Then the FWER of $\hat{j}_0$ is the probability that too many rejections are made; i.e. $\PP\left[\hat{j}_0 > j_0\right]$. For example, suppose that the top three data ranks and population ranks coincide, but not the fourth ($j_0=3$). Then we will have made a Type I error if we declare that the top five ranks are correct ($\hat{j}_0=5$), but not if we declare that the top two are correct ($\hat{j}_0=2$).
+Let $j_0$ denote the largest $j$ for which \eqref{eq:jrankscorrect} is true. Note that $j_0$ is both random and unknown, because it depends on both the data and population ranks. Procedure 3 declares that $j_0 \ge j$ if the unadjusted pairwise tests between $X_{[k]}$ and $X_{[k+1]}$, reject at level $\alpha$ for {\em all} of $k = 1, \ldots, j$.
+
+Using the example in \Cref{sec:intro} regarding the polls, we would like to produce a statement of ``Trump is the best, Cruz is the runner-up and Rubio is the second runner-up''. Procedure 3 performs unadjusted pairwise tests to ask if Cruz is really the runner-up upon verifying that Trump is the best, and if Rubio is really the second runner-up upon verifying that Cruz is the runner-up, etc., until we can no longer infer that a certain candidate really holds its rank.
+
+While we aim to declare more candidates to be in the correct order, declaring too many candidates, i.e.\ out-of-place candidates, to be in the right order is undesirable. While it is possible to consider false discovery rate (the expected portion of out-of-place candidates declared) here, we restrict our derivation to FWER (the probability of having out-of-place candidates declared).
+
+Formally, let $\hat{j}_0$ denote the number of ranks validated by a procedure (the number of rejections). Then the FWER of $\hat{j}_0$ is the probability that too many rejections are made; i.e. $\PP\left[\hat{j}_0 > j_0\right]$. For example, suppose that the top three data ranks and population ranks coincide, but not the fourth ($j_0=3$). Then we will have made a Type I error if we declare that the top five ranks are correct ($\hat{j}_0=5$), but not if we declare that the top two are correct ($\hat{j}_0=2$).
 
 To show that Procedure 3 is valid, we will prove the validity of a more liberal Procedure 3', described below.
 
@@ -580,30 +586,47 @@ To show that Procedure 3 is valid, we will prove the validity of a more liberal 
 	\caption{Procedure 3', a more liberal version of Procedure 3}
 \end{algorithm}
 
-Later we will see that Procedure 3 is mostly the same as Procedure 3', except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
+Later we will see that Procedure 3 is equivalent to Procedure 3' for the most part, except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
 
 \begin{theorem}
-Procedure 3' is a step-down procedure that infers $j_0$ above with the FWER controlled at $\alpha$.
-\WFcomment{``Infers'' is too vague. We need to say exactly what is true of the procedure, in rigorous mathematical terms.}
+Procedure 3' is a step-down procedure that an estimate $\hat{j}_0$ of $j_0$ at the FWER controlled at $\alpha$, where $j_0$ is given by
+$$j_0 = \max_j \left\{\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}\right\}.$$
 \end{theorem}
 
 \begin{proof}
-This problem falls into the sequential goodness-of-fit testing framework proposed by \citet{Fithian:2015uj}. Given the observations $X_{[1]} \ge \cdots \ge X_{[n]}$, define the $j$th null hypothesis as
-$$\widetilde{H}_{0j}: \theta_{[j]} \le \max_{k > j} \theta_{[k]}.$$
+We will first show that Procedure 3' falls into the sequential goodness-of-fit testing framework proposed by \citet{Fithian:2015uj}. Then we will show that it satisfies the subpath sufficiency principle (SSP) and construct the $p$-values. These constructions suffice to show that FWER is controlled by Theorem 4 in \citet{Fithian:2015uj}.
 
-$\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$ are all false if and only if $\theta\notin \mathcal{M}_j(X)$, where the $\mathcal{M}_j$ represent a sequence of nested models:
-$$\mathcal{M}_1\left(X\right) \subseteq \cdots \subseteq \mathcal{M}_n\left(X\right), \quad\text{ where }~~ \mathcal{M}_j\left(X\right)^c = \left\{\theta:\; \theta_{[1]} > \cdots > \theta_{[j]} > \max_{k > j} \theta_{[k]}\right\}.$$
-Thus, returning $\hat{j}_0=j$ amounts to rejecting $\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$, or equivalently determining that the models $\mathcal{M}_1(X),\ldots,\mathcal{M}_j(X)$ do {\em not} fit the data.
+\paragraph{Application of the sequential goodness-of-fit testing framework}
 
-\WFcomment{The rest of this proof seems correct but is hard to follow. Can you try to go through and clean it up a bit?}
+Upon observing $X_{[1]} \ge \cdots \ge X_{[n]}$, we can set up a sequence of nested model
+$$\mathcal{M}_1\left(X\right) \subseteq \cdots \subseteq \mathcal{M}_n\left(X\right), \quad\text{ where } \mathcal{M}_j\left(X\right)^c = \left\{\theta:\; \theta_{[1]} > \cdots > \theta_{[j]} > \max_{k > j} \theta_{[k]}\right\}.$$
+If we define the $j$-th null hypothesis as
+$$\widetilde{H}_{0j}: \theta_{[j]} \le \max_{k > j} \theta_{[k]},$$
+then $\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$ are all false if and only if $\theta\notin \mathcal{M}_j(X)$.
 
-We can construct selective $p$-values by conditioning on $\mathcal{M}_j\left(X\right)$, as well as other variables corresponding to the nuisance parameters. Specifically, we are conditioning on the selection of the model $\mathcal{M}_j\left(X\right)$ \WFcomment{Why? Also, we are conditioning on more things as well.}. We can take $p_j$ to be the survival function of the conditional law
+In other words, $\mathcal{M}_j\left(X\right)$ is a family of distributions that does not have all first $j$ ranks correct. As we will see later, each step in Procedure 3' corresponds to testing $\widetilde{H}_{0j}$, stating that without the first $j$ ranks correct, it is hard to explain the observations. Thus, returning $\hat{j}_0 = j$ amounts to rejecting $\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$, or equivalently determining that the models $\mathcal{M}_1(X), \ldots, \mathcal{M}_j(X)$ do {\em not} fit the data.
+
+\paragraph{Demonstration of the SSP} As in the proof of Parts 1 and 2 of \Cref{thm:main} before, we drop the square brackets subscripts for convenience here, while maintaining that the sample ranks are random. Under the model $\mathcal{M}_j\left(X\right)$, the minimal sufficient statistic is simply $X$. The sufficient filtration \citep{Fithian:2015uj} is thus
+$$\mathscr{F}_j = \sigma\left(\mathcal{M}_0\left(X\right), \ldots, \mathcal{M}_j\left(X\right), X\right) = \sigma\left(X\right),$$
+where $\mathcal{M}_k\left(X\right)$ above refers to the choice of the model as a random variable, and thus measurable in $\sigma\left(X\right)$. This is the same as $\sigma\left(\mathcal{M}_j\left(X\right), X\right) = \sigma\left(X\right)$ for all $j$. Thus the random sequence of model satisfies SSP.
+
+Now if we construct valid selective $p$-values, the $p$-values sequence will be independent on nulls, as defined and shown in Theorem 4 of \citet{Fithian:2015uj} and FWER will be controlled.
+
+\KHcomment{It occured to me that the minimal sufficient statistic should be the entire $X$, as the sequence of model does not assert $\theta_j = \theta_{j+1}$.}
+
+\paragraph{Construction of the selective $p$-values}
+
+As defined in \citet{Fithian:2015uj}, a selective $p$-value $p_j$, for testing $H_{0j}: \theta \in \mathcal{M}_j\left(X\right)$ is valid if and only if
+$$\PP_\theta\left(p_j \le \alpha \;\middle|\; \mathcal{M}_j\right) \le \alpha \text{ a.s.\ on } \left\{\theta \in \mathcal{M}_j\left(X\right)\right\}.$$
+
+\KHcomment{Testing $H_{0j}$ is not the same $\widetilde{H}_{0j}$, need fixes.}
+
+By smoothing, we can construct selective $p$-values by conditioning on $\mathcal{M}_j\left(X\right)$, as well as other variables corresponding to the nuisance parameters. Specifically, we are conditioning on the choice of the model $\mathcal{M}_j\left(X\right)$ and the variables $X_1, \ldots, X_{j-1}, X_{j+1}, \ldots, X_n$ and $M_{j\left(j+1\right)}$ as defined in earlier in the proof of Part 1 of \Cref{thm:main}. We can take $p_j$ to be the survival function of the conditional law
 \begin{align}
 &~ \mathcal{L}_{\theta_j = \theta_{j+1}} \left(D_{j\left(j+1\right)} \;\middle|\; \mathcal{M}_j\left(X\right), X_1, \ldots, X_{j-1}, M_{j\left(j+1\right)}, X_{j+2}, \ldots, X_n\right) \nonumber \\
 = &~ \mathcal{L}_{\theta_j = \theta_{j+1}} \left(D_{j\left(j+1\right)} \;\middle|\; \left\{X_1 \ge \ldots \ge X_j \ge \max_{k > j} X_k\right\}, X_1, \ldots, X_{j-1}, M_{j\left(j+1\right)}, X_{j+2}, \ldots, X_n\right) \nonumber \\
 = &~ \mathcal{L}_{\theta_j = \theta_{j+1}} \left(D_{j\left(j+1\right)} \;\middle|\; \left\{X_{j-1} \ge X_j \ge M_{j\left(j+1\right)}\right\}, X_1, \ldots, X_{j-1}, M_{j\left(j+1\right)}, X_{j+2}, \ldots, X_n\right). \label{eqn:step_down_law}
 \end{align}
-\WFcomment{Why does all this work? Maybe cite a specific theorem in Fithian et al. (2015)?}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -626,25 +649,25 @@ We can construct selective $p$-values by conditioning on $\mathcal{M}_j\left(X\r
 	\draw[thick] (A) -- (B) node[midway, above right] {$A$};
 	\draw[thick] (B) -- (C3) node[midway, below left] {$B$};
 	\fill (C3) circle(2pt);
-	\fill (A) circle(2pt) node[above right] {$\left(M_{12}, M_{12}, X_3\right)$};
-	\fill (B) circle(2pt) node[right] {$\left(X_1, X_2, X_3\right)$};
+	\fill (A) circle(2pt) node[above right] {$\left(M_{j\left(j+1\right)}, M_{j\left(j+1\right)}, X_k\right)$};
+	\fill (B) circle(2pt) node[right] {$\left(X_j, X_{j+1}, X_k\right)$};
 	\draw[thick] (C) -- (B) node[midway, below right] {$C$};
-	\node[below] at (C) {$\left(M_{13}, X_2, M_{13}\right)$};
+	\node[below] at (C) {$\left(M_{jk}, X_{j+1}, M_{jk}\right)$};
 	\draw[thick] (B) -- (C4) node[midway, above left] {$D$};
 	\fill (C4) circle(2pt);
 	\fill ($(0, 0)!(B)!(C2)$) circle(2pt);
 	\draw[thick, dashed] (A) -- (D) node[midway, below left] {$\tilde{A}$};
-	\fill (D) circle(2pt) node[above] {$\left(M_{13}, X_2 + D_{13}, X_3\right)$};
+	\fill (D) circle(2pt) node[above] {$\left(M_{jk}, X_{j+1} + D_{jk}, X_k\right)$};
 	\draw[thick, dotted] (C) -- (D) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] (A) -- ++(0, -3) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] ($(B) + (30:4)$) -- ($(B) + (330:4)$) node[midway, below, rotate=-90] {$\succeq$};
 \end{tikzpicture}
 \end{center}
-\caption{The two $p$-values constructed corresponds to taking integrals of $g$ along these segments, that lie on a level set of $x_j + x_{j+1} + x_k$. The dashed line corresponds to extension in \Cref{eqn:int_extension}. The dotted line on the far right is the truncation that enforces $X_j < X_{j-1}$.}
+\caption{The two $p$-values constructed corresponds to taking integrals of $g$ along these segments, that lie on a level set of $x_j + x_{j+1} + x_k$. The dashed line corresponds to extension in \eqref{eqn:int_extension}. The dotted line on the far right is the truncation that enforces $X_j < X_{j-1}$.}
 \label{fig:crop_rays}
 \end{figure}
 
-Here we are only comparing $X_j$ to $X_{j+1}$ by \Cref{sec:winnerbest}. The upper truncation for $X_j$ can be represented by cropping \Cref{fig:compare_rays} along a vertical line, shown in \Cref{fig:crop_rays}, thus the proof of Part 1 of \Cref{thm:main} that it suffices to compare $X_1$ and $X_2$ remains valid with appropriate conditioning. Again we can construct the $p$-values as in \Cref{eqn:p1j} for $k>j$.
+Here we are only comparing $X_j$ to $X_{j+1}$ by \Cref{sec:winnerbest}. The upper truncation for $X_j$ can be represented by cropping \Cref{fig:compare_rays} along a vertical line, shown in \Cref{fig:crop_rays}. Thus the proof of Part 1 of \Cref{thm:main} that it suffices to compare $X_1$ and $X_2$ remains valid. Again we can construct the $p$-values as in \Cref{eqn:p1j} for $k>j$.
 
 $$p_{jk} = \frac{\int_{D_{jk}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_{j+1} - M_{jk}, 0\right\}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}.$$
 
@@ -654,15 +677,9 @@ Hence similar to the proof of Part 1 of \Cref{thm:main}, Schur-concavity ensures
 \end{align*}
 for all $\theta \in M$, where $M$ is the selected model, by tower property. Note that the conditioning is indeed a random event as the order of $\theta$ depends on $X$ (emphasized with the square brackets here).
 
-The conditioning above indeed holds some significance. The sufficient filtration \citep{Fithian:2015uj} $\mathscr{F}_k$ is given as the $\sigma$-field
-\begin{align*}
-\mathscr{F}_k & = \sigma\left(\mathcal{M}_0\left(X\right), \ldots, \mathcal{M}_j\left(X\right), X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right) \\
-& = \sigma\left(\left\{X_1 > \ldots > X_j > \max_{k>j} X_k\right\}, X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right) \\
-& = \sigma\left(\mathcal{M}_j\left(X\right), X_1, \ldots, X_{j-1}, \frac{X_j + X_{j+1}}{2}, X_{j+2}, \ldots, X_n\right),
-\end{align*}
-which is the conditioning we used just now. Hence the nested sequence of model satisfies the subpath sufficiency principle , and the $p$-values sequence $p_j$ is independent on nulls, as defined in and shown in Theorem 4 of \citet{Fithian:2015uj}. Thus the step-down procedure where we keep rejecting $H_{0j}$ until the first time that $p_j > \alpha$ controls FWER.
+\paragraph{FWER is controlled}
 
-\WFcomment{Should the reference to SSP be earlier if you are going to say it? Also, is it actually necessary to bring up the SSP? You've already said directly that we are conditioning on $X_{[1]}$ through $X_{[j-1]}$. More generally, if we can sidestep the more generic langauge of that paper and substitute more specific language for our specific problem, I think that will make this a lot more readable.}
+\WFcomment{You've already said directly that we are conditioning on $X_{[1]}$ through $X_{[j-1]}$. More generally, if we can sidestep the more generic language of that paper and substitute more specific language for our specific problem, I think that will make this a lot more readable.}
 \end{proof}
 
 \begin{customthm}[Part 3 of \Cref{thm:main}]
