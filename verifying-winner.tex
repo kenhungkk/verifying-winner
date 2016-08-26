@@ -550,7 +550,7 @@ Let $j_0$ denote the largest $j$ for which \eqref{eq:jrankscorrect} is true. Not
 
 Using the example in \Cref{sec:intro} regarding the polls, we would like to produce a statement of ``Trump is the best, Cruz is the runner-up and Rubio is the second runner-up''. Procedure 3 performs unadjusted pairwise tests to ask if Cruz is really the runner-up upon verifying that Trump is the best, and if Rubio is really the second runner-up upon verifying that Cruz is the runner-up, etc., until we can no longer infer that a certain candidate really holds its rank.
 
-While we aim to declare more candidates to be in the correct order, declaring too many candidates, i.e.\ out-of-place candidates, to be in the right order is undesirable. While it is possible to consider false discovery rate (the expected portion of out-of-place candidates declared) here, we restrict our derivation to FWER (the probability of having out-of-place candidates declared).
+While we aim to declare more candidates to be in the correct order, declaring too many candidates, i.e.\ out-of-place candidates, to be in the right order is undesirable. It is possible to consider false discovery rate (the expected portion of out-of-place candidates declared) here, but we restrict our derivation to FWER (the probability of having any out-of-place candidates declared).
 
 Formally, let $\hat{j}_0$ denote the number of ranks validated by a procedure (the number of rejections). Then the FWER of $\hat{j}_0$ is the probability that too many rejections are made; i.e. $\PP\left[\hat{j}_0 > j_0\right]$. For example, suppose that the top three data ranks and population ranks coincide, but not the fourth ($j_0 = 3$). Then we will have made a Type I error if we declare that the top five ranks are correct ($\hat{j}_0 = 5$), but not if we declare that the top two are correct ($\hat{j}_0 = 2$).
 
@@ -588,7 +588,7 @@ To show that Procedure 3 is valid, we will prove the validity of a more liberal 
 	\label{alg:proc3}
 \end{algorithm}
 
-Later we will see that Procedure 3 is equivalent to Procedure 3' for the most part, except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
+Procedure 3 is equivalent to Procedure 3' for the most part, except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
 
 \begin{theorem}
 Procedure 3' is a step-down procedure that an estimate $\hat{j}_0$ of $j_0$ at the FWER controlled at $\alpha$, where $j_0$ is given by
@@ -596,7 +596,7 @@ $$j_0 = \max_j \left\{\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{
 \end{theorem}
 
 \begin{proof}
-We will first show that Procedure 3' falls into the sequential goodness-of-fit testing framework proposed by \citet{Fithian:2015uj}. We thus analyze Procedure 3' as a special case of the BasicStop procedure on random hypothesis, described in the same paper. This enables us to construct valid selective $p$-values and derives Procedure 3'.
+We will first show that Procedure 3' falls into the sequential goodness-of-fit testing framework proposed by \citet{Fithian:2015uj}. We thus analyze Procedure 3' as a special case of the BasicStop procedure on random hypothesis, described in the same paper. This enables us to construct valid selective $p$-values and derive Procedure 3'.
 
 \paragraph{Application of the sequential goodness-of-fit testing framework}
 
@@ -616,12 +616,12 @@ Adapting this notation, the FWER can be viewed as $\PP\left[\text{reject } H_{0 
 
 \paragraph{Special case of the BasicStop procedure}
 
-While impractical, Procedure 3' can be thought of as performing all $n$ tests first, producing a sequence of $p$-values $p_j$, returning
+While impractical, Procedure 3' can be thought of as performing all $n$ tests first, producing a sequence of $p$-values $p_j$, and returning
 \begin{equation}
 \hat{j}_0 = \min\left\{j: p_j > \alpha\right\} - 1.
 \label{eq:basicstop}
 \end{equation}
-This is a special case of the BasicStop procedure. Instead simply checking that Procedure 3' fits all the requirement for FWER control in BasicStop, we will give the construction of Procedure 3', assuming that we are to estimate $j_0$ with BasicStop.
+This is a special case of the BasicStop procedure. Instead of simply checking that Procedure 3' fits all the requirement for FWER control in BasicStop, we will give the construction of Procedure 3', assuming that we are to estimate $j_0$ with BasicStop.
 
 In general, the FWER for BasicStop can be rewritten as $\PP\left[p_{j_0+1} \le \alpha\right]$. This is however difficult to analyze, as $j_0$ itself is random and dependent on $X$, thus we break the FWER down as follows:
 \begin{align*}
@@ -636,7 +636,7 @@ Thus it suffices to construct the $p$-values such that
 \label{eq:basicstopreq}
 \end{equation}
 
-\paragraph{Construction of $p$-values}
+\paragraph{Considerations for conditioning}
 
 By smoothing, we are free to condition on additional variables in \eqref{eq:basicstopreq}. A logical choice that simplified \eqref{eq:basicstopreq} is conditioning on the variables $\mathcal{M}_{j-1}\left(X\right)$ and $\mathcal{M}_j\left(X\right)$. Note that the choice of the model $\mathcal{M}_j\left(X\right)$, once again, based solely on the random indices $[1], \ldots, [j]$, so conditioning on both $\mathcal{M}_{j-1}\left(X\right)$ and $\mathcal{M}_j\left(X\right)$ is equivalent to conditioning on the random indices $[1], \ldots, [j]$, which in turns is equivalent to conditioning on the $\sigma$-field generated by the partition of the observation space $X$
 $$\left\{\left\{X_{\tau_1} \ge \cdots \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k}\right\}: \tau \text{ is any permutation of } \left(1, \ldots, n\right)\right\},$$
@@ -644,6 +644,9 @@ or colloquially, the set of all possible choices of $[1], \ldots, [j]$. Within e
 
 As a brief summary, we want to construct $p$-values $p_j$ such that
 $$\PP_{\substack{\theta_{\tau_1} > \cdots > \theta_{\tau_j} \\ \theta_{\tau_j} \le \max_{k>j} \theta_{\tau_k}}} \left[p_j \le \alpha \;\middle|\; X_{\tau_1} \ge \cdots \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k}\right].$$
+
+\paragraph{Construction of the $p$-values}
+
 To avoid the clutter in the subscript notation, we will drop the $\tau$ in the subscript. Hence our goal is now
 $$\PP_{\substack{\theta_1 > \cdots > \theta_j \\ \theta_j \le \max_{k>j} \theta_k}} \left[p_j \le \alpha \;\middle|\; X_1 \ge \cdots \ge X_j \ge \max_{k>j} X_k\right]$$
 Construction of $p_j$ for other permutations $\tau$ can be obtained similarly.
@@ -662,11 +665,11 @@ For the hypothesis $H_{0jk}: \theta_j \le \theta_k$, we can construct $p_{jk}$, 
 = &~ \mathcal{L}_{\theta_j = \theta_k} \left(D_{jk} \;\middle|\; \left\{X_{j-1} \ge X_j \ge \max_{\substack{\ell>j \\ \ell \ne k}} X_\ell \text{ and } X_j \ge M_{jk}\right\}, X_{\setminus\left\{j, k\right\}}, M_{jk}\right)
 \end{align*}
 
-It is not necessarily true that $X_{j+1} = \max_{\ell > j} X_\ell$, but we will use so as a shorthand and simplify our notation. Now the $p$-values are similar to the ones in \Cref{eq:p1j} for $k>j$.
+It is not necessarily true that $X_{j+1} = \max_{\ell > j} X_\ell$, but we will use so as a shorthand and simplify our notation. Now the $p$-values are similar to the ones in \Cref{eq:p1j}, for $k>j$:
 
 $$p_{jk} = \frac{\int_{D_{jk}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_{j+1} - M_{jk}, 0\right\}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}.$$
 
-We can graphically represent this in a diagram (\Cref{fig:croprays}) similar to \Cref{fig:comparerays}.
+We can graphically represent $p_{jk}$ in \Cref{fig:croprays}, a diagram analogous to \Cref{fig:comparerays}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -709,9 +712,10 @@ We can graphically represent this in a diagram (\Cref{fig:croprays}) similar to 
 
 We have $p_{j(j+1)} \ge \max_{k>j} p_{jk}$ by \Cref{sec:winnerbest}: the upper truncation for $X_j$ can be represented by cropping \Cref{fig:comparerays} along a vertical line, shown in \Cref{fig:croprays}. Considering $p_{j(j+1)}$ is sufficient in rejecting all the $H_{0jk}$. We will take $p_j' = p_{j(j+1)}$, noting that this is the $p$-value that Procedure 3' would produce. In fact, $p_j'$ is also the $p$-value we would have constructed if we were to reject only $\widetilde{H}_{0j}$.
 
-Upon constructing $p_j$, one should realize that the $p$-values for testing $\theta_k \le \theta_{k+1}$ would have been constructed in earlier iterations of BasicStop. In other words, $p_j = \max_{k \le j} p_k'$ is the sequence of $p$-values that works with BasicStop. However, from \eqref{eq:basicstop},
+Upon constructing $p_j$, one should realize that the $p$-values for testing $\theta_k \le \theta_{k+1}$ would have been constructed in earlier iterations of BasicStop, as $p_k'$. In other words, $p_j = \max_{k \le j} p_k'$ is the sequence of $p$-values that works with BasicStop. However, from \eqref{eq:basicstop},
 $$\hat{j}_0 = \min\left\{j: \max_{k \le j} p_k' > \alpha\right\} - 1 = \min\left\{j: p_j' > \alpha\right\} - 1,$$
 so it is safe to apply BasicStop to $p_j'$ directly, yielding Procedure 3'.
+\end{proof}
 
 \begin{customthm}[Part 3 of \Cref{thm:main}]
 Assume the model~\eqref{eq:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Procedure 3 is a conservative step-down procedure with FWER no larger than $\alpha$.
