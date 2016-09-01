@@ -193,7 +193,7 @@ A Schur-concave function is symmetric by default since $a \succeq b$ and $b \suc
 
 \begin{example}[Independent binomial treatment outcomes in a clinical trial]
  If each of $n$ different treatments are applied to $m$ patients independently, the number of positive outcomes $X_j$ for treatment $j$ is $\text{Binomial}\left(m, p_j\right)$. The best treatment would be the treatment with the highest success probability $p_j$. The joint distribution of $X$ is given by
-$$p\left(x\right) \propto \exp\left(x' \left(\log p\right)\right) \frac{1}{x_1! \left(m-x_1\right)! \cdots x_n! \left(m-p_n\right)!}$$
+$$p\left(x\right) \propto \exp\left(x' \left(\log p\right)\right) \frac{1}{x_1! \left(m-x_1\right)! \cdots x_n! \left(m-x_n\right)!}$$
 The carrier measure above is Schur-concave.
 \end{example}
 
@@ -208,7 +208,7 @@ $$p\left(x\right) = \exp\left(2\theta' x\right) g\left(x\right),$$
 where $g\left(x\right)$ is a function that counts the number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave. Therefore, we can use Procedures 1--3 to compare player qualities.
 \end{example}
 
-\begin{example}[Comparing the variances of different normal populations] Suppose there are $n$ normal populations with laws $N\left(\mu_j, \sigma_j^2\right)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $R_j$. By Cochran's theorem, $\left(m-1\right) R_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $R$ is
+\begin{example}[Comparing the variances of different normal populations] Suppose there are $n$ normal populations with laws $N(\mu_j, \sigma_j^2)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $R_j$. By Cochran's theorem, $\left(m-1\right) R_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $R$ is
 \begin{align*}
 r & \sim \prod_{j=1}^n \left(\frac{\left(m-1\right) r_j}{\sigma_j^2}\right)^{\left(m-3\right) / 2} e^{-\left(m-1\right) r_j / 2 \sigma_j^2} 1_{\left\{r_j > 0 \right\}} \\
 & \propto \exp\left(-\frac{m-1}{2 \sigma_1^2} r_1 - \cdots - \frac{m-1}{2 \sigma_n^2} r_n\right) \prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}.
@@ -226,9 +226,9 @@ For a multivariate exponential family with a symmetric carrier distribution, $X_
 \end{theorem}
 
 \begin{proof}
-It suffices to prove the ``if'' part, as the ``only if'' part can be follows from swapping the role of $\theta_1$ and $\theta_2$. For any fixed $a$, and $X_1 \ge a$ and $X_2 < a$, we have $X_1 > X_2$ and
-$$\exp\left(\theta_1 X_1 + \theta_2 X_2 + \cdots + \theta_n X_n - \psi\left(\theta\right)\right) g\left(X\right) \ge \exp\left(\theta_1 X_2 + \theta_2 X_1 + \cdots + \theta_n X_n - \psi\left(\theta\right)\right) g\left(X\right).$$
-Integrating both sides over the region $\left\{X: X_1 \ge a, X_2 < a\right\}$ gives
+It suffices to prove the ``if'' part, as the ``only if'' part can be follows from swapping the role of $\theta_1$ and $\theta_2$. For any fixed $a$, and $x_1 \ge a$ and $x_2 < a$, we have $x_1 > x_2$ and
+$$\exp\left(\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_n x_n - \psi\left(\theta\right)\right) g\left(x\right) \ge \exp\left(\theta_1 x_2 + \theta_2 x_1 + \cdots + \theta_n x_n - \psi\left(\theta\right)\right) g\left(x\right).$$
+Integrating both sides over the region $\left\{x: x_1 \ge a, x_2 < a\right\}$ gives
 $$\PP\left[X_1 \ge a, X_2 < a\right] \ge \PP\left[X_1 < a, X_2 \ge a\right].$$
 Now adding $\PP\left[X_1 \ge a, X_2 \ge a\right]$ to both probabilities gives
 $$\PP\left[X_1 \ge a\right] \ge \PP\left[X_2 \ge a\right],$$
@@ -254,8 +254,8 @@ If $\theta_1 \ge \max_{j \ne 1} \theta_j$, then $\PP\left[1 \text{ wins}\right] 
 \end{lemma}
 
 \begin{proof}
-We can prove so with a coupling argument: for any sequence $X_1, X_2, \ldots, X_n$, define $Y_1, Y_2, \ldots, Y_n$, obtained by swapping $X_1$ with the largest value in the sequence $X$. Hence
-$$\exp\left(\theta_1 Y_1 + \theta_2 Y_2 + \cdots + \theta_n Y_n - \psi\left(\theta\right)\right) g\left(X\right) \ge \exp\left(\theta_1 X_1 + \theta_2 X_2 + \cdots + \theta_n X_n - \psi\left(\theta\right)\right) g\left(X\right).$$
+We can prove so with a coupling argument: for any sequence $x_1, x_2, \ldots, x_n$, define $y_1, y_2, \ldots, y_n$, obtained by swapping $x_1$ with the largest value in the sequence $x$. Hence
+$$\exp\left(\theta_1 y_1 + \theta_2 y_2 + \cdots + \theta_n y_n - \psi\left(\theta\right)\right) g\left(X\right) \ge \exp\left(\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_n x_n - \psi\left(\theta\right)\right) g\left(X\right).$$
 Integrating both sides over $\mathbb{R}^n$ (or $\mathbb{Z}^n$ in the case of counting measure) gives
 $$n \PP\left[1 \text{ wins}\right] \ge 1$$
 as desired.
@@ -279,7 +279,7 @@ where the last inequality follows from \Cref{lma:margsharp}.
 
 We start by assuming that we are working with the Lebesgue measure rather than the counting measure (eliminating the possibility of ties). The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
-To minimize notational clutter, we consider only the case where the winner is $1$ and the runner-up is $2$, etc., i.e.\ $X_1 \ge \cdots \ge X_n$. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \le \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\le \alpha$ coincides with the unadjusted pairwise test.
+To minimize notational clutter, we consider only the case where the winner is $1$, i.e.\ $X_1 \ge \max_{j > 1} X_j$. Furthermore, we will denote the runner-up with $2$. This is not necessarily true, but we will use it as a shorthand to simplify our notation. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \le \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\le \alpha$ coincides with the unadjusted pairwise test.
 
 Our proof has three main parts:
 \begin{inlinelist}
@@ -305,14 +305,12 @@ We can rewrite the selection event in terms of our new parameterization as
 A_1 &= \left\{X_1 \ge X_j\right\} \cap \left\{X_1 \ge \max_{k \neq 1,j} X_k\right\}\\
 &= \left\{D_{1j} \ge 0\right\} \cap \left\{D_{1j} \ge \max_{k \ne 1, j} X_k - M_{1j}\right\}.
 \end{align*}
-The conditional law in \Cref{eq:condlaw}, in particular, is a truncated distribution
+The conditional law of $D_{1j}$ in \eqref{eq:condlaw}, in particular, is a truncated distribution\footnote{Here consider this as a one-dimensional distribution of $D_{1j}$ on $\RR$, where $M_{1j}$ and $X_{\setminus\left\{1, j\right\}}$ are treated as fixed.}
 \begin{align*}
-p\left(D_{1j} \mid M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
-& \quad\quad g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1} \\
-& \stackrel{\text{(a)}}{\propto} g\left(M_{ij} + D_{ij}, X_2, \ldots, M_{ij} - D_{ij}, \ldots X_n\right) 1_{A_1},
+p\left(d_{1j} \mid M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) d_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
+& \quad\quad g\left(M_{1j} + d_{ij}, X_2, \ldots, M_{ij} - d_{ij}, \ldots X_n\right) 1_{A_1} \\
+& \stackrel{\text{(a)}}{\propto} g\left(M_{1j} + d_{1j}, X_2, \ldots, M_{1j} - d_{1j}, \ldots X_n\right) 1_{A_1},
 \end{align*}
-\WFcomment{This notation is confusing because there should also be another indicator that $M_{ij}=m_{ij}$ where $m_{ij}$ is the realized value this time, also for $X_{\setminus\left\{1,j\right\}}=x_{\cdots}$.}
-\KHcomment{It seems appropriate as conditioning should give a density in terms of the variables being conditioned. Clarified the variables conditioned on nonetheless.}
 where at step (a), conditioning on $X_{\setminus\left\{1, j\right\}}$ and $M_{1j}$ removes dependence on $\theta_{\setminus\left\{1, j\right\}}$ and $\theta_1 + \theta_j$ respectively, while $\theta_1 - \theta_j$ is taken to be $0$ under our null hypothesis.
 
 The $p$-value for $H_{01j}$ is thus
@@ -454,21 +452,21 @@ for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width = \textwidth]{plotMultinomialPower}
+\includegraphics[width = \textwidth, clip, trim = {4cm 2cm 4cm 2cm}]{plotMultinomialPower}
 \end{center}
 \caption{Power curves as a function of $\delta$. The plots in the first row all have $m = 50$ and the second row $m = 250$. The solid line and the dashed line are the power for the selective test and Gupta and Nagel's test, respectively.}
 \label{fig:power}
 \end{figure}
 
-To interpret, e.g., the upper right panel of Figure~\ref{fig:power}, suppose that in a poll of $m = 50$ respondents, one candidate enjoys $30\%$ support and the other $n - 1 = 9$ split the remainder ($\delta = \log\frac{0.3}{0.7 / 9} \approx 1.35$). Then our procedure has power approximately $0.3$ to detect the best candidate, while \citeauthor{Gupta:1967wg}'s procedure has power around $0.1$.
+To interpret, e.g., the upper right panel of \Cref{fig:power}, suppose that in a poll of $m = 50$ respondents, one candidate enjoys $30\%$ support and the other $n - 1 = 9$ split the remainder ($\delta = \log\frac{0.3}{0.7 / 9} \approx 1.35$). Then our procedure has power approximately $0.3$ to detect the best candidate, while \citeauthor{Gupta:1967wg}'s procedure has power around $0.1$.
 
 To understand why our method is more powerful, note that both procedures operate by comparing $X_{[1]}-X_{[2]}$ to some threshold, but the two methods differ in how that threshold is determined. The threshold from \citet{Gupta:1967wg} is fixed and depends on $m$ and $n$ alone, whereas in our procedure the threshold depends on $X_{[1]}+X_{[2]}$, a data-adaptive choice. 
 
-The difference between the two methods is amplified when $n$ is large and $\pi_{[1]} \ll 1/2$. In that case, $d$ from \citeauthor{Gupta:1967wg} is usually computed based on the worst-case scenario $\pi = \left(\frac{1}{2}, \frac{1}{2}, 0, \ldots, 0\right)$; i.e. $d$ is the upper $\alpha$ quantile of
+The difference between the two methods is amplified when $n$ is large and $\pi_{(1)} \ll 1/2$. In that case, $d$ from \citeauthor{Gupta:1967wg} is usually computed based on the worst-case scenario $\pi = \left(\frac{1}{2}, \frac{1}{2}, 0, \ldots, 0\right)$; i.e.\ $d$ is the upper $\alpha$ quantile of
 $$X_1 - X_2 \sim m - 2 \cdot \text{Binomial}\left(m, \frac{1}{2}\right) \approx \text{Normal}\left(0, m\right).$$
 Thus $d \approx \sqrt{m} z_\alpha$, where $z_\alpha$ is the upper $\alpha$ quantile of a standard Gaussian. On the other hand, our method defines a threshold based on the upper $\frac{n}{n-1} \cdot \frac{\alpha}{2}$ quantile of
 $$X_1 - X_2 \mid X_1 + X_2 \sim X_1 + X_2 - 2 \cdot \text{Binomial}\left(X_1 + X_2, \frac{1}{2}\right),$$
-which is approximately $\sqrt{X_1 + X_2} z_{\alpha / 2}$. If $\pi_{[1]} \ll 1/2$ then with high probability $X_1 + X_2 \ll  m$, making our test much more liberal.
+which is approximately $\sqrt{X_1 + X_2} z_{\alpha / 2}$. If $\pi_{(1)} \ll 1/2$ then with high probability $X_1 + X_2 \ll  m$, making our test much more liberal.
 
 \section{Confidence Bounds on Differences: By How Much?}
 \label{sec:confbound}
@@ -482,13 +480,13 @@ The $p$-values constructed above satisfy $p_{[1][2]}^\delta \ge p_{[1]j}^\delta$
 \end{theorem}
 
 \begin{proof}
-Again we start with assuming $X_1 \ge \cdots \ge X_n$. The $p$-values in question are derived from the conditional law
+Again we start with assuming $X_1 \ge X_2 \ge \max_{j > 2} X_j$ for convenience. The $p$-values in question are derived from the conditional law
 $$\mathcal{L}_{\theta_1 - \theta_j = \delta} \left(D_{1j} \;\middle|\; M_{1j}, X_2, \ldots, X_n, A\right),$$
 which is the truncated distribution
 \begin{align*}
-p\left(D_{1j}\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) D_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
-& \quad\quad g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1} \\
-& \propto \exp\left(\delta D_{1j}\right) g\left(M_{1j} + D_{1j}, X_2, \ldots, M_{1j} - D_{1j}, \ldots X_n\right) 1_{A_1}.
+p\left(d_{1j}\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) d_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
+& \quad\quad g\left(M_{1j} + d_{1j}, X_2, \ldots, M_{1j} - d_{1j}, \ldots X_n\right) 1_{A_1} \\
+& \propto \exp\left(\delta d_{1j}\right) g\left(M_{1j} + d_{1j}, X_2, \ldots, M_{1j} - d_{1j}, \ldots X_n\right) 1_{A_1}.
 \end{align*}
 
 The $p$-values thus are
@@ -534,7 +532,7 @@ Note that Procedure 2 reporting $-\infty$ in case of $\delta^* \le 0$ is rather 
 \section{Verifying Other Ranks: Is the Runner-Up Really the Second Best, etc.?}
 \label{sec:stepdown}
 
-Often we will be interested in verifying ranks beyond the winner. More generally, we could imagine declaring that the first $j$ candidates are all in the correct order, that is
+Often we will be interested in verifying ranks beyond the winner. More generally, we could imagine declaring that the first $j$ populations are all in the correct order, that is
 \begin{equation}
 \theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}.
 \label{eq:jrankscorrect}
@@ -542,13 +540,13 @@ Often we will be interested in verifying ranks beyond the winner. More generally
 
 Let $j_0$ denote the largest $j$ for which \eqref{eq:jrankscorrect} is true. Note that $j_0$ is both random and unknown, because it depends on both the data and population ranks. Procedure 3 declares that $j_0 \ge j$ if the unadjusted pairwise tests between $X_{[k]}$ and $X_{[k+1]}$, reject at level $\alpha$ for {\em all} of $k = 1, \ldots, j$.
 
-In terms of the Iowa polling example of \Cref{sec:intro}, we would like to produce a statement of the form ``Trump has the most support, Cruz has the second-most, and Rubio has the third-most.'' Procedure 3 performs unadjusted pairwise tests to ask if Cruz is really the runner-up upon verifying that Trump is the best, and if Rubio is really the second runner-up upon verifying that Cruz is the runner-up, etc., until we can no longer infer that a certain candidate really holds its rank.
+In terms of the Iowa polling example of \Cref{sec:intro}, we would like to produce a statement of the form ``Trump has the most support, Cruz has the second-most, and Rubio has the third-most.'' Procedure 3 performs unadjusted pairwise tests to ask if Cruz is really the runner-up upon verifying that Trump is the best, and if Rubio is really the second runner-up upon verifying that Cruz is the runner-up, etc., until we can no longer infer that a certain population really holds its rank.
 
-While we aim to declare more candidates to be in the correct order, declaring too many candidates, i.e.\ out-of-place candidates, to be in the right order is undesirable. It is possible to consider false discovery rate (the expected portion of out-of-place candidates declared) here, but we restrict our derivation to FWER (the probability of having any out-of-place candidates declared).
+While we aim to declare more populations to be in the correct order, declaring too many populations, i.e.\ out-of-place populations, to be in the right order is undesirable. It is possible to consider false discovery rate (the expected portion of out-of-place populations declared) here, but we restrict our derivation to FWER (the probability of having any out-of-place populations declared).
 
-Formally, let $\hat{j}_0$ denote the number of ranks validated by a procedure (the number of rejections). Then the FWER of $\hat{j}_0$ is the probability that too many rejections are made; i.e. $\PP\left[\hat{j}_0 > j_0\right]$. For example, suppose that the top three data ranks and population ranks coincide, but not the fourth ($j_0 = 3$). Then we will have made a Type I error if we declare that the top five ranks are correct ($\hat{j}_0 = 5$), but not if we declare that the top two are correct ($\hat{j}_0 = 2$). In other words, $\hat{j}_0$ is a lower confidence bound for $j_0$.
+Formally, let $\hat{j}_0$ denote the number of ranks validated by a procedure (the number of rejections). Then the FWER of $\hat{j}_0$ is the probability that too many rejections are made; i.e.\ $\PP\left[\hat{j}_0 > j_0\right]$. For example, suppose that the top three data ranks and population ranks coincide, but not the fourth ($j_0 = 3$). Then we will have made a Type I error if we declare that the top five ranks are correct ($\hat{j}_0 = 5$), but not if we declare that the top two are correct ($\hat{j}_0 = 2$). In other words, $\hat{j}_0$ is a lower confidence bound for $j_0$.
 
-To show that Procedure 3 is valid, we will prove the validity of a more liberal Procedure 3', described in \Cref{alg:proc3}.
+To show that Procedure 3 is valid, we will prove the validity of a more liberal Procedure 3', described in \Cref{alg:proc3}. Procedure 3 is equivalent to Procedure 3' for the most part, except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
 
 \begin{algorithm}[htbp]
 	\SetKwInOut{Input}{input}
@@ -582,8 +580,6 @@ To show that Procedure 3 is valid, we will prove the validity of a more liberal 
 	\label{alg:proc3}
 \end{algorithm}
 
-Procedure 3 is equivalent to Procedure 3' for the most part, except that Procedure 3 conditions on a larger event $\left\{X_{[j]} \ge \max_{k>j} X_{[k]}\right\}$ in \Cref{lne:event}.
-
 \begin{theorem}
 Procedure 3' is a step-down procedure that an estimate $\hat{j}_0$ of $j_0$ at the FWER controlled at $\alpha$, where $j_0$ is given by
 $$j_0 = \max_j \left\{\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}\right\}.$$
@@ -606,7 +602,7 @@ While the null hypotheses $\widetilde{H}_{0j}$ provided intuition in the setting
 $$H_{0j}: \theta \in \mathcal{M}_j\left(X\right),$$
 or equivalently, that $\theta_{[1]}, \ldots, \theta_{[j]}$ are not the best $j$ parameters in order.
 
-Adapting this notation, the FWER can be viewed as $\PP\left[\text{reject } H_{0 {j_0+1}}\right]$.
+Adapting this notation, the FWER can be viewed as $\PP\left[\text{reject } H_{0(j_0+1)}\right]$.
 
 \paragraph{Special case of the BasicStop procedure}
 
@@ -640,7 +636,7 @@ $$\PP_{\substack{\theta_{\tau_1} > \cdots > \theta_{\tau_j} \\ \theta_{\tau_j} \
 
 \paragraph{Construction of the $p$-values}
 
-To avoid the clutter in the subscript notation, we will drop the $\tau$ in the subscript. Hence our goal is now
+To avoid the clutter in the subscripts, we will drop the $\tau$ in the subscript. Hence our goal is now
 $$\PP_{\substack{\theta_1 > \cdots > \theta_j \\ \theta_j \le \max_{k>j} \theta_k}} \left[p_j \le \alpha \;\middle|\; X_1 \ge \cdots \ge X_j \ge \max_{k>j} X_k\right]$$
 Construction of $p_j$ for other permutations $\tau$ can be obtained similarly.
 
@@ -658,7 +654,7 @@ For the hypothesis $H_{0jk}: \theta_j \le \theta_k$, we can construct $p_{jk}$, 
 = &~ \mathcal{L}_{\theta_j = \theta_k} \left(D_{jk} \;\middle|\; \left\{X_{j-1} \ge X_j \ge \max_{\substack{\ell>j \\ \ell \ne k}} X_\ell \text{ and } X_j \ge M_{jk}\right\}, X_{\setminus\left\{j, k\right\}}, M_{jk}\right)
 \end{align*}
 
-It is not necessarily true that $X_{j+1} = \max_{\ell > j} X_\ell$, but we will use so as a shorthand and simplify our notation. Now the $p$-values are similar to the ones in \Cref{eq:p1j}, for $k>j$:
+Once again, $X_{j+1} = \max_{\ell > j} X_\ell$ is simply shorthand for simplifying our notation. Now the $p$-values are similar to the ones in \Cref{eq:p1j}, for $k>j$:
 
 $$p_{jk} = \frac{\int_{D_{jk}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_{j+1} - M_{jk}, 0\right\}}^{X_{j-1}} g\left(X_1, \ldots, M_{jk} + z, \ldots, M_{jk} - z, \ldots, X_n\right) \,dz}.$$
 
@@ -703,11 +699,11 @@ We can graphically represent $p_{jk}$ in \Cref{fig:croprays}, a diagram analogou
 \label{fig:croprays}
 \end{figure}
 
-We have $p_{j(j+1)} \ge \max_{k>j} p_{jk}$ by \Cref{sec:winnerbest}: the upper truncation for $X_j$ can be represented by cropping \Cref{fig:comparerays} along a vertical line, shown in \Cref{fig:croprays}. Considering $p_{j(j+1)}$ is sufficient in rejecting all the $H_{0jk}$. We will take $p_j' = p_{j(j+1)}$, noting that this is the $p$-value that Procedure 3' would produce. In fact, $p_j'$ is also the $p$-value we would have constructed if we were to reject only $\widetilde{H}_{0j}$.
+We have $p_{j(j+1)} \ge \max_{k>j} p_{jk}$ by \Cref{sec:winnerbest}: the upper truncation for $X_j$ can be represented by cropping \Cref{fig:comparerays} along a vertical line, shown in \Cref{fig:croprays}. Considering $p_{j(j+1)}$ is sufficient in rejecting all the $H_{0jk}$. We will take $p_{j*} = p_{j(j+1)}$, noting that this is the $p$-value that Procedure 3' would produce. In fact, $p_{j*}$ is also the $p$-value we would have constructed if we were to reject only $\widetilde{H}_{0j}$.
 
-Upon constructing $p_j$, one should realize that the $p$-values for testing $\theta_k \le \theta_{k+1}$ would have been constructed in earlier iterations of BasicStop, as $p_k'$. In other words, $p_j = \max_{k \le j} p_k'$ is the sequence of $p$-values that works with BasicStop. However, from \eqref{eq:basicstop},
-$$\hat{j}_0 = \min\left\{j: \max_{k \le j} p_k' > \alpha\right\} - 1 = \min\left\{j: p_j' > \alpha\right\} - 1,$$
-so it is safe to apply BasicStop to $p_j'$ directly, yielding Procedure 3'.
+Upon constructing $p_j$, one should realize that the $p$-values for testing $\theta_k \le \theta_{k+1}$ would have been constructed in earlier iterations of BasicStop, as $p_{k*}$. In other words, $p_j = \max_{k \le j} p_{k*}$ is the sequence of $p$-values that works with BasicStop. However, from \eqref{eq:basicstop},
+$$\hat{j}_0 = \min\left\{j: \max_{k \le j} p_{k*} > \alpha\right\} - 1 = \min\left\{j: p_{j*} > \alpha\right\} - 1,$$
+so it is safe to apply BasicStop to $p_{j*}$ directly, yielding Procedure 3'.
 \end{proof}
 
 \begin{customthm}[Part 3 of \Cref{thm:main}]
