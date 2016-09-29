@@ -165,7 +165,7 @@ This forms a partial order in $\RR^n$ (or $\ZZ^n$).
 
 Intuitively, majorization is a partial order that monitors the evenness of a vector: the more even a vector is, the ``smaller'' it is. There are two properties of majorization that we will use in the proofs.
 
-\begin{lemma}~\\
+\begin{lemma}\leavevmode
 \begin{enumerate}
 \item Suppose $\left(x_1, x_2, x_3, \ldots\right)$ and $\left(x_1, y_2, y_3, \ldots\right)$ are two vectors in $\RR^n$. Then
 $$\left(x_1, x_2, x_3, \ldots\right) \succeq \left(x_1, y_2, y_3, \ldots\right) \text{ if and only if } \left(x_2, x_3, \ldots\right) \succeq \left(y_2, y_3, \ldots\right).$$
@@ -176,7 +176,7 @@ If $t \le 0$, the majorization is reversed.
 \label{lma:twoprop}
 \end{lemma}
 
-\begin{proof}~\\
+\begin{proof}\leavevmode
 \begin{enumerate}
 \item The property follows from an equivalent formulation of majorization listed in \citet{Marshall:2010hb}, where $x \succeq y$ if and only if
 $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n \quad \text{ and } \quad \sum_{j=1}^n \left(x_j - a\right)_+ \ge \sum_{j=1}^n \left(y_j - a\right)_+ \text{ for all } a \in \RR.$$
@@ -291,7 +291,7 @@ Our proof has three main parts:
 
 \paragraph{Derivation of $p_{1j}$}
 
-Following the framework in \citet{Fithian:2014ws}, we first construct the p-values by conditioning on the selection event where the winner is $1$: 
+Following the framework in \citet{Fithian:2014ws}, we first construct the $p$-values by conditioning on the selection event where the winner is $1$: 
 $$A_1 = \left\{X_1 \ge \max_{j > 1} X_j\right\}.$$
 For convenience, we let
 $$D_{jk} = \frac{X_j - X_k}{2} \quad \text{ and } \quad M_{jk} = \frac{X_j + X_k}{2}.$$
@@ -426,7 +426,7 @@ For the second case where $X_2 \ge M_{13}$, the segment $C$ will reach the line 
 
 \paragraph{$p_{12}$ is an unadjusted pairwise $p$-value}
 
-Before conditioning on $A_1$, the distribution in \label{eq:condlaw} is symmetric around 0 under $\theta_1=\theta_j$. Since the denominator of $p_{12}$ integrates over half of this symmetric distribution, it is always equal to $1/2$. Thus, the one-sided conditional test at level $\alpha$ is equivalent to the one-sided unadjusted test at level $\alpha/2$, or equivalently the two-sided unadjusted pairwise test at level $\alpha$.
+Before conditioning on $A_1$, the distribution in \eqref{eq:condlaw} is symmetric around $0$ under $\theta_1=\theta_j$. Since the denominator of $p_{12}$ integrates over half of this symmetric distribution, it is always equal to $1/2$. Thus, the one-sided conditional test at level $\alpha$ is equivalent to the one-sided unadjusted test at level $\alpha/2$, or equivalently the two-sided unadjusted pairwise test at level $\alpha$.
 
 \paragraph{Modification for counting measure}
 
