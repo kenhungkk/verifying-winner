@@ -14,6 +14,7 @@
 \usepackage[round]{natbib}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usepackage[hyphens]{url}
 \usepackage{verbatim}
 \usepackage{xcolor}
 \definecolor{mid_green}{HTML}{99d8c9}
@@ -118,7 +119,7 @@ In each of the above examples, there is a natural exact test we could apply to t
 Generalizing the procedures described in \Cref{sec:iowa} we obtain the following:
 \begin{enumerate}
 \item {\em Is the winner really the best?} Carry out the unadjusted pairwise test comparing the winner to the runner-up. If the test rejects at level $\alpha$, conclude that the winner is really the best.
-\item {\em By how much?} Construct the unadjusted pairwise confidence interval comparing the winner to the runner-up, and report the lower confidence bound obtained for $\theta_{[1]}-\theta_{[2]}$ if it is nonnegative, report $-\infty$ otherwise.
+\item {\em By how much?} Construct the unadjusted pairwise confidence interval comparing the winner to the runner-up, and report the lower confidence bound obtained for $\theta_{[1]} - \theta_{[2]}$ if it is nonnegative, report $-\infty$ otherwise.
 \item {\em Is the runner-up really the second best, etc.?} Continue by comparing the runner-up to the second-runner-up, again using the unadjusted pairwise test, and so on down the list comparing adjacent values. Stop the first time the test accepts.
 \end{enumerate}
 Procedures 2 and 3 are conservative stand-ins for exact, but slightly more involved, conditional inference procedures. In particular, as we will see, reporting $-\infty$ in Procedure 2 is typically much more conservative than is necessary.
@@ -136,13 +137,13 @@ Assume the model~\eqref{eq:expfam} holds and $g\left(x\right)$ is a Schur-concav
 
 We define Schur-concavity and discuss its properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof combines the conditional selective-inference framework of \citet{Fithian:2014ws} with classical multiple-testing methods, as well as new technical tools involving majorization and Schur-concavity.
 
-Note that these procedures make an implicit adjustment for selection because they use two-tailed, rather than one-tailed, unadjusted tests. If we instead based our tests on an independent realization $X^*= (X_1^*,\ldots,X_n^*)$ then, for example, Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n = 2$, Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1 = \theta_2$, and it is intuitively clear that a one-tailed test would be too liberal. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n = 2$. 
+Note that these procedures make an implicit adjustment for selection because they use two-tailed, rather than one-tailed, unadjusted tests. If we instead based our tests on an independent realization $X^* = (X_1^*, \ldots, X_n^*)$ then, for example, Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n = 2$, Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1 = \theta_2$, and it is intuitively clear that a one-tailed test would be too liberal. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n = 2$. 
 
 \subsection{Related work}
 
-Rank verification, especially for the first rank, has been studied extensively in the ranking and selection literature; see~\citet{Gupta:1971wk}, \citet{gupta1985subset}, and \citet{hsu1996multiple} for surveys. In particular, \citet{Gutmann:1987fk} prove a result analogous to our main result in a different setting: that a two-tailed test comparing the winner to the runner-up is valid for log-concave location families. \citet{Bofinger:1991hv, Maymin:1992fz, Karnnan:2009iv} give similar results for other models including scale and location-scale families. These results use very different technical tools than the ones we use here, require independence between the different groups (ruling out, for example, the multinomial family), and do not address the exponential family case. Because most exponential families are not location-scale families (the Gaussian being a notable exception), and because our results involve more general dependence structures, both our proof techniques and our technical results are complementary to the techniques and results in the above works.
+Rank verification, especially for the first rank, has been studied extensively in the ranking and selection literature; see \citet{Gupta:1971wk, Gupta:1985bj}, and \citet{Hsu:1996} for surveys. In particular, \citet{Gutmann:1987fk} prove a result analogous to our main result in a different setting: that a two-tailed test comparing the winner to the runner-up is valid for log-concave location families. \citet{Bofinger:1991hv, Maymin:1992fz, Karnnan:2009iv} give similar results for other models including scale and location-scale families. These results use very different technical tools than the ones we use here, require independence between the different groups (ruling out, for example, the multinomial family), and do not address the exponential family case. Because most exponential families are not location-scale families (the Gaussian being a notable exception), and because our results involve more general dependence structures, both our proof techniques and our technical results are complementary to the techniques and results in the above works.
 
-For the multinomial case, \citet{Gupta:1967wg}, discussed in Section~\ref{sec:subsetsel} remains the state of the art in finite-sample tests; \citet{gupta1978subset} discusses related approaches for Poisson models. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test, and \citet{gupta1989selecting} consider an empirical Bayes approach for selecting the best binomial population wherein a parametric prior distribution is assumed for the success probabilities for the different populations. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As Section~\ref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]}-X_{[2]}$ adapts to the data. Thus, our work closes a significant gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
+For the multinomial case, \citet{Gupta:1967wg}, discussed in \Cref{sec:subsetsel}, remain the state of the art in finite-sample tests; \citet{Gupta:1976vd} discuss related approaches for Poisson models. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test, and \citet{Gupta:1989fe} consider an empirical Bayes approach for selecting the best binomial population wherein a parametric prior distribution is assumed for the success probabilities for the different populations. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As \Cref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]} - X_{[2]}$ adapts to the data. Thus, our work closes a significant gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
 
 \subsection{Outline}
 
@@ -191,7 +192,7 @@ $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n \quad \text{ and } \quad \sum_{j=1}^n \lef
 A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\left(y\right)$.
 \end{definition}
 
-A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \citep{Marshall:2010hb}. Interestingly, \citet{bjornstad1981class} also show that, in the context of independent location families, Schur concavity is equivalent to monotone likelihood ratio.
+A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \citep{Marshall:2010hb}. Interestingly, \citet{Gupta:1984fw} also show that, in the context of independent location families, Schur concavity of the probability density is equivalent to monotone likelihood ratio.
 
 \subsection{Examples}
 
@@ -213,7 +214,7 @@ where $x_j = \sum_{k \ne j} y_{jk}$. In other words, if $X_j$ is the number of w
 $$p\left(x\right) = \exp\left(2\theta' x\right) g\left(x\right),$$
 where $g\left(x\right)$ is a function that counts the number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave. Therefore, we can use Procedures 1--3 to compare player qualities.
 
-After conditioning on $U(X)=(X_1+X_2, X_3,\ldots,X_n)$, and under the assumption $\theta_1=\theta_2$, every feasible configuration of $Y$ is equally likely. If $n$ is not too large (say, no more than 40 players), we can find the conditional distribution of $X_1$ by enumerating over the configurations; for larger $n$, computation might pose a more serious problem, requiring us for example to compute the $p$-value using Markov Chain Monte Carlo techniques~\citep{besag1989generalized}.
+After conditioning on $U(X) = (X_1 + X_2, X_3, \ldots, X_n)$, and under the assumption $\theta_1 = \theta_2$, every feasible configuration of $Y$ is equally likely. If $n$ is not too large (say, no more than $40$ players), we can find the conditional distribution of $X_1$ by enumerating over the configurations; for larger $n$, computation might pose a more serious problem, requiring us for example to compute the $p$-value using Markov Chain Monte Carlo techniques \citep{Besag:1989}.
 \end{example}
 
 \begin{example}[Comparing the variances of different normal populations] Suppose there are $n$ normal populations with laws $N(\mu_j, \sigma_j^2)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $R_j$. By Cochran's theorem, $\left(m-1\right) R_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $R$ is
@@ -221,7 +222,7 @@ After conditioning on $U(X)=(X_1+X_2, X_3,\ldots,X_n)$, and under the assumption
 r & \sim \prod_{j=1}^n \left(\frac{\left(m-1\right) r_j}{\sigma_j^2}\right)^{\left(m-3\right) / 2} e^{-\left(m-1\right) r_j / 2 \sigma_j^2} 1_{\left\{r_j > 0 \right\}} \\
 & \propto \exp\left(-\frac{m-1}{2 \sigma_1^2} r_1 - \cdots - \frac{m-1}{2 \sigma_n^2} r_n\right) \prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}.
 \end{align*}
-The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}$, which is Schur-concave. Thus, we can use Procedures 1--3 to find populations with the smallest or largest variances. In this example, the distribution of $X_1/(X_1+X_2)$ conditional on $(X_1+X_2,X_3,\ldots,X_4)$ is distributed as $text{Beta}(m/2,m/2)$ under the null, or equivalently $X_1/X_2$ is conditionally distributed as $F_{m,m}$; hence a (two-tailed) $F$-test is valid for comparing the top two populations.
+The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}$, which is Schur-concave. Thus, we can use Procedures 1--3 to find populations with the smallest or largest variances. In this example, the distribution of $X_1 / (X_1 + X_2)$ conditional on $(X_1 + X_2, X_3, \ldots, X_4)$ is distributed as $\text{Beta}(m/2, m/2)$ under the null, or equivalently $X_1 / X_2$ is conditionally distributed as $F_{m, m}$; hence a (two-tailed) $F$-test is valid for comparing the top two populations.
 \end{example}
 
 \section{Verifying the Winner: Is the Winner Really the Best?}
@@ -236,7 +237,7 @@ For a multivariate exponential family with a symmetric carrier distribution, $X_
 \begin{proof}
 It suffices to prove the ``if'' part, as the ``only if'' part can be follows from swapping the role of $\theta_1$ and $\theta_2$. For any fixed $a$, and $x_1 \ge a$ and $x_2 < a$, we have $x_1 > x_2$ and
 $$\exp\left(\theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_n x_n - \psi\left(\theta\right)\right) g\left(x\right) \ge \exp\left(\theta_1 x_2 + \theta_2 x_1 + \cdots + \theta_n x_n - \psi\left(\theta\right)\right) g\left(x\right).$$
-Integrating both sides over the region $\left\{x: x_1 \ge a, x_2 < a\right\}$ gives
+Integrating both sides over the region $\left\{x:\; x_1 \ge a, x_2 < a\right\}$ gives
 $$\PP\left[X_1 \ge a, X_2 < a\right] \ge \PP\left[X_1 < a, X_2 \ge a\right].$$
 Now adding $\PP\left[X_1 \ge a, X_2 \ge a\right]$ to both probabilities gives
 $$\PP\left[X_1 \ge a\right] \ge \PP\left[X_2 \ge a\right],$$
@@ -288,7 +289,7 @@ where the last inequality follows from \Cref{lma:margsharp}.
 
 We start by assuming that we are working with the Lebesgue measure rather than the counting measure (eliminating the possibility of ties). The necessary modification of the proof for the counting measure case is provided at the end of this proof.
 
-To minimize notational clutter, we consider only the case where the winner is $1$, i.e.\ $X_1 \ge \max_{j > 1} X_j$. Furthermore, we will denote the runner-up with $2$. This is not necessarily true, but we will use it as a shorthand to simplify our notation. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}: \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}: \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \le \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\le \alpha$ coincides with the unadjusted pairwise test.
+To minimize notational clutter, we consider only the case where the winner is $1$, i.e.\ $X_1 \ge \max_{j > 1} X_j$. Furthermore, we will denote the runner-up with $2$. This is not necessarily true, but we will use it as a shorthand to simplify our notation. For other cases, the following proof remains valid under relabeling and can thus be applied. In this case, we will test the null hypothesis $H_{01}:\; \theta_1 \le \max_{j > 1} \theta_j$, which is the union of the null hypotheses $H_{01j}:\; \theta_1 \le \theta_j$ for $j \ge 2$. For each of these we can construct an exact $p$-value $p_{1j}$, which is valid under $H_{01j}$ conditional on $A_1$, the event that $X_1$ is the winner. Hence by \Cref{lma:union}, a test that rejects when $p_{1*} = \max_j p_{1j} \le \alpha$ is valid for $H_{01}$ conditional on $A_1$. Procedure 1 performs an unadjusted pairwise test comparing $X_1$ to $X_2$. Hence it is sufficient to show that $p_{12} = p_{1*}$ and that rejecting when $p_{12}\le \alpha$ coincides with the unadjusted pairwise test.
 
 Our proof has three main parts:
 \begin{inlinelist}
@@ -338,7 +339,7 @@ Therefore these $p_{1j}$ are indeed valid $p$-values.
 
 We now proceed to show that $p_{12}$, the $p$-value comparing the winner to the runner-up, is the largest of all $p_{1j}$. Without loss of generality, it is sufficient to show that $p_{12} \ge p_{13}$.
 
-From the first part of this proof, both p-values are constructed by conditioning on $X_4, \ldots, X_n$. Upon conditioning these, $\left(X_1, X_2, X_3\right)$ follows an exponential family distribution, with carrier distribution
+From the first part of this proof, both $p$-values are constructed by conditioning on $X_4, \ldots, X_n$. Upon conditioning these, $\left(X_1, X_2, X_3\right)$ follows an exponential family distribution, with carrier distribution
 $$g_{X_4, \ldots, X_n}\left(X_1, X_2, X_3\right) = g\left(X_1, \ldots, X_n\right),$$
 here $X_4, \ldots, X_n$ are used in the subscript as they are conditioned on and no longer considered as variables. The first point in \Cref{lma:twoprop} says that the function $g_{X_4, \ldots, X_n}$ is Schur-concave as well. We have reduced the problem to the case when $n = 3$: we can apply the result for $n = 3$ to $g_{X_4, \ldots, X_n}$ to yield $p_{12} \ge p_{13}$ for $n > 3$.
 
@@ -438,7 +439,7 @@ Before conditioning on $A_1$, the distribution in \eqref{eq:condlaw} is symmetri
 
 \paragraph{Modification for counting measure}
 
-Now suppose the exponential family is defined on the counting measure instead. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers (or a smaller fraction of an atom in case of a multi-way tie). The number of atoms on each ray is the same (after the extension $\tilde{A}$) and the atoms on each ray can be paired up in exactly the same way as illustrated in Figure~\ref{fig:comparerays}, with the inequalities above still holding for each pair of the atoms. Summing these inequalities yields our desired result.
+Now suppose the exponential family is defined on the counting measure instead. If ties are broken independently and randomly, the end points on the rays can be considered as ``half an atom'' if the coordinates are integers (or a smaller fraction of an atom in case of a multi-way tie). The number of atoms on each ray is the same (after the extension $\tilde{A}$) and the atoms on each ray can be paired up in exactly the same way as illustrated in \Cref{fig:comparerays}, with the inequalities above still holding for each pair of the atoms. Summing these inequalities yields our desired result.
 \end{proof}
 
 
@@ -602,10 +603,10 @@ We will first show that Procedure 3' falls into the sequential goodness-of-fit t
 Upon observing $X_{[1]} \ge \cdots \ge X_{[n]}$, we can set up a sequence of nested models
 $$\mathcal{M}_1\left(X\right) \subseteq \cdots \subseteq \mathcal{M}_n\left(X\right), \quad\text{ where } \mathcal{M}_j\left(X\right)^c = \left\{\theta:\; \theta_{[1]} > \cdots > \theta_{[j]} > \max_{k > j} \theta_{[k]}\right\}.$$
 If we define the $j$-th null hypothesis as
-$$\widetilde{H}_{0j}: \theta_{[j]} \le \max_{k > j} \theta_{[k]},$$
+$$\widetilde{H}_{0j}: \theta_{[j]} \le \max_{k>j} \theta_{[k]},$$
 then $\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$ are all false if and only if $\theta\notin \mathcal{M}_j(X)$.
 
-In other words, $\mathcal{M}_j\left(X\right)$ is a family of distributions that does not have all first $j$ ranks correct. As we will see later, each step in Procedure 3' is similar to testing $\widetilde{H}_{0j}$, stating that without the first $j$ ranks correct, it is hard to explain the observations. Thus, returning $\hat{j}_0 = j$ amounts to rejecting $\widetilde{H}_{01},\ldots,\widetilde{H}_{0j}$, or equivalently determining that the models $\mathcal{M}_1(X), \ldots, \mathcal{M}_j(X)$ do {\em not} fit the data.
+In other words, $\mathcal{M}_j\left(X\right)$ is a family of distributions that does not have all first $j$ ranks correct. As we will see later, each step in Procedure 3' is similar to testing $\widetilde{H}_{0j}$, stating that without the first $j$ ranks correct, it is hard to explain the observations. Thus, returning $\hat{j}_0 = j$ amounts to rejecting $\widetilde{H}_{01}, \ldots, \widetilde{H}_{0j}$, or equivalently determining that the models $\mathcal{M}_1(X), \ldots, \mathcal{M}_j(X)$ do {\em not} fit the data.
 
 While the null hypotheses $\widetilde{H}_{0j}$ provided intuition in the setting up the nested models, they are rather cumbersome to work with. Inspired by \citet{Fithian:2015uj}, we will instead consider another sequence of random hypothesis that are more closely related to the nest models,
 $$H_{0j}: \theta \in \mathcal{M}_j\left(X\right),$$
@@ -637,7 +638,7 @@ We emphasize here that $\theta$ is {\em not} random, but $\mathcal{M}_{j+1}$ is.
 \paragraph{Considerations for conditioning}
 
 By smoothing, we are free to condition on additional variables in \eqref{eq:basicstopreq}. A logical choice that simplified \eqref{eq:basicstopreq} is conditioning on the variables $\mathcal{M}_{j-1}\left(X\right)$ and $\mathcal{M}_j\left(X\right)$. Note that the choice of the model $\mathcal{M}_j\left(X\right)$, once again, based solely on the random indices $[1], \ldots, [j]$, so conditioning on both $\mathcal{M}_{j-1}\left(X\right)$ and $\mathcal{M}_j\left(X\right)$ is equivalent to conditioning on the random indices $[1], \ldots, [j]$, which in turns is equivalent to conditioning on the $\sigma$-field generated by the partition of the observation space $X$
-$$\left\{\left\{X_{\tau_1} \ge \cdots \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k}\right\}: \tau \text{ is any permutation of } \left(1, \ldots, n\right)\right\},$$
+$$\left\{\left\{X_{\tau_1} \ge \cdots \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k}\right\}:\; \tau \text{ is any permutation of } \left(1, \ldots, n\right)\right\},$$
 or colloquially, the set of all possible choices of $[1], \ldots, [j]$. Within each set in this partition, the event $\left\{\theta \in \mathcal{M}_j\left(X\right) \setminus \mathcal{M}_{j-1}\left(X\right)\right\}$ is simply $\left\{\theta_{\tau_1} > \cdots > \theta_{\tau_j} \text { and } \theta_{\tau_j} \le \max_{k>j} \theta_{\tau_k}\right\}$, a trivial event.
 
 As a brief summary, we want to construct $p$-values $p_j$ such that
@@ -711,7 +712,7 @@ We can graphically represent $p_{jk}$ in \Cref{fig:croprays}, a diagram analogou
 We have $p_{j(j+1)} \ge \max_{k>j} p_{jk}$ by \Cref{sec:winnerbest}: the upper truncation for $X_j$ can be represented by cropping \Cref{fig:comparerays} along a vertical line, shown in \Cref{fig:croprays}. Considering $p_{j(j+1)}$ is sufficient in rejecting all the $H_{0jk}$. We will take $p_{j*} = p_{j(j+1)}$, noting that this is the $p$-value that Procedure 3' would produce. In fact, $p_{j*}$ is also the $p$-value we would have constructed if we were to reject only $\widetilde{H}_{0j}$.
 
 Upon constructing $p_j$, one should realize that the $p$-values for testing $\theta_k \le \theta_{k+1}$ would have been constructed in earlier iterations of BasicStop, as $p_{k*}$. In other words, $p_j = \max_{k \le j} p_{k*}$ is the sequence of $p$-values that works with BasicStop. However, from \eqref{eq:basicstop},
-$$\hat{j}_0 = \min\left\{j: \max_{k \le j} p_{k*} > \alpha\right\} - 1 = \min\left\{j: p_{j*} > \alpha\right\} - 1,$$
+$$\hat{j}_0 = \min\left\{j:\; \max_{k \le j} p_{k*} > \alpha\right\} - 1 = \min\left\{j:\; p_{j*} > \alpha\right\} - 1,$$
 so it is safe to apply BasicStop to $p_{j*}$ directly, yielding Procedure 3'.
 \end{proof}
 
@@ -728,8 +729,9 @@ The $p$-values $p_{j\left(j+1\right)}$ obtained in Procedure 3' are always small
 
 Combining ideas from conditional inference and multiple testing, we have proven the validity of several very simple and seemingly ``naive'' procedures for significance testing of sample ranks. In particular, we have shown that an unadjusted pairwise test comparing the winner with the runner-up is a valid significance test for the first rank. Our result complements and extends pre-exisiting analogous results for location and location-scale families with independence between observations. Our approach is considerably more powerful than previously known solutions. We provide similarly straightforward conservative methods for producing a lower confidence bound for the difference between the winner and runner up, and for verifying ranks beyond the first.
 
-Claims reporting the ``winner'' are commonly made in the scientific literature, usually with no significance level reported or an incorrect method applied. For example, \citet{Uhls:2012gf} asked $n=20$ elementary and middle school students which of seven personal values they most hoped to embody as adults, with ``Fame'' (8 responses) being the most commonly selected, with ``Benevolence'' (5 responses) second. The authors' main finding --- which appeared in the abstract, the first paragraph of the article, and later a CNN.com headline \citep{alikhani} --- was that ``Fame'' was the most likely response, accompanied by a significance level of $0.006$, which the authors computed by testing whether the probability of selecting ``Fame'' was larger than 1/7. The obvious error in the authors' reasoning could have been avoided if they had performed an equally straightforward two-tailed binomial test of ``Fame'' vs. ``Benevolence,'' which would have produced a $p$-value of $0.58$.
+Claims reporting the ``winner'' are commonly made in the scientific literature, usually with no significance level reported or an incorrect method applied. For example, \citet{Uhls:2012gf} asked $n = 20$ elementary and middle school students which of seven personal values they most hoped to embody as adults, with ``Fame'' (8 responses) being the most commonly selected, with ``Benevolence'' (5 responses) second. The authors' main finding --- which appeared in the abstract, the first paragraph of the article, and later a CNN.com headline \citep{Alikhani:2011} --- was that ``Fame'' was the most likely response, accompanied by a significance level of $0.006$, which the authors computed by testing whether the probability of selecting ``Fame'' was larger than 1/7. The obvious error in the authors' reasoning could have been avoided if they had performed an equally straightforward two-tailed binomial test of ``Fame'' vs.\ ``Benevolence,'' which would have produced a $p$-value of $0.58$.
 
+\Urlmuskip=0mu plus 1mu\relax
 \bibliographystyle{plainnat}
 \bibliography{papers}
 
