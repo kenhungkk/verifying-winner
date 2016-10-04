@@ -140,9 +140,9 @@ Note that these procedures make an implicit adjustment for selection because the
 
 \subsection{Related work}
 
-Rank verification, especially for the first rank, has been studied extensively in the ranking and selection literature; see~\citet{Gupta:1971wk} and \citet{hsu1996multiple} for surveys. In particular, \citet{Gutmann:1987fk} prove a result analogous to our main result in a different setting: that a two-tailed test comparing the winner to the runner-up is valid for log-concave location families. \citet{Bofinger:1991hv, Maymin:1992fz, Karnnan:2009iv} give similar results for other models including scale and location-scale families. These results use very different technical tools than the ones we use here, require independence between the different groups (ruling out, for example, the multinomial family), and do not address the exponential family case. Because most exponential families are not location-scale families (the Gaussian being a notable exception), and because our results involve more general dependence structures, both our proof techniques and our technical results are complementary to the techniques and results in the above works.
+Rank verification, especially for the first rank, has been studied extensively in the ranking and selection literature; see~\citet{Gupta:1971wk}, \citet{gupta1985subset}, and \citet{hsu1996multiple} for surveys. In particular, \citet{Gutmann:1987fk} prove a result analogous to our main result in a different setting: that a two-tailed test comparing the winner to the runner-up is valid for log-concave location families. \citet{Bofinger:1991hv, Maymin:1992fz, Karnnan:2009iv} give similar results for other models including scale and location-scale families. These results use very different technical tools than the ones we use here, require independence between the different groups (ruling out, for example, the multinomial family), and do not address the exponential family case. Because most exponential families are not location-scale families (the Gaussian being a notable exception), and because our results involve more general dependence structures, both our proof techniques and our technical results are complementary to the techniques and results in the above works.
 
-For the multinomial case, \citet{Gupta:1967wg}, discussed in Section~\ref{sec:subsetsel} remains the state of the art in finite-sample tests. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As Section~\ref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]}-X_{[2]}$ adapts to the data. Thus, our paper will close a major gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
+For the multinomial case, \citet{Gupta:1967wg}, discussed in Section~\ref{sec:subsetsel} remains the state of the art in finite-sample tests; \citet{gupta1978subset} discusses related approaches for Poisson models. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test, and \citet{gupta1989selecting} consider an empirical Bayes approach for selecting the best binomial population wherein a parametric prior distribution is assumed for the success probabilities for the different populations. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As Section~\ref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]}-X_{[2]}$ adapts to the data. Thus, our work closes a significant gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
 
 \subsection{Outline}
 
@@ -150,6 +150,8 @@ For the multinomial case, \citet{Gupta:1967wg}, discussed in Section~\ref{sec:su
 
 \section{Majorization and Schur concavity}
 \label{sec:maj}
+
+\subsection{Definitions and basic properties}
 
 We start by reviewing the notion of {\em majorization}, defined on both $\RR^n$ and $\ZZ^n$.
 
@@ -189,12 +191,16 @@ $$\sum_{j=1}^n x_n = \sum_{j=1}^n y_n \quad \text{ and } \quad \sum_{j=1}^n \lef
 A function $g$ is Schur-concave if $x \succeq y$ implies $g\left(x\right) \le g\left(y\right)$.
 \end{definition}
 
-A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \citep{Marshall:2010hb}, thus many common exponential family distributions lie in this class. To name a few:
+A Schur-concave function is symmetric by default since $a \succeq b$ and $b \succeq a$ if and only if $b$ is a permutation of the coordinates of $a$. Conversely a symmetric and log-concave function is Schur-concave \citep{Marshall:2010hb}. Interestingly, \citet{bjornstad1981class} also show that, in the context of independent location families, Schur concavity is equivalent to monotone likelihood ratio.
+
+\subsection{Examples}
+
+Many common exponential family models have Schur-concave carrier densities. Below we give a few examples:
 
 \begin{example}[Independent binomial treatment outcomes in a clinical trial]
  If each of $n$ different treatments are applied to $m$ patients independently, the number of positive outcomes $X_j$ for treatment $j$ is $\text{Binomial}\left(m, p_j\right)$. The best treatment would be the treatment with the highest success probability $p_j$. The joint distribution of $X$ is given by
 $$p\left(x\right) \propto \exp\left(\sum_j x_j \log\frac{p_j}{1-p_j}\right) \frac{1}{x_1! \left(m-x_1\right)! \cdots x_n! \left(m-x_n\right)!}$$
-The carrier measure above is Schur-concave.
+The carrier measure above is Schur-concave. The unadjusted pairwise test in this family is Fisher's exact test.
 \end{example}
 
 \begin{example}[Competitive sports under the Bradley--Terry model]
@@ -206,6 +212,8 @@ $$p\left(y\right) \propto \exp\left(\sum_j 2\theta_j \sum_{k \ne j} y_{jk}\right
 where $x_j = \sum_{k \ne j} y_{jk}$. In other words, if $X_j$ is the number of wins by player $j$, then $X=(X_1,\ldots,X_n)$ is a sufficient statistic with distribution
 $$p\left(x\right) = \exp\left(2\theta' x\right) g\left(x\right),$$
 where $g\left(x\right)$ is a function that counts the number of possible tournament results giving the net win vector $x$. A bijection proof shows that $x$ is indeed Schur-concave. Therefore, we can use Procedures 1--3 to compare player qualities.
+
+After conditioning on $U(X)=(X_1+X_2, X_3,\ldots,X_n)$, and under the assumption $\theta_1=\theta_2$, every feasible configuration of $Y$ is equally likely. If $n$ is not too large (say, no more than 40 players), we can find the conditional distribution of $X_1$ by enumerating over the configurations; for larger $n$, computation might pose a more serious problem, requiring us for example to compute the $p$-value using Markov Chain Monte Carlo techniques~\citep{besag1989generalized}.
 \end{example}
 
 \begin{example}[Comparing the variances of different normal populations] Suppose there are $n$ normal populations with laws $N(\mu_j, \sigma_j^2)$ and $m$ independent observations from each of them. The sample variance for population $j$ can be denoted as $R_j$. By Cochran's theorem, $\left(m-1\right) R_j \sim \sigma_j^2 \chi_{m-1}^2$, and thus the joint distribution of $R$ is
@@ -213,7 +221,7 @@ where $g\left(x\right)$ is a function that counts the number of possible tournam
 r & \sim \prod_{j=1}^n \left(\frac{\left(m-1\right) r_j}{\sigma_j^2}\right)^{\left(m-3\right) / 2} e^{-\left(m-1\right) r_j / 2 \sigma_j^2} 1_{\left\{r_j > 0 \right\}} \\
 & \propto \exp\left(-\frac{m-1}{2 \sigma_1^2} r_1 - \cdots - \frac{m-1}{2 \sigma_n^2} r_n\right) \prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}.
 \end{align*}
-The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}$, which is Schur-concave. Thus, we can use Procedures 1--3 to find populations with the smallest or largest variances.
+The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0\right\}}$, which is Schur-concave. Thus, we can use Procedures 1--3 to find populations with the smallest or largest variances. In this example, the distribution of $X_1/(X_1+X_2)$ conditional on $(X_1+X_2,X_3,\ldots,X_4)$ is distributed as $text{Beta}(m/2,m/2)$ under the null, or equivalently $X_1/X_2$ is conditionally distributed as $F_{m,m}$; hence a (two-tailed) $F$-test is valid for comparing the top two populations.
 \end{example}
 
 \section{Verifying the Winner: Is the Winner Really the Best?}
