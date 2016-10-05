@@ -64,7 +64,7 @@ Many statistical experiments involve comparing multiple population groups. For e
 \Cref{tbl:poll} shows the result of a Quinnipiac University poll asking 890 Iowa Republicans their preferred candidate for the Republican presidential nomination \citep{quinnipiac}. Donald Trump led with $31\%$ of the vote, Ted Cruz came second with $24\%$, Marco Rubio third with $17\%$, and ten other candidates including ``Don't know'' trailed behind. 
 
 \begin{table}[htbp]
-\begin{center}
+\centering
 \begin{tabular}{c c c c}
 	\hline
 	Rank & Candidate & Result & Votes \\
@@ -79,7 +79,6 @@ Many statistical experiments involve comparing multiple population groups. For e
 	$\vdots$ & $\vdots$ & $\vdots $ & $\vdots$ \\
 	\hline
 \end{tabular}
-\end{center}
 \caption{Results from a February 1, 2016 Quinnipiac University poll of $890$ Iowa Republicans. To compute the last column (Votes), we make the simplifying assumption that the reported percentages in the third column (Result) are raw vote shares among survey respondents. The asterisks indicate that the rank is verified at level $0.05$ by a step-down procedure.}
 \label{tbl:poll}
 \end{table}
@@ -143,7 +142,7 @@ Note that these procedures make an implicit adjustment for selection because the
 
 Rank verification, especially for the first rank, has been studied extensively in the ranking and selection literature; see \citet{Gupta:1971wk, Gupta:1985bj}, and \citet{Hsu:1996} for surveys. In particular, \citet{Gutmann:1987fk} prove a result analogous to our main result in a different setting: that a two-tailed test comparing the winner to the runner-up is valid for log-concave location families. \citet{Bofinger:1991hv, Maymin:1992fz, Karnnan:2009iv} give similar results for other models including scale and location-scale families. These results use very different technical tools than the ones we use here, require independence between the different groups (ruling out, for example, the multinomial family), and do not address the exponential family case. Because most exponential families are not location-scale families (the Gaussian being a notable exception), and because our results involve more general dependence structures, both our proof techniques and our technical results are complementary to the techniques and results in the above works.
 
-For the multinomial case, \citet{Gupta:1967wg}, discussed in \Cref{sec:subsetsel}, remain the state of the art in finite-sample tests; \citet{Gupta:1976vd} discuss related approaches for Poisson models. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test, and \citet{Gupta:1989fe} consider an empirical Bayes approach for selecting the best binomial population wherein a parametric prior distribution is assumed for the success probabilities for the different populations. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As \Cref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]} - X_{[2]}$ adapts to the data. Thus, our work closes a significant gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
+For the multinomial case, \citet{Gupta:1967wg}, discussed in \Cref{sec:subsetsel}, remain the state of the art in finite-sample tests; \citet{Gupta:1976vd} discuss related approaches for Poisson models. \citet{Berger:1980ev} mentions an alternative, simpler rule which performs a binomial test on each population, but its power does not necessarily as the size $m$ of observations increases in cases like $\text{Multinomial}(m; 2/3, 1/3, 0, \ldots, 0)$. \citet{Nettleton:2009ht} proves validity for an asymptotic version of the winner-versus-runner-up test, and \citet{Gupta:1989fe} consider an empirical Bayes approach for selecting the best binomial population wherein a parametric prior distribution is assumed for the success probabilities for the different populations. \citet{Ng:2007cn} discuss an exact test for a modified problem in which the maximum count is fixed instead of the total count; that is, we sample until the leading candidate has at least $m$ votes. As \Cref{sec:subsetsel} shows, our test can be much more powerful than the one in \citet{Gupta:1967wg}, especially if there are many candidates, because of the way our critical rejection threshold for $X_{[1]} - X_{[2]}$ adapts to the data. Thus, our work closes a significant gap in the ranking and selection literature, extending the result of \citet{Gutmann:1987fk} and others to new families like the multinomial, independent binomials, and many others.
 
 \subsection{Outline}
 
@@ -360,7 +359,7 @@ To help see the re-parametrization, each of these integrals can be thought of in
 \[p_{12} = \frac{B}{A+B}\]
 
 \begin{figure}[htbp]
-\begin{center}
+\centering
 \begin{tikzpicture}
 	\coordinate (C1) at (60:5);
 	\coordinate (C2) at (300:3);
@@ -379,7 +378,6 @@ To help see the re-parametrization, each of these integrals can be thought of in
 	\draw[thick, ->] (0, 0) -- (120:1) node[above] {\tiny $+ \left(0, 1, 0\right)$};
 	\draw[thick, ->] (0, 0) -- (240:1) node[below] {\tiny $+ \left(0, 0, 1\right)$};
 \end{tikzpicture}
-\end{center}
 \caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray. The diagram is drawn a level set of $x_1 + x_2 + x_3$. The green region represents the selection event $A_1$.}
 \label{fig:p-value}
 \end{figure}
@@ -394,7 +392,7 @@ A' = \int_{-D_{13}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz \ge \int_{-D_{12}
 It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 
 \begin{figure}[htbp]
-\begin{center}
+\centering
 \begin{tikzpicture}
 	\coordinate (C1) at (60:5);
 	\coordinate (C2) at (300:3);
@@ -420,7 +418,6 @@ It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 	\draw[thick, dotted] (A) -- ++(0, -3) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] ($(B) + (30:4)$) -- ($(B) + (330:4)$) node[midway, below, rotate=-90] {$\succeq$};
 \end{tikzpicture}
-\end{center}
 \caption{The $p$-value $p_{12}$ can be written in terms of integral $A$ along the segment and $B$ along the ray; and $p_{13}$ in terms of $C$ and $D$. $A'$ would refer to the sum of $A$ with the dashed line portion labeled as $\tilde{A}$, formally explained in \Cref{eq:int_extension}. The majorization relation is indicated by the dotted line.}
 \label{fig:comparerays}
 \end{figure}
@@ -461,9 +458,8 @@ Subset selection is closely related to testing whether the winner is the best. I
 for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05$; but in light of the extra factor of $\frac{n-1}{n}$ in \eqref{eq:marginal}, we will apply the selective procedure with $\frac{n}{n-1} \alpha$ such that the marginal type I error rate of both procedures are controlled at $\alpha$. Their test coincides with our test at $n = 2$; however as $n$ grows, the selective test shows significantly more power than \citeauthor{Gupta:1967wg}'s test.
 
 \begin{figure}[htbp]
-\begin{center}
+\centering
 \includegraphics[width = \textwidth]{multinomial-power}
-\end{center}
 \caption{Power curves as a function of $\delta$. The plots in the first row all have $m = 50$ and the second row $m = 250$. The solid line and the dashed line are the power for the selective test and Gupta and Nagel's test, respectively.}
 \label{fig:power}
 \end{figure}
@@ -671,7 +667,7 @@ Once again, $X_{j+1} = \max_{\ell > j} X_\ell$ is simply shorthand for simplifyi
 We can graphically represent $p_{jk}$ in \Cref{fig:croprays}, a diagram analogous to \Cref{fig:comparerays}.
 
 \begin{figure}[htbp]
-\begin{center}
+\centering
 \begin{tikzpicture}
 	\coordinate (C1) at (60:5);
 	\coordinate (C2) at (300:3);
@@ -704,7 +700,6 @@ We can graphically represent $p_{jk}$ in \Cref{fig:croprays}, a diagram analogou
 	\draw[thick, dotted] (A) -- ++(0, -3) node[midway, below, rotate=-90] {$\succeq$};
 	\draw[thick, dotted] ($(B) + (30:4)$) -- ($(B) + (330:4)$) node[midway, below, rotate=-90] {$\succeq$};
 \end{tikzpicture}
-\end{center}
 \caption{The two $p$-values constructed corresponds to taking integrals of $g$ along these segments, that lie on a level set of $x_j + x_{j+1} + x_k$. The dashed line corresponds to extension in \eqref{eq:int_extension}. The dotted line on the far right is the truncation that enforces $X_j < X_{j-1}$.}
 \label{fig:croprays}
 \end{figure}
