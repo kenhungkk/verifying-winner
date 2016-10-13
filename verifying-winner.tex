@@ -2,16 +2,17 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{caption}
 \usepackage{enumitem}
 \newlist{inlinelist}{enumerate*}{1}
 \setlist*[inlinelist]{label=(\arabic*)}
 \usepackage[totalwidth=450pt, totalheight=630pt]{geometry}
 \usepackage{graphicx}
-\usepackage{hyperref,cleveref} % hyperref must be loaded before cleveref
+\usepackage{hyperref} % hyperref must be loaded before cleveref
 \usepackage{mathrsfs}
-\usepackage[round]{natbib}
+\usepackage[round]{natbib} % natbib must be loaded before algorithm2e
+\usepackage[linesnumbered, ruled]{algorithm2e} % algorithm2e must be loaded before cleveref
+\usepackage{cleveref}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage{verbatim}
@@ -99,8 +100,8 @@ Surprisingly, all of the three procedures described above are statistically vali
 
 Generically, we will consider data drawn from an exponential family model with density
 \begin{equation}
-X \sim \exp\left(\theta'x - \psi\left(\theta\right)\right) g\left(x\right),
 \label{eq:expfam}
+X \sim \exp\left(\theta'x - \psi\left(\theta\right)\right) g\left(x\right),
 \end{equation}
 with respect to either the Lebesgue measure on $\RR^n$ or counting measure on $\ZZ^n$. We assume further that $g\left(x\right)$ is symmetric with respect to permutation, and Schur concave, a mild technical condition defined in \Cref{sec:maj}. In addition to the multinomial family, model~\eqref{eq:expfam} also encompasses settings such as comparing independent binomial treatment outcomes in a clinical trial, competing sports teams under a Bradley--Terry model, entries of a Dirichlet distribution, and many more; see \Cref{sec:maj} for these and other examples.
 
@@ -122,13 +123,13 @@ Procedures 2 and 3 are conservative stand-ins for exact, but slightly more invol
 
 We now state our main theorem: under a mild technical assumption, Procedures 1--3 described above are statistically valid, even accounting for the selection.
 \begin{theorem}
+\label{thm:main}
 Assume the model~\eqref{eq:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Then:
 \begin{enumerate}
 \item Procedure 1 has level $\alpha$ conditional on the best population not winning (otherwise a Type I error is impossible).
 \item Procedure 2 gives a conservative $1-\alpha$ lower confidence bound for $\theta_{[1]} - \max_{j \ne [1]} \theta_{j}$.
 \item Procedure 3 is a conservative step-down procedure with familywise error rate (FWER) no larger than $\alpha$.
 \end{enumerate}
-\label{thm:main}
 \end{theorem}
 
 We define Schur-concavity and discuss its properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof combines the conditional selective-inference framework of \citet{Fithian:2014ws} with classical multiple-testing methods, as well as new technical tools involving majorization and Schur-concavity.
@@ -165,6 +166,7 @@ This forms a partial order in $\RR^n$ (or $\ZZ^n$).
 Intuitively, majorization is a partial order that monitors the evenness of a vector: the more even a vector is, the ``smaller'' it is. There are two properties of majorization that we will use in the proofs.
 
 \begin{lemma}\leavevmode
+\label{lma:twoprop}
 \begin{enumerate}
 \item Suppose $\left(x_1, x_2, x_3, \ldots\right)$ and $\left(x_1, y_2, y_3, \ldots\right)$ are two vectors in $\RR^n$. Then
 \[\left(x_1, x_2, x_3, \ldots\right) \succeq \left(x_1, y_2, y_3, \ldots\right) \text{ if and only if } \left(x_2, x_3, \ldots\right) \succeq \left(y_2, y_3, \ldots\right).\]
@@ -172,7 +174,6 @@ Intuitively, majorization is a partial order that monitors the evenness of a vec
 \[\left(x_1 + t, x_2, x_3, \ldots\right) \succeq \left(x_1, x_2 + t, x_3, \ldots\right).\]
 If $t \le 0$, the majorization is reversed.
 \end{enumerate}
-\label{lma:twoprop}
 \end{lemma}
 
 \begin{proof}\leavevmode
@@ -226,8 +227,8 @@ The carrier measure is $\prod_{j=1}^n r_j^{\left(m-3\right) / 2} 1_{\left\{r > 0
 
 First, we justify the notion that the population with largest $\theta_j$ is also the largest population in stochastic order:
 \begin{theorem}
-For a multivariate exponential family with a symmetric carrier distribution, $X_1 \ge X_2$ in stochastic order if and only if $\theta_1 \geq \theta_2$.
 \label{thm:stoch}
+For a multivariate exponential family with a symmetric carrier distribution, $X_1 \ge X_2$ in stochastic order if and only if $\theta_1 \geq \theta_2$.
 \end{theorem}
 
 \begin{proof}
@@ -243,7 +244,8 @@ meaning that $X_1$ is greater than $X_2$ in stochastic order.
 Before proving our main result for Procedure 1, we give the following lemmas, the first of which clarifies a key idea in the proof, and the second is needed for a sharper bound in \eqref{eq:marginal}.
 
 \begin{lemma}[\citealp{Berger:1982hy}]
-If $p_j$ are valid $p$-values for testing null hypothesis $H_{0j}$, then $p_* = \max_j p_j$ is a valid $p$-value for the union null (i.e.\ disjunction null) hypothesis $H_0 = \bigcup_j H_{0j}$. \label{lma:union}
+\label{lma:union}
+If $p_j$ are valid $p$-values for testing null hypothesis $H_{0j}$, then $p_* = \max_j p_j$ is a valid $p$-value for the union null (i.e.\ disjunction null) hypothesis $H_0 = \bigcup_j H_{0j}$.
 \end{lemma}
 
 \begin{proof}
@@ -253,8 +255,8 @@ Therefore $p_*$ is a valid $p$-value for the union null hypothesis.
 \end{proof}
 
 \begin{lemma}
-If $\theta_1 \ge \max_{j \ne 1} \theta_j$, then $\PP\left[1 \text{ wins}\right] \ge \frac{1}{n}$.
 \label{lma:margsharp}
+If $\theta_1 \ge \max_{j \ne 1} \theta_j$, then $\PP\left[1 \text{ wins}\right] \ge \frac{1}{n}$.
 \end{lemma}
 
 \begin{proof}
@@ -278,8 +280,8 @@ Let $j^*$ denote the (fixed) index of the best population, so $\theta_{j^*} \ge 
 \[\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \PP\left[\text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \PP\left[j \text{ wins}\right],\]
 recalling that ties are broken randomly, so there is only one winner in any realization. Thus, it is enough to bound $\PP_{\theta}\left[\text{declare } j \text{ best} \;\middle|\; j \text{ wins}\right] \le \alpha$, for each $j \ne j^*$, and for all $\theta$ with $j^* \in \argmax_j \theta_j$. Then we will have
 \begin{equation}
-\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \alpha \cdot \PP\left[j \text{ wins}\right] = \alpha \PP\left[j^* \text{ does not win}\right] \le \frac{n-1}{n} \alpha,
 \label{eq:marginal}
+\PP\left[\bigcup_{j \ne j^*} \text{declare } j \text{ best}\right] \le \sum_{j \ne j^*} \alpha \cdot \PP\left[j \text{ wins}\right] = \alpha \PP\left[j^* \text{ does not win}\right] \le \frac{n-1}{n} \alpha,
 \end{equation}
 where the last inequality follows from \Cref{lma:margsharp}.
 
@@ -303,8 +305,8 @@ For convenience, we let
 
 We then re-parametrize to replace $X_1$ and $X_j$ with $D_{1j}$ and $M_{1j}$. The distribution is now an exponential family with sufficient statistics $D_{1j}, M_{1j}, X_{\setminus\left\{1, j\right\}}$ and corresponding natural parameters $\theta_1 - \theta_j, \theta_1 + \theta_j, \theta_{\setminus\left\{1, j\right\}}$. We now consider
 \begin{equation}
-\mathcal{L}_{\theta_1 - \theta_j = 0} \left(D_{1j} \;\middle|\; M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right).
 \label{eq:condlaw}
+\mathcal{L}_{\theta_1 - \theta_j = 0} \left(D_{1j} \;\middle|\; M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right).
 \end{equation}
 We can rewrite the selection event in terms of our new parameterization as
 \begin{align*}
@@ -321,8 +323,8 @@ where at step (a), conditioning on $X_{\setminus\left\{1, j\right\}}$ and $M_{1j
 
 The $p$-value for $H_{01j}$ is thus
 \begin{equation}
-p_{1j} = \frac{\int_{D_{1j}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_2 - M_{1j}, 0\right\}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}.
 \label{eq:p1j}
+p_{1j} = \frac{\int_{D_{1j}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}{\int_{\max\left\{X_2 - M_{1j}, 0\right\}}^\infty g\left(M_{1j} + z, X_2, \ldots, M_{1j} - z, \ldots, X_n\right) \,dz}.
 \end{equation}
 
 Finally, by construction, $p_{1j}$ satisfies
@@ -383,8 +385,8 @@ To help see the re-parametrization, each of these integrals can be thought of in
 \[\frac{B}{A+B} \ge \frac{D}{C+D} \quad \Longleftrightarrow \quad \frac{B}{A} \ge \frac{D}{C}.\]
 We will prove so by extending $A$ to include $\tilde{A}$ on the diagram. We denote the sum $A + \tilde{A}$ as $A'$. Formally,
 \begin{equation}
-A' = \int_{-D_{13}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz \ge \int_{-D_{12}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz = A.
 \label{eq:int_extension}
+A' = \int_{-D_{13}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz \ge \int_{-D_{12}}^0 g\left(X_1 + z, X_2 - z, X_3\right) \,dz = A.
 \end{equation}
 It is thus sufficient to show that $B \ge D$ and $C \ge A'$.
 
@@ -441,7 +443,8 @@ Now suppose the exponential family is defined on the counting measure instead. I
 \label{sec:subsetsel}
 
 As the construction of this test follows \citet{Fithian:2014ws}, it uses UMPU selective level-$\alpha$ tests for the pairwise $p$-values. This section compares the power of our procedure to the best previously known method for verifying multinomial ranks, by \citet{Gupta:1967wg}. They devise a rule to select a subset that includes the maximum $\pi_j$. In other words, if the selected subset is $J\left(X\right)$, it guarantees
-\begin{equation}\label{eq:subsetsel}
+\begin{equation}
+\label{eq:subsetsel}
 \PP\left[\argmax_j \pi_j \in J\left(X\right)\right] \ge 1 - \alpha.
 \end{equation}
 This is achieved by finding an integer $d$, as a function on $m$, $n$ and $\alpha$, and selecting the subset
@@ -517,8 +520,8 @@ When Procedure 2 reports $-\infty$ as a confidence lower bound, it is definitely
 
 If Procedure 2 reports a finite confidence lower bound $\delta^*$, then $\delta^* \ge 0$. Also
 \begin{equation}
-\frac{\alpha}{2} = \frac{\int_{D_{12}}^\infty \exp\left(\delta^* z\right) g\left(M_{12} + z, X_2, \ldots, M_{12} - z, \ldots, X_n\right) \,dz}{\int_{-\infty}^\infty \exp\left(\delta^* z\right) g\left(M_{12} + z, X_2, \ldots, M_{12} - z, \ldots, X_n\right) \,dz}
 \label{eq:naivelo}
+\frac{\alpha}{2} = \frac{\int_{D_{12}}^\infty \exp\left(\delta^* z\right) g\left(M_{12} + z, X_2, \ldots, M_{12} - z, \ldots, X_n\right) \,dz}{\int_{-\infty}^\infty \exp\left(\delta^* z\right) g\left(M_{12} + z, X_2, \ldots, M_{12} - z, \ldots, X_n\right) \,dz}
 \end{equation}
 as Procedure 2 is constructed from an unadjusted two-tail pairwise confidence interval. However, as $\delta^* \ge 0$, we have
 \begin{align*}
@@ -537,8 +540,8 @@ Note that Procedure 2 reporting $-\infty$ in case of $\delta^* \le 0$ is rather 
 
 Often we will be interested in verifying ranks beyond the winner. More generally, we could imagine declaring that the first $j$ populations are all in the correct order, that is
 \begin{equation}
-\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}.
 \label{eq:jrankscorrect}
+\theta_{[1]} > \cdots > \theta_{[j]} > \max_{k>j} \theta_{[k]}.
 \end{equation}
 
 Let $j_0$ denote the largest $j$ for which \eqref{eq:jrankscorrect} is true. Note that $j_0$ is both random and unknown, because it depends on both the data and population ranks. Procedure 3 declares that $j_0 \ge j$ if the unadjusted pairwise tests between $X_{[k]}$ and $X_{[k+1]}$, reject at level $\alpha$ for {\em all} of $k = 1, \ldots, j$.
@@ -569,10 +572,10 @@ To show that Procedure 3 is valid, we will prove the validity of a more liberal 
 	\While{\Rejected}{
 		$j \leftarrow j+1$\;
 		$D_{\tau_j} \leftarrow X_{\tau_j} - X_{\tau_{j+1}}$\;
-		Set up the distribution of $D_{\tau_j \tau_{j+1}}$, conditioned on
+		\label{lne:event} Set up the distribution of $D_{\tau_j \tau_{j+1}}$, conditioned on
 		\begin{itemize}
 		\item the variables $X_{\tau_1}, \ldots, X_{\tau_{j-1}}, X_{\tau_{j+2}}, \ldots, X_{\tau_n]}$, and
-		\item the event $\left\{X_{\tau_{j-1}} \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k)}\right\}$\; \label{lne:event}
+		\item the event $\left\{X_{\tau_{j-1}} \ge X_{\tau_j} \ge \max_{k>j} X_{\tau_k)}\right\}$\;
 		\end{itemize}
 		\Comment{The distribution of $D_{\tau_j \tau_{j+1}}$ depends only on $\theta_{\tau_j} - \theta_{\tau_{j+1}}$ now}
 		\Test $H_0: \theta_{\tau_j} - \theta_{\tau_{j+1}} \le 0$ against $H_1: \theta_{\tau_j} - \theta_{\tau_{j+1}} > 0$ according to the distribution of $D_{\tau_j \tau_{j+1}}$\;
@@ -611,8 +614,8 @@ Adapting this notation, the FWER can be viewed as $\PP\left[\text{reject } H_{0(
 
 While impractical, Procedure 3' can be thought of as performing all $n$ tests first, producing a sequence of $p$-values $p_j$, and returning
 \begin{equation}
-\hat{j}_0 = \min\left\{j: p_j > \alpha\right\} - 1.
 \label{eq:basicstop}
+\hat{j}_0 = \min\left\{j: p_j > \alpha\right\} - 1.
 \end{equation}
 This is a special case of the BasicStop procedure. Instead of simply checking that Procedure 3' fits all the requirement for FWER control in BasicStop, we will give the construction of Procedure 3', assuming that we are to estimate $j_0$ with BasicStop.
 
@@ -624,8 +627,8 @@ In general, the FWER for BasicStop can be rewritten as $\PP\left[p_{j_0+1} \le \
 \end{align*}
 We emphasize here that $\theta$ is {\em not} random, but $\mathcal{M}_{j+1}$ is. Thus it suffices to construct the $p$-values such that
 \begin{equation}
-\PP\left[p_j \le \alpha \;\middle|\; \theta \in \mathcal{M}_j\left(X\right) \setminus \mathcal{M}_{j-1}\left(X\right)\right] \le \alpha \quad \text{for all } j.
 \label{eq:basicstopreq}
+\PP\left[p_j \le \alpha \;\middle|\; \theta \in \mathcal{M}_j\left(X\right) \setminus \mathcal{M}_{j-1}\left(X\right)\right] \le \alpha \quad \text{for all } j.
 \end{equation}
 
 \paragraph{Considerations for conditioning}
