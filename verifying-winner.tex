@@ -4,17 +4,16 @@
 \usepackage{amsthm}
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \usepackage{caption}
-\usepackage{cleveref}
 \usepackage{enumitem}
 \newlist{inlinelist}{enumerate*}{1}
 \setlist*[inlinelist]{label=(\arabic*)}
 \usepackage[totalwidth=450pt, totalheight=630pt]{geometry}
 \usepackage{graphicx}
+\usepackage{hyperref,cleveref} % hyperref must be loaded before cleveref
 \usepackage{mathrsfs}
 \usepackage[round]{natbib}
 \usepackage{tikz}
 \usetikzlibrary{calc}
-\usepackage[hyphens]{url}
 \usepackage{verbatim}
 \usepackage{xcolor}
 \definecolor{mid_green}{HTML}{99d8c9}
@@ -457,7 +456,7 @@ for various combinations of $m$ and $n$. For their method, we use $\alpha = 0.05
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width = \textwidth]{multinomial-power}
+\includegraphics[width = \textwidth]{multinomial-power.png}
 \caption{Power curves as a function of $\delta$. The plots in the first row all have $m = 50$ and the second row $m = 250$. The solid line and the dashed line are the power for the selective test and Gupta and Nagel's test, respectively.}
 \label{fig:power}
 \end{figure}
