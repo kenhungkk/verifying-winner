@@ -98,7 +98,8 @@ PlotMultinomialPower <- function(m, n, alpha, num.sample) {
                theme(axis.title.x = element_blank(),
                      axis.title.y = element_blank(),
                      legend.title = element_blank(),
-                     legend.position = "none") +
+                     legend.position = "none",
+                     plot.title = element_text(size = 10, face = "bold")) +
                ggtitle(sprintf("m = %d, n = %d", m, n)))
 }
 
@@ -111,6 +112,10 @@ p3 <- PlotMultinomialPower(50, 10, alpha, num.sample)
 p4 <- PlotMultinomialPower(250, 10, alpha, num.sample)
 p5 <- PlotMultinomialPower(250, 25, alpha, num.sample)
 p6 <- PlotMultinomialPower(250, 50, alpha, num.sample)
+
+# Saving the plot
+png("multinomial-power.png", width = 7, height = 5, units = 'in', res = 300)
 grid.arrange(arrangeGrob(p1, p2, p3, p4, p5, p6, ncol = 3,
                          left = textGrob("Power", rot = 90, vjust = 1),
                          bottom = textGrob(expression(delta))))
+dev.off()
