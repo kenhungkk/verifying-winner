@@ -9,5 +9,6 @@ ignore/*
 *.snm
 *.toc
 *~
+imsart*
 .DS_Store
 .Rhistory

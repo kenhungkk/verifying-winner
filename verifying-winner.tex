@@ -1,25 +1,37 @@
-\documentclass[11pt]{article}
+\documentclass[aos, authoryear]{imsart}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{caption}
 \usepackage{enumitem}
-\newlist{inlinelist}{enumerate*}{1}
-\setlist*[inlinelist]{label=(\arabic*)}
 \usepackage[totalwidth=450pt, totalheight=630pt]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref} % hyperref must be loaded before cleveref
 \usepackage{mathrsfs}
-\usepackage[round]{natbib} % natbib must be loaded before algorithm2e
+\usepackage{natbib} % natbib must be loaded before algorithm2e
 \usepackage[linesnumbered, ruled]{algorithm2e} % algorithm2e must be loaded before cleveref
 \usepackage{cleveref}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage{verbatim}
 \usepackage{xcolor}
-\definecolor{mid_green}{HTML}{99d8c9}
 
-\captionsetup{width=0.8\textwidth}
+% arXiv number
+\arxiv{arXiv:1610.03944}
+
+% custom definitions
+\startlocaldefs
+
+% enumitem
+\newlist{inlinelist}{enumerate*}{1}
+\setlist*[inlinelist]{label=(\arabic*)}
+
+% algorithm2e
+\SetAlgoCaptionSeparator{.}
+\renewcommand\AlCapFnt{\normalfont\scshape}
+
+% xcolor
+\definecolor{mid_green}{HTML}{99d8c9}
 
 \newtheorem{corollary}{Corollary}
 \newtheorem{definition}{Definition}
@@ -42,16 +54,48 @@
 \newcommand{\ZZ}{\mathbb{Z}}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
+\endlocaldefs
+
 \begin{document}
 
+\begin{frontmatter}
+
 \title{Rank Verification for Exponential Families}
-\author{Kenneth Hung \and William Fithian}
-\date{\today}
-\maketitle
+\runtitle{Rank Verification for Exp. Families}
+
+\begin{aug}
+  \author{\fnms{Kenneth} \snm{Hung}\corref{}\ead[label=e1]{kenhung@berkeley.edu}}
+  \and
+  \author{\fnms{William} \snm{Fithian}\ead[label=e2]{wfithian@berkeley.edu}}
+
+  \runauthor{K. Hung and W. Fithian}
+
+  \affiliation{University of California, Berkeley}
+
+  \address{Department of Mathematics\\ 951 Evans Hall, Suite 3840\\ Berkeley, CA 94720-3840\\
+  \printead{e1}}
+
+  \address{Department of Statistics\\ Evans Hall\\ Berkeley, CA 94720\\
+          \printead{e2}}
+
+\end{aug}
 
 \begin{abstract}
 Many statistical experiments involve comparing multiple population groups. For example, a public opinion poll may ask which of several political candidates commands the most support; a social scientific survey may report the most common of several responses to a question; or, a clinical trial may compare binary patient outcomes under several treatment conditions to determine the most effective treatment. Having observed the ``winner'' (largest observed response) in a noisy experiment, it is natural to ask whether that candidate, survey response, or treatment is actually the ``best'' (stochastically largest response). This article concerns the problem of {\em rank verification} --- post hoc significance tests of whether the orderings discovered in the data reflect the population ranks. For exponential family models, we show under mild conditions that an unadjusted two-tailed pairwise test comparing the top two observations (i.e., comparing the ``winner'' to the ``runner-up'') is a valid test of whether the winner is truly the best. We extend our analysis to provide equally simple procedures to obtain lower confidence bounds on the gap between the winning population and the others, and to verify ranks beyond the first.
 \end{abstract}
+
+\begin{keyword}[class=MSC]
+\kwd[Primary ]{62F07}
+\kwd[; secondary ]{62F03}
+\end{keyword}
+
+\begin{keyword}
+\kwd{ranking}
+\kwd{selective inference}
+\kwd{exponential family}
+\end{keyword}
+
+\end{frontmatter}
 
 \section{Introduction}
 \label{sec:intro}
@@ -83,7 +127,7 @@ Many statistical experiments involve comparing multiple population groups. For e
 
 Seeing that Trump leads this poll, several salient questions may occur to us: Is Trump really winning, and if so by how much? Furthermore, is Cruz really in second, is Rubio really in third, and so on? Note that there is implicitly a problem of multiple comparisons here, because if Cruz had led the poll instead, we would be asking a different set of questions. Indeed, the selection issue appears especially pernicious due to the so-called ``winner's curse'': given that Trump leads the poll, it more likely than not overestimates his support.
 
-Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha = 0.05$. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans; i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $\left(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \ldots\right)$.\footnote{The reality is a bit more complicated: before releasing the data, Quinnipiac has post-processed it to make the reported result more representative of likely caucus-goers. The raw data is proprietary.}
+Nevertheless, if we blithely ignore the selection issue, we might carry out the following analyses to answer the questions we posed before at significance level $\alpha = 0.05$. We assume for simplicity that the poll represents a simple random sample of Iowa Republicans; i.e., that the data are a multinomial sample of size $890$ and underlying probabilities $\left(\pi_{\text{Trump}}, \pi_{\text{Cruz}}, \ldots\right)$. (The reality is a bit more complicated: before releasing the data, Quinnipiac has post-processed it to make the reported result more representative of likely caucus-goers. The raw data is proprietary.)
 
 \begin{enumerate}
 \item {\em Is Trump really winning?} If Trump and Cruz were in fact tied, then Trump's share of their combined 490 votes would be distributed as $\text{Binomial}\left(490, 0.5\right)$. Because the (two-tailed) $p$-value for this pairwise test is $p = 0.006$, we reject the null and conclude that Trump is really winning.
@@ -111,7 +155,7 @@ Write the order statistics of $X$ as
 $$X_{[1]} \ge X_{[2]} \ge \cdots \ge X_{[n]},$$
 where $[j]$ will denote the random index for the $j$-th order statistic. Thus, $\theta_{[j]}$ is the entry of $\theta$ corresponding to the $j$-th order statistic of $X$ (so $\theta_{[1]}$ might {\em not} equal $\max_j \theta_j$, for example).
 
-In each of the above examples, there is a natural exact test we could apply to test $\theta_j=\theta_k$ for any two {\em fixed} populations $j$ and $k$. In the multinomial case, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section. For the case of independent binomials we would apply Fisher's exact test, again conditioning on $X_j+X_k$. These are both examples of a generic UMPU pairwise test in which we condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$. Crucially, this null distribution does not depend on the value of $\theta$ provided that $\theta_j=\theta_k$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it makes no explicit adjustment for selection. Similarly, inverting this test for other values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}.\footnote{To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.}
+In each of the above examples, there is a natural exact test we could apply to test $\theta_j=\theta_k$ for any two {\em fixed} populations $j$ and $k$. In the multinomial case, we would apply the conditional binomial test based on the combined total $X_j+X_k$ as discussed in the previous section. For the case of independent binomials we would apply Fisher's exact test, again conditioning on $X_j+X_k$. These are both examples of a generic UMPU pairwise test in which we condition on the other $n-2$ indices (notated $X_{\setminus \{j,k\}}$) and $X_j+X_k$, and reject the null if $X_j$ is outside the $\alpha/2$ and $1-\alpha/2$ quantiles of the conditional law $\mathcal{L}_{\theta_j=\theta_k}(X_j \mid X_j+X_k, X_{\setminus\{j,k\}})$. Crucially, this null distribution does not depend on the value of $\theta$ provided that $\theta_j=\theta_k$. We call this test the (two-tailed) {\em unadjusted pairwise test} since it makes no explicit adjustment for selection. Similarly, inverting this test for other values of $\theta_j-\theta_k$ yields an {\em unadjusted pairwise confidence interval}. (To avoid trivialities in the discrete case, we assume these procedures are appropriately randomized at the rejection thresholds to give exact level-$\alpha$ control.)
 
 Generalizing the procedures described in \Cref{sec:iowa} we obtain the following:
 \begin{enumerate}
@@ -313,13 +357,13 @@ We can rewrite the selection event in terms of our new parameterization as
 A_1 &= \left\{X_1 \ge X_j\right\} \cap \left\{X_1 \ge \max_{k \neq 1,j} X_k\right\}\\
 &= \left\{D_{1j} \ge 0\right\} \cap \left\{D_{1j} \ge \max_{k \ne 1, j} X_k - M_{1j}\right\}.
 \end{align*}
-The conditional law of $D_{1j}$ in \eqref{eq:condlaw}, in particular, is a truncated distribution\footnote{Here consider this as a one-dimensional distribution of $D_{1j}$ on $\RR$, where $M_{1j}$ and $X_{\setminus\left\{1, j\right\}}$ are treated as fixed.}
+The conditional law of $D_{1j}$ in \eqref{eq:condlaw}, in particular, is a truncated distribution.
 \begin{align*}
 p\left(d_{1j} \mid M_{1j}, X_{\setminus\left\{1, j\right\}}, A_1\right) & \propto \exp\left(\left(\theta_1 - \theta_j\right) d_{1j} + \theta_2 X_2 + \cdots + \left(\theta_1 + \theta_j\right) M_{1j} + \cdots + \theta_n X_n \right) \\
 & \quad\quad g\left(M_{1j} + d_{ij}, X_2, \ldots, M_{ij} - d_{ij}, \ldots X_n\right) 1_{A_1} \\
 & \stackrel{\text{(a)}}{\propto} g\left(M_{1j} + d_{1j}, X_2, \ldots, M_{1j} - d_{1j}, \ldots X_n\right) 1_{A_1},
 \end{align*}
-where at step (a), conditioning on $X_{\setminus\left\{1, j\right\}}$ and $M_{1j}$ removes dependence on $\theta_{\setminus\left\{1, j\right\}}$ and $\theta_1 + \theta_j$ respectively, while $\theta_1 - \theta_j$ is taken to be $0$ under our null hypothesis.
+where at step (a), conditioning on $X_{\setminus\left\{1, j\right\}}$ and $M_{1j}$ removes dependence on $\theta_{\setminus\left\{1, j\right\}}$ and $\theta_1 + \theta_j$ respectively, while $\theta_1 - \theta_j$ is taken to be $0$ under our null hypothesis. Note that we consider this as a one-dimensional distribution of $D_{1j}$ on $\RR$, where $M_{1j}$ and $X_{\setminus\left\{1, j\right\}}$ are treated as fixed.
 
 The $p$-value for $H_{01j}$ is thus
 \begin{equation}
@@ -533,7 +577,7 @@ Multiplying this to \eqref{eq:naivelo}, we have
 indicating that $\delta^*$ is smaller than the confidence bound that Procedure 2' would report. Hence $\delta^*$ is a valid and conservative.
 \end{proof}
 
-Note that Procedure 2 reporting $-\infty$ in case of $\delta^* \le 0$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\pi_{\text{Trump}} \ge \max_{j \ne \text{Trump}} \pi_{j} \ge 1.108$ (Trump leads the field by at least $10.8\%$).
+Note that Procedure 2 reporting $-\infty$ in case of $\delta^* \le 0$ is rather extreme. In reality, we can always just adopt Procedure 2' in the case when Procedure 1 rejects. In fact, by Procedure 2', the multinomial example for polling in \Cref{sec:iowa} can give a stronger lower confidence bound, that $\pi_{\text{Trump}} / \max_{j \ne \text{Trump}} \pi_{j} \ge 1.108$ (Trump leads the field by at least $10.8\%$).
 
 \section{Verifying Other Ranks: Is the Runner-Up Really the Second Best, etc.?}
 \label{sec:stepdown}
@@ -649,7 +693,7 @@ Construction of $p_j$ for other permutations $\tau$ can be obtained similarly.
 There are many valid options for $p_j$ (such as constant $\alpha$). We will follow the idea in the proof of Part 1 of \Cref{thm:main} here. $p_j$ is intended to test $H_{0j}: \theta \in \mathcal{M}_j\left(X\right)$, which is equivalent to the union of the null hypotheses:
 \begin{enumerate}
 \item $\theta_k \le \theta_{k+1}$ for $k = 1, \ldots, j-1$, and
-\item $\theta_j \le \theta_k$ for $k = j+1, \ldots, n$.\footnote{The union of these null hypotheses is $\widetilde{H}_{0j}$.}
+\item $\theta_j \le \theta_k$ for $k = j+1, \ldots, n$. (The union of these null hypotheses is $\widetilde{H}_{0j}$.)
 \end{enumerate}
 
 Since the joint distribution of $X$, restricted to $\left\{X_1 \ge \cdots \ge X_j \ge \max_{k>j} X_k\right\}$, remains in the exponential family, we can construct the $p$-values for each of the hypotheses above by conditioning on the variables corresponding to the nuisance parameters here, similar to the proof of Part 1 of \Cref{thm:main}. Then we can take $p_j$ as the maximum of such $p$-values.
@@ -730,7 +774,7 @@ Claims reporting the ``winner'' are commonly made in the scientific literature, 
 A git repository containing with the code generating the image in this paper is available at \url{https://github.com/kenhungkk/verifying-winner}.
 
 \Urlmuskip=0mu plus 1mu\relax
-\bibliographystyle{plainnat}
+\bibliographystyle{imsart-nameyear}
 \bibliography{papers}
 
 \end{document}
