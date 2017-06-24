@@ -8,7 +8,7 @@ Kenneth Hung, William Fithian
 
 LaTeX Files
 --------
-The files related to to LaTeX are `verifying-winner.tex` (LaTeX source), `papers.bib` (bibliography) and `multinomial-power.png` (Figure 3).
+The files related to to LaTeX are `verifying-winner.tex` (LaTeX source), `papers.bib` (bibliography) and `multinomial-power.png` (Figure 3). Furthermore, there are additional files related to submission to journals and slides for presentation.
 
 R Files
 -------
