@@ -173,19 +173,20 @@ We now state our main theorem: under a mild technical assumption, Procedures 1--
 \label{thm:main}
 Assume the model~\eqref{eq:expfam} holds and $g\left(x\right)$ is a Schur-concave function. Then:
 \begin{enumerate}
-\item Procedure 1 has exact level $\alpha$ conditional on $H$ being true (conditional on the best population not winning), and marginally has level $\alpha\PP(H \text{ is true}) \leq \alpha \left(1-\frac{1}{n}\right)$.
+\item Procedure 1 has exact level $\alpha$ conditional on $H$ being true (conditional on the best population not winning), and marginally has level $\alpha \cdot \PP(H \text{ is true}) \leq \alpha \left(1-\frac{1}{n}\right)$.
 \item Procedure 2 gives a conservative $1-\alpha$ lower confidence bound for $\theta_{[1]} - \max_{j \ne [1]} \theta_{j}$.
 \item Procedure 3 is a conservative stepwise procedure with FWER no larger than $\alpha$.
 \end{enumerate}
 \end{theorem}
 
-Note that Theorem~\ref{thm:main} implies that we could actually replace $\alpha$ with $\alpha \frac{n}{n-1}$ to obtain a more powerful version of Procedure 1 when $n$ is not too large.
+Note that Theorem~\ref{thm:main} implies that we could actually replace $\alpha$ with $\frac{n}{n-1} \alpha$ to obtain a more powerful version of Procedure 1 when $n$ is not too large.
 
 We define Schur-concavity and discuss its properties in \Cref{sec:maj}. Because any log-concave and symmetric function is Schur-concave, \Cref{thm:main} applies to all of the cases discussed above. The proof combines the conditional selective-inference framework of \citet{Fithian:2014ws} with classical multiple-testing methods, as well as new technical tools involving majorization and Schur-concavity.
 
 Note that these procedures make an implicit adjustment for selection because they use two-tailed, rather than one-tailed, unadjusted tests. If we instead based our tests on an independent realization $X^* = (X_1^*, \ldots, X_n^*)$ then, for example, Procedure 1 could use a right-tailed version of the unadjusted pairwise test. In the case $n = 2$, Procedure 1 amounts to a simple two-tailed test of the null hypothesis $\theta_1 = \theta_2$, and it is intuitively clear that a one-tailed test would be too liberal. More surprising is that, no matter how large $n$ is, Procedures 1--3 require no further adjustment beyond what is required when $n = 2$. 
 
-\subsection{Related work}\label{sec:related}
+\subsection{Related work}
+\label{sec:related}
 
 Rank verification has been studied extensively in the ranking and selection literature. See \citet{Gupta:1971wk, Gupta:1985bj} for surveys of the subset selection literature. The two main formulations of ranking and selection are closely related to procedures for multiple comparisons with the best treatment \citep{edwards1983multiple,hsu1984constrained},  but more powerful methods are available in some cases for procedures involving only the first sample rank, the problem of comparisons with the sample best; see \citet{Hsu:1996} for an overview and discussion of the relationships between these problems. 
 

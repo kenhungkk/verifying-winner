@@ -74,10 +74,6 @@ Thanks for catching that. It is now fixed.
 
 If the first test rejects then we have concluded that (say) population 1 is ``better'' than {\em both} populations 2 and 3. The test compares only the top two sample ranks, but the conclusion involves all 3 populations. If we then decide we can't distinguish between populations 2 and 3, it would not threaten that conclusion.
 
-% In a case with a more complex joint distribution, changing $X_3$ would alter the test, as the test comparing $X_1$ and $X_2$ conditions on $X_3$. The test procedure remains the same.
-
-%Kenneth, I don't understand what you mean in the commented paragraph.
-
 \item {\em This is not a step-down procedure in the sense of multiple testing. There the order used to test hypotheses depends on the individual p-values.}
 
 Thank you, we have stopped calling it a step-down procedure. We have changed the term to ``stepwise procedure''. If you know of a better name for this type of ``reject until we can no longer reject'' procedure, we would be happy to correct our terminology.
@@ -89,8 +85,6 @@ This is an interesting question. Suppose that every (two-tailed) unadjusted pair
 For example, if populations are spread out at the top but cluster together at the bottom, then we will usually get farther by starting with the maximum, and vice versa. Another factor is that there might be more information for comparisons at one end: in the multinomial case, for example, comparisons between large probabilities may be more powerful than comparisons between small probabilities because the conditional ``sample size'' is larger.
 
 In any case, there is often a compelling scientific reason to care more about comparisons at one or the other end of the ranked list, in which case we should begin at the prioritized end.
-
-% in cases with parameters clustered together. The performance of starting from either end depends largely on the distribution of the parameters. If a few parameters are clustered on the lower end, then starting the test from the minimum will result in acceptance of the unadjusted pairwise test and no further ranks will be verified. On the other hand, if the tests are performed from the maximum, then most of the rank can be verified, save for the few clustered in the lower end. We believe in most applications there is one end that holds more significance (e.g.\ drug trial).
 
 \end{itemize}
 
