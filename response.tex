@@ -38,31 +38,33 @@
 
 \end{itemize}
 
+We thank both referees for their thoughtful questions and helpful suggestions. Please find a point-by-point response below.
+
 \section{Response to Reviewer 1}
 
 \begin{itemize}
 
 \item {\em Then they are offering a test based on the first two order statistics. If that is the case they should say so.}
 
-We adopted this suggestion.
+Thank you, this is a clearer way of stating our goal and we have adopted the suggestion.
 
 \item {\em It is said that we would be asking different questions if Cruz had led the race? What are they? Wouldn't we still be asking if Cruz was really winning?}
 
-We clarified what we refer to as different questions in the paper.
+We meant to say that we would be asking the same question, except we would be asking it about Cruz. We've clarified this in the paper.
 
 \item {\em Why would we stop with a failure to reject? Could we not obtain later orders? What if we wanted to know who was last?}
 
-This is to stay in line with BasicStop \citep{Fithian:2015uj}, also known as the partition test, where we reject a sequence of null hypothesis and halt whenever we can no longer reject.
+We can keep going if we want, but we only control FWER if we stop at the first acceptance. The FWER proof of \citep{Fithian:2015uj} unfortunately fails without this restriction, and FWER is not controlled.
 
-In the case where we want to know who was last, we can take $-X$ as the observations and $-\theta$ as the parameter. Applying our procedure will thus infer about the last. This is mentioned in Section 1.2 and a similar idea was included in \citet{Stefansson:1988wj} as well.
+In the case where we want to know who was last, we can take $-X$ as the observations and $-\theta$ as the parameter. Applying our procedure will thus make inferences about the last, second last, and so on. This is mentioned in Section 1.2.
 
 \item {\em In primary voting, the second place finisher is not necessarily the second choice. If the choice of Trump was removed it is not clear that Cruz would move to first.}
 
-We are not inferring that Cruz (the first running-up in polls) to be the second choice. We are testing that Cruz has the second largest support. This is not clarified in Section 1.2 where we define what ``best'', ``second best'', ``winner'' and ``runner-up'' mean.
+We are not inferring that Cruz (the first running-up in polls) would win in an election if Trump were disqualified; rather we are testing that Cruz has the second-most voters for whom he is the first choice (i.e., the second largest parameter in the multinomial distribution). This is now clarified in Section 1.2 where we define what ``best'', ``second best'', ``winner'' and ``runner-up'' mean.
 
 \item {\em What is the definition of a ”valid” test being used here?}
 
-A valid test should control the Type I error rate (in the case of just testing for the best), and FWER (in the case of verifying multiple ranks). This has been made more explicit in the paper.
+We've clarified the error rates we are controlling in the paper.
 
 \item {\em On line 17 from the bottom of page 4, the sentence beginning with ``Berger (1980) ...'' does not seem to make any sense.}
 
@@ -70,17 +72,25 @@ Thanks for catching that. It is now fixed.
 
 \item {\em What can be said about using all the data? Suppose there were just 3 populations and you decided that the first two were different. Would you feel the same way about the difference of the first two if you next found that the 2nd and 3rd were not different?}
 
-We would not feel any different about the population. We are performing a test to establish the winner as the best by comparing the top two order statistics. Even the third population is closer to the second population, the test remains statistically valid, and we can establish the same conclusion.
+If the first test rejects then we have concluded that (say) population 1 is ``better'' than {\em both} populations 2 and 3. The test compares only the top two sample ranks, but the conclusion involves all 3 populations. If we then decide we can't distinguish between populations 2 and 3, it would not threaten that conclusion.
 
-In a case with a more complex joint distribution, changing $X_3$ would alter the test, as the test comparing $X_1$ and $X_2$ conditions on $X_3$. The test procedure remains the same.
+% In a case with a more complex joint distribution, changing $X_3$ would alter the test, as the test comparing $X_1$ and $X_2$ conditions on $X_3$. The test procedure remains the same.
+
+%Kenneth, I don't understand what you mean in the commented paragraph.
 
 \item {\em This is not a step-down procedure in the sense of multiple testing. There the order used to test hypotheses depends on the individual p-values.}
 
-That is a point quite valid. We agree that calling this a step-down procedure can be misleading. We have changed this to ``stepwise procedure''. However, if there is a wider known name for this type of ``reject until we can no longer reject'' procedure, we would gladly change the name again.
+Thank you, we have stopped calling it a step-down procedure. We have changed the term to ``stepwise procedure''. If you know of a better name for this type of ``reject until we can no longer reject'' procedure, we would be happy to correct our terminology.
 
 \item {\em Again suppose there were just a few populations and you wanted to know about all the ranks. As the authors point out, the method works beginning either with the maximum or minimum. However they need not give the same result. How would their performance differ?}
 
-Since it is a stepwise procedure, it will ``get stuck'' in cases with parameters clustered together. The performance of starting from either end depends largely on the distribution of the parameters. If a few parameters are clustered on the lower end, the starting the test from the minimum will result in acceptance of the unadjusted pairwise test and no further ranks will be verified. On the other hand, if the tests are performed from the maximum, then most of the rank can be verified, save for the few clustered in the lower end. We believe in most applications there is one end that holds more significance (e.g.\ drug trial).
+This is an interesting question. Suppose that every (two-tailed) unadjusted pairwise test between adjacent populations is significant; then our conservative Procedure 3 will verify that all of the sample ranks coincide with population ranks. If some populations are hard to distinguish from each other, however, then it matters whether we start from the top or the bottom.
+
+For example, if populations are spread out at the top but cluster together at the bottom, then we will usually get farther by starting with the maximum, and vice versa. Another factor is that there might be more information for comparisons at one end: in the multinomial case, for example, comparisons between large probabilities may be more powerful than comparisons between small probabilities because the conditional ``sample size'' is larger.
+
+In any case, there is often a compelling scientific reason to care more about comparisons at one or the other end of the ranked list, in which case we should begin at the prioritized end.
+
+% in cases with parameters clustered together. The performance of starting from either end depends largely on the distribution of the parameters. If a few parameters are clustered on the lower end, then starting the test from the minimum will result in acceptance of the unadjusted pairwise test and no further ranks will be verified. On the other hand, if the tests are performed from the maximum, then most of the rank can be verified, save for the few clustered in the lower end. We believe in most applications there is one end that holds more significance (e.g.\ drug trial).
 
 \end{itemize}
 
@@ -90,7 +100,11 @@ Since it is a stepwise procedure, it will ``get stuck'' in cases with parameters
 
 \item {\em The main reason for pointing out this reference is its technique for constructing a confidence set is by what is called Partitioning, a technique which has turned out to be fundamentally useful in multiple comparisons.}
 
-We included this reference and credited this reference for its test on comparison with sample best under location family with monotone likelihood ratio.
+Thank you, we have included this reference and included the connection to partitioning. 
+
+\item {\em (As an aside, the authors are presumably aware that the two approaches to traditional Ranking and Selection turns out to be two sides of the confidence bounds in Multiple Comparisons with the Best, as described in chapter 4 or Hsu 1996.)}
+
+Thank you, we have mentioned this connection in the text.
 
 \end{itemize}
 
