@@ -114,7 +114,7 @@ p5 <- PlotMultinomialPower(250, 25, alpha, num.sample)
 p6 <- PlotMultinomialPower(250, 50, alpha, num.sample)
 
 # Saving the plot
-png("multinomial-power.png", width = 7, height = 5, units = 'in', res = 300)
+pdf("multinomial-power.pdf", width = 7, height = 5)
 grid.arrange(arrangeGrob(p1, p2, p3, p4, p5, p6, ncol = 3,
                          left = textGrob("Power", rot = 90, vjust = 1),
                          bottom = textGrob(expression(delta))))
