@@ -85,7 +85,9 @@ GnPower <- function(m, n, delta, alpha, num.sample) {
 PlotMultinomialPower <- function(m, n, alpha, num.sample) {
     # delta ranges from 0 to 2
     delta <- (0:200) / 100
-    sel <- sapply(delta, function(d) SelectivePower(m, n, d, alpha / (n - 1) * n, num.sample))
+    sel <- sapply(delta,
+                  function(d) SelectivePower(m, n, d, alpha / (n - 1) * n,
+                                             num.sample))
     gn <- GnPower(m, n, delta, alpha, num.sample)
     power <- melt(data.frame(delta, sel, gn), id.vars = "delta")
     return(ggplot(data = power, aes(x = delta,
@@ -114,7 +116,8 @@ p5 <- PlotMultinomialPower(250, 25, alpha, num.sample)
 p6 <- PlotMultinomialPower(250, 50, alpha, num.sample)
 
 # Saving the plot
-pdf("multinomial-power.pdf", width = 7, height = 5)
+setEPS()
+postscript("multinomial-power.eps", width = 7, height = 5)
 grid.arrange(arrangeGrob(p1, p2, p3, p4, p5, p6, ncol = 3,
                          left = textGrob("Power", rot = 90, vjust = 1),
                          bottom = textGrob(expression(delta))))

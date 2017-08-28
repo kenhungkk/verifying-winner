@@ -198,7 +198,7 @@ A two-tailed level-$\alpha$ test here refers to the conditional exact test for e
 \begin{block}{Key Ideas in Proof}
 
 \begin{itemize}
-	\item {\em Multiple comparison}: Null hypothesis is ``the winner is not the best'', a union null of hypothesis that the winner is not better than each of the rest
+	\item {\em Multiple comparison}: Null hypothesis is ``the winner is not the best'', a union of null hypotheses, each stating that the winner is not better than one other candidate
 	\item Construct a $p$-value $p_{ij}$ for comparing winner $i$ to each of the rest, $j$; do a significance test based on the combined $p$-value $\max_{j \ne i} p_{ij}$.
 	\item {\em Selective inference}: Construct $p_{ij}$ by conditioning on the selection event \citep{Fithian:2014ws}, given by
 	\[
@@ -274,7 +274,7 @@ It suffices to show
 % column 4
 \begin{column}{\onecolwid}
 
-\begin{block}{Brief Sketch for Other Two Inferences}
+\begin{block}{Proof Sketch for Other Two Procedures}
 
 \begin{itemize}
 	\item A test can be built, similarly for the hypothesis that winner is not at least $\delta$ larger than the rest; inverting this test yields the second procedure
@@ -295,7 +295,7 @@ It suffices to show
 \end{itemize}
 
 \centering
-\includegraphics[width=\textwidth]{multinomial-power.pdf}
+\includegraphics[width=\textwidth]{multinomial-power.eps}
 
 \begin{itemize}
 	\item Our test performs better than \citet{Gupta:1967wg}

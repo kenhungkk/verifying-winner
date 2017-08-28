@@ -1,5 +1,6 @@
 ignore/*
 *.pdf
+*.eps
 *.aux
 *.log
 *.bbl
